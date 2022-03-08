@@ -6,6 +6,6 @@
 
 The Open Fermentation Project is...
 
-- Reference Hardware for an Industrial Fermentation Appliance
+- Reference Hardware for an Industrial IoT "Internet of Things" Fermentation Appliance
 - The Automation Software to Manage a Fermentation Recipe Lifecycle
 - Cloud Integration for Telemetry and Monitoring
