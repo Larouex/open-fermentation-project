@@ -44,9 +44,9 @@ As we continue to grow, we promise to continue to make automated fermentation mo
 
 To us, food is more than just business, it’s passion. That’s why, we stand by our values with the aim to inspire the entire industry to uphold new standards.
 
-### Quality
+- ### Quality
 
-We love artisanal food more than you can imagine. Hence, we take quality very seriously. Our products have been tested and approved to go beyond your everyday kitchen appliances to provide delicious recipes friends and families are sure to enjoy. You can find the taste of quality in everything we do and it has never tasted so good.
+  We love artisanal food more than you can imagine. Hence, we take quality very seriously. Our products have been tested and approved to go beyond your everyday kitchen appliances to provide delicious recipes friends and families are sure to enjoy. You can find the taste of quality in everything we do and it has never tasted so good.
 
 ### Sustainability
 
