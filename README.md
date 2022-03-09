@@ -5,6 +5,13 @@
 ## Contents
 
 - [Mission Statement](#mission-statement)
+  - [Our Mission](#our-mission)
+  - [Our Story](#our-story)
+  - [Our Values](#our-values)
+    - [Quality] (#quality)
+    - [Sustainability](#sustainability)
+    - [Education](#education)
+    - [Community](#sommunity)
 - [Welcome](#welcome)
   - [The Hardware (Overview)](#the-hardware)
   - [The Software (Overview)](#the-sofwtware)
@@ -15,7 +22,43 @@
 
 ## Mission Statement
 
-Insert mission statement
+### OUR MISSION
+
+The Open Fermentation Project exists to make automated fermentation accessible to all. Fermentation makes food more nutritious and is a process likely used to create some of your favorite foods and drinks. Inspired by artisans and foodies alike, we give you the tools you need to engineer your personal getaway to artisanal food. The result is artisan-level produces that help people stay healthy.
+
+### OUR STORY
+
+Launched in 2022, the Open Fermentation Project began with a simple vision: to make automated fermentation more accessible.
+
+It all began several years ago when I started to develop a unique software and hardware with the goal to open source it. I wanted anyone with basic engineering skills to be able to put together our system. Little did I know, it was the beginning of the Open Fermentation Project.
+
+Today, our hallmark product is the “Saluminator” — an appliance that promises to bring precision curing and fermentation to home and custom curing chambers. We offer everything from complete DIY kits to fully assembled Saluminators to allow you to cure meats and other recipes that require temperature, humidity and time control. Recipe management is the core of the Saluminator IoT Management Automation System and we have worked closely with design experts on perfecting its user interface.
+
+As proponents of open design, we have proudly made our design accessible and encourage everyone to build one of their own. We share all the details with you and invite you to follow our step-by-step instructions that make integration flawless.
+
+Through open design, we have also grown to be a full-fledge community where hundreds of people come together to make automated fermentation more accessible. Our people are at the heart of what we do and allow us to further our mission. We believe that food and technology must work together to further the food industry for the better.
+
+As we continue to grow, we promise to continue to make automated fermentation more accessible. The Open Fermentation Project is a food tech company. Moreover, it’s a place for a community of foodies — just like you and I.
+
+### OUR VALUES
+
+To us, food is more than just business, it’s passion. That’s why, we stand by our values with the aim to inspire the entire industry to uphold new standards.
+
+### Quality
+
+We love artisanal food more than you can imagine. Hence, we take quality very seriously. Our products have been tested and approved to go beyond your everyday kitchen appliances to provide delicious recipes friends and families are sure to enjoy. You can find the taste of quality in everything we do and it has never tasted so good.
+
+### Sustainability
+
+A big part of what we do is done to modernize the food industry to in turn enhance its sustainability and efficiency. We take a sustainable approach to everything we do and strive to find the perfect balance of nature, and performance. Rest assured, we develop our products for a greener and better tomorrow.
+
+### Education
+
+We are committed to keeping the conversation around food going. Advancing the industry, is our number one priority and we believe that starts with better education. Via our innovative technologies, we’re changing the way we think and are starting the conversation around artisanal food. We promise to continue to be a tool for education.
+
+### Community
+
+We are proud to be a place for community for people to come together and to share their passion for food. Beyond bringing solutions, we like to bring people together to take our mission to the next level. As the industry advances, our community motivates us to continue to learn and to deliver exceptional products.
 
 ## Welcome!
 
