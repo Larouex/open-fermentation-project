@@ -1,6 +1,15 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)&nbsp;<img src="https://img.shields.io/badge/OFS v1-Open%20Fermentation%20Project%20v1-yellowgreen">
 
 <img src="./assets/open-fermentation-project-logo-v2_500px.png" width="500"/>
+## Contents
+- [Mission Statement](#coldhub-integration-for-azure-iot-central)
+- [Welcome](#welcome)
+  - [The Hardware (Overview)](#the-hardware)
+  - [The Software (Overview)](#the-sofwtware)
+      - [Recipe Phases](#recipe-phases)
+        - [Incubation](#incubation)
+        - [Curing](#curing)
+        - [Finishing](#finishing)
 
 ## Welcome!
 
