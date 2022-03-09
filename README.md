@@ -2,14 +2,18 @@
 
 <img src="./assets/open-fermentation-project-logo-v2_500px.png" width="500"/>
 ## Contents
-- [Mission Statement](#coldhub-integration-for-azure-iot-central)
+- [Mission Statement](#mission-statement)
 - [Welcome](#welcome)
-  - [The Hardware (Overview)](#the-hardware)
-  - [The Software (Overview)](#the-sofwtware)
-      - [Recipe Phases](#recipe-phases)
+    - [The Hardware (Overview)](#the-hardware)
+    - [The Software (Overview)](#the-sofwtware)
+    - [Recipe Phases](#recipe-phases)
         - [Incubation](#incubation)
         - [Curing](#curing)
         - [Finishing](#finishing)
+
+## Mission Statement
+
+Insert mission statement
 
 ## Welcome!
 
