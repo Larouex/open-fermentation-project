@@ -48,17 +48,17 @@ To us, food is more than just business, it’s passion. That’s why, we stand b
 
   We love artisanal food more than you can imagine. Hence, we take quality very seriously. Our products have been tested and approved to go beyond your everyday kitchen appliances to provide delicious recipes friends and families are sure to enjoy. You can find the taste of quality in everything we do and it has never tasted so good.
 
-### Sustainability
+- ### Sustainability
 
-A big part of what we do is done to modernize the food industry to in turn enhance its sustainability and efficiency. We take a sustainable approach to everything we do and strive to find the perfect balance of nature, and performance. Rest assured, we develop our products for a greener and better tomorrow.
+  A big part of what we do is done to modernize the food industry to in turn enhance its sustainability and efficiency. We take a sustainable approach to everything we do and strive to find the perfect balance of nature, and performance. Rest assured, we develop our products for a greener and better tomorrow.
 
-### Education
+- ### Education
 
-We are committed to keeping the conversation around food going. Advancing the industry, is our number one priority and we believe that starts with better education. Via our innovative technologies, we’re changing the way we think and are starting the conversation around artisanal food. We promise to continue to be a tool for education.
+  We are committed to keeping the conversation around food going. Advancing the industry, is our number one priority and we believe that starts with better education. Via our innovative technologies, we’re changing the way we think and are starting the conversation around artisanal food. We promise to continue to be a tool for education.
 
-### Community
+- ### Community
 
-We are proud to be a place for community for people to come together and to share their passion for food. Beyond bringing solutions, we like to bring people together to take our mission to the next level. As the industry advances, our community motivates us to continue to learn and to deliver exceptional products.
+  We are proud to be a place for community for people to come together and to share their passion for food. Beyond bringing solutions, we like to bring people together to take our mission to the next level. As the industry advances, our community motivates us to continue to learn and to deliver exceptional products.
 
 ## Welcome!
 
@@ -86,17 +86,17 @@ Recipes in the Saluminator are fixed with a starting time and a ending time. The
 
 As an example, take a classic Tuscan salumi that consists of three distinct phases...
 
-#### Incubation
+- #### Incubation
 
-This is the very first phase the salumi goes through in order to kick the starter culture and begin the fermentation. This consists of higher heat and humidity usually between 8 to 12 hours.
+  This is the very first phase the salumi goes through in order to kick the starter culture and begin the fermentation. This consists of higher heat and humidity usually between 8 to 12 hours.
 
-#### Curing
+- #### Curing
 
-This is the longest time in the salumi and is marked by a consistent temperature and humidity with constant air flow. The goal is remove 30% of the water weight from the salumi.
+  This is the longest time in the salumi and is marked by a consistent temperature and humidity with constant air flow. The goal is remove 30% of the water weight from the salumi.
 
-#### Finishing
+- #### Finishing
 
-The final stage that typically keeps the temperature and humidity low to achieve minimal moisture and weight loss. This is an optional phase and is used to cure a bit longer and if you desire a harder texture.
+  The final stage that typically keeps the temperature and humidity low to achieve minimal moisture and weight loss. This is an optional phase and is used to cure a bit longer and if you desire a harder texture.
 
 ### Managing Recipes
 
@@ -106,45 +106,45 @@ Managing recipes using the Saluminator’s automation system you can easily crea
 
 Recipe management in the Saluminator is controlled through the setting of Parameters in the system and you set the following per phase…
 
-#### Temperature
+- #### Temperature
 
-The consistent “desired” temperature you want for the curing chamber. You measure the temperature inside your chamber and monitor the ambient temperature outside the chamber.
+  The consistent “desired” temperature you want for the curing chamber. You measure the temperature inside your chamber and monitor the ambient temperature outside the chamber.
 
-#### Temperature Variance
+- #### Temperature Variance
 
-This is the amount of temperature variance before the Heater or the Chiller kick in. For example, if the Desired Temperature is 70 Degrees Fahrenheit and the Temperature Variance is set to 3, then the chiller will kick in at 73 Degrees Fahrenheit and the heater at 67 Degrees Fahrenheit.
+  This is the amount of temperature variance before the Heater or the Chiller kick in. For example, if the Desired Temperature is 70 Degrees Fahrenheit and the Temperature Variance is set to 3, then the chiller will kick in at 73 Degrees Fahrenheit and the heater at 67 Degrees Fahrenheit.
 
-#### Temperature Run Time
+- #### Temperature Run Time
 
-This is a “per minute” setting that you can tell a device to run for a designated length of time. You can achieve fine control of the amount of change you get from the heater and chillers to run them for a set period of time and then monitor and perfect the amount of change to get the desired result in the cure chamber.
+  This is a “per minute” setting that you can tell a device to run for a designated length of time. You can achieve fine control of the amount of change you get from the heater and chillers to run them for a set period of time and then monitor and perfect the amount of change to get the desired result in the cure chamber.
 
-#### Temperature Idle Time
+- #### Temperature Idle Time
 
-This is a “per minute” setting that you can set for the time to wait between runs for a heater or chiller.
+  This is a “per minute” setting that you can set for the time to wait between runs for a heater or chiller.
 
-#### Humidity
+- #### Humidity
 
-The desired RH for the phase of the recipe. It is common to “incubate” a recipe with higher heat and humidity to kick the starter. Then lower it for the cure cycle and then lower even more for the finish cycle.
+  The desired RH for the phase of the recipe. It is common to “incubate” a recipe with higher heat and humidity to kick the starter. Then lower it for the cure cycle and then lower even more for the finish cycle.
 
-#### Humidity Variance
+- #### Humidity Variance
 
-This is the amount of temperature variance before the humidifier or the dehumidifier kick in. For example, If the desired Humidity is 65 RH and the Humidity Variance is 3, then the dehumidifier will kick in at 68 RH and the humidifier at 62 RH.
+  This is the amount of temperature variance before the humidifier or the dehumidifier kick in. For example, If the desired Humidity is 65 RH and the Humidity Variance is 3, then the dehumidifier will kick in at 68 RH and the humidifier at 62 RH.
 
-#### Humidity Run Time
+- #### Humidity Run Time
 
-This is a “per minute” setting that you can tell a device to run for a designated length of time. You can achieve fine control of the amount of change you get from the humidifier and dehumidifier to run them for a set period of time and then monitor and perfect the amount of change to get the desired value in the cure chamber.
+  This is a “per minute” setting that you can tell a device to run for a designated length of time. You can achieve fine control of the amount of change you get from the humidifier and dehumidifier to run them for a set period of time and then monitor and perfect the amount of change to get the desired value in the cure chamber.
 
-#### Humidity Idle Time
+- #### Humidity Idle Time
 
-This is a “per minute” setting that you can set for the time to wait between runs for a humidifier or dehumidifier.
+  This is a “per minute” setting that you can set for the time to wait between runs for a humidifier or dehumidifier.
 
-#### Cycle Time Toggle
+- #### Cycle Time Toggle
 
-Toggle between Hours or Days used to measure time (24 or 1).
+  Toggle between Hours or Days used to measure time (24 or 1).
 
-#### Cycle Time
+- #### Cycle Time
 
-Set the number of days or hours for this phase.
+  Set the number of days or hours for this phase.
 
 ## The Cloud
 
@@ -158,48 +158,48 @@ The Saluiminator has optional capabilities to connect and seamlessly integrate y
 
 Each time the Samulinator takes a reading of a sensor, the data is sent to Azure IoT Central to record the values. This keeps an ongoing record of things like temperature and humidity readings.
 
-#### State Changes
+- #### State Changes
 
-The Saluminator tracks the changes associated with the AC Relays that toggle the Humidifier, Dehumifier, Chiller and Heater. This data is aggregated along with the telemetry to support machine learning to create the perfect ambiance in the curing chamber.
+  The Saluminator tracks the changes associated with the AC Relays that toggle the Humidifier, Dehumifier, Chiller and Heater. This data is aggregated along with the telemetry to support machine learning to create the perfect ambiance in the curing chamber.
 
-#### Tracking Events
+- #### Tracking Events
 
-We track overrides, shut downs, restarts and other signficant events for the Saluminator.
+  We track overrides, shut downs, restarts and other signficant events for the Saluminator.
 
 ### RECIPE REPORTING
 
-#### Incubation Started
+- #### Incubation Started
 
-The date and time that the Incubate phase STARTED.
+  The date and time that the Incubate phase STARTED.
 
-#### Incubation Ended
+- #### Incubation Ended
 
-The date and time that the Incubate phase ENDED.
+  The date and time that the Incubate phase ENDED.
 
-#### Incubation Percentage Completed
+- #### Incubation Percentage Completed
 
-The amount of completion for the Incubate phase relative to the current date and time.
+  The amount of completion for the Incubate phase relative to the current date and time.
 
-#### Cure Started
+- #### Cure Started
 
-The date and time that the Cure phase STARTED. Cure Ended The date and time that the Cure phase ENDED.
+  The date and time that the Cure phase STARTED. Cure Ended The date and time that the Cure phase ENDED.
 
-#### Cure Percentage Completed
+- #### Cure Percentage Completed
 
-The amount of completion for the Cure phase relative to the current date and time.
+  The amount of completion for the Cure phase relative to the current date and time.
 
-#### Finish Started
+- #### Finish Started
 
-The date and time that the Finish phase STARTED. Cure Ended The date and time that the Cure phase ENDED.
+  The date and time that the Finish phase STARTED. Cure Ended The date and time that the Cure phase ENDED.
 
-#### Finish Percentage Completed
+- #### Finish Percentage Completed
 
-The amount of completion for the Finish phase relative to the current date and time.
+  The amount of completion for the Finish phase relative to the current date and time.
 
-#### Checkpoint Hour
+- #### Checkpoint Hour
 
-Checkpoint pointer to the exact hour that the Salumintor is at for the whole recipe cycle.
+  Checkpoint pointer to the exact hour that the Salumintor is at for the whole recipe cycle.
 
-#### Last Reported from Device
+- #### Last Reported from Device
 
-The date and time that the last sending of the properties data from the Saluminator.
+  The date and time that the last sending of the properties data from the Saluminator.
