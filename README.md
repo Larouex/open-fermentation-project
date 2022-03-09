@@ -8,7 +8,7 @@
   - [Our Mission](#our-mission)
   - [Our Story](#our-story)
   - [Our Values](#our-values)
-    - [Quality] (#quality)
+    - [Quality](#quality)
     - [Sustainability](#sustainability)
     - [Education](#education)
     - [Community](#sommunity)
