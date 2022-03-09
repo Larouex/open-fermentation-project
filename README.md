@@ -20,13 +20,13 @@
     - [Curing](#curing)
     - [Finishing](#finishing)
 
-## Mission Statement
+# Mission Statement
 
-### OUR MISSION
+## OUR MISSION
 
 The Open Fermentation Project exists to make automated fermentation accessible to all. Fermentation makes food more nutritious and is a process likely used to create some of your favorite foods and drinks. Inspired by artisans and foodies alike, we give you the tools you need to engineer your personal getaway to artisanal food. The result is artisan-level produces that help people stay healthy.
 
-### OUR STORY
+## OUR STORY
 
 Launched in 2022, the Open Fermentation Project began with a simple vision: to make automated fermentation more accessible.
 
@@ -40,7 +40,7 @@ Through open design, we have also grown to be a full-fledge community where hund
 
 As we continue to grow, we promise to continue to make automated fermentation more accessible. The Open Fermentation Project is a food tech company. Moreover, it’s a place for a community of foodies — just like you and I.
 
-### OUR VALUES
+## OUR VALUES
 
 To us, food is more than just business, it’s passion. That’s why, we stand by our values with the aim to inspire the entire industry to uphold new standards.
 
@@ -60,7 +60,7 @@ To us, food is more than just business, it’s passion. That’s why, we stand b
 
   We are proud to be a place for community for people to come together and to share their passion for food. Beyond bringing solutions, we like to bring people together to take our mission to the next level. As the industry advances, our community motivates us to continue to learn and to deliver exceptional products.
 
-## Welcome!
+# Welcome!
 
 The Open Fermentation Project is...
 
@@ -68,7 +68,7 @@ The Open Fermentation Project is...
 - The Automation Software to Manage a Fermentation Recipe Lifecycle
 - Cloud Integration for Telemetry and Monitoring
 
-## The Hardware
+# The Hardware
 
 The curing appliance is branded and trademarked as the "Saluminator" and was developed by Larry W Jordan Jr for Larouex Gourmet Foods LLC. The trademark is registered for commercial projects.
 
