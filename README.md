@@ -14,7 +14,7 @@
     - [Community](#sommunity)
 - [Welcome](#welcome)
   - [The Hardware (Overview)](#the-hardware)
-  - [The Software (Overview)](#the-sofwtware)
+  - [The Software (Overview)](#the-software)
 
 # Mission Statement
 
