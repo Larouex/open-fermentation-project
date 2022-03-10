@@ -26,6 +26,10 @@
 
 ## Overview
 
+We developed this appliance to bring precision curing and fermentation to home and custom curing chambers. The entire project is based on “open source” software and “open and available” components that anyone with basic engineering skills could put together our system. We share this all with you and you are welcome to just use the instructions here to build your system and/or we are happy to sell you everything you need from a complete DIY kit to everything fully assembled and ready to install.
+
+We designed the Saluminator for the production of fermented products and specifically for the automation of dry curing meats and other recipes that require control over temperature, humidity and time. Connected to the power of the cloud and through the acquisition of stream telemetry and machine learning, the Saluminator IoT Automation tunes itself to variances in the ambient environment and the characteristics of your specific curing chamber
+
 The Saluminator Appliance was designed to be put together using commodity, DIN mounted components that anyone with basic electrical and software skills can build one of our systems. This document provides all of the needed materials and wiring schematics to build yoiur own wall mounted system and get started with precision fermentations.
 
 ## Hardware Bill of Materials

@@ -30,21 +30,19 @@ The **Open Fermentation Project** allows for the non-commercial use of everythin
 
 &nbsp;<img src="./assets/SaluminatorLogoTrans.png" width="300"/>
 
-# The Hardware
+## The Hardware
 
-We have opened up the design and how to build the device and you are encouraged to build one for yourself and the only restriction is that you do not pally the Saluminator our trademark for any commercial projects or usage.
+We have opened up the design and provide complete instructions on how to build the device. We encourage folks to build one for themselves and the only restriction is that we ask that you do not apply the Saluminator trademark for any commercial projects, products or collateral without our express wriiten consent.
 
-We developed this appliance to bring precision curing and fermentation to home and custom curing chambers. The entire project is based on “open source” software and “open and available” components that anyone with basic engineering skills could put together our system. We share this all with you and you are welcome to just use the instructions here to build your system and/or we are happy to sell you everything you need from a complete DIY kit to everything fully assembled and ready to install.
+[Click here for Hardware](./hardware/)
 
-We designed the Saluminator for the production of fermented products and specifically for the automation of dry curing meats and other recipes that require control over temperature, humidity and time. Connected to the power of the cloud and through the acquisition of stream telemetry and machine learning, the Saluminator IoT Automation tunes itself to variances in the ambient environment and the characteristics of your specific curing chamber
-
-# The Software
+## The Software
 
 Recipes in the Saluminator are fixed with a starting time and a ending time. The time between is the “Recipe Cycle” and it can be as simple as one set of settings applied to the whole fermentation cycle or more complex with three(3) phases in the cycle automatically managed by the Saluminator’s automation software.'
 
 [Click here for Software](./software/)
 
-# The Cloud
+## The Cloud
 
 Overview of the Metrics and Telemetry that Communicated to the Cloud for Analysis and Machine Learning.
 
