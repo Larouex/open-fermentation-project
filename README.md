@@ -7,8 +7,9 @@
 ## Contents
 
 - [Welcome](#welcome)
-  - [The Hardware (Overview)](#the-hardware)
-  - [The Software (Overview)](#the-software)
+  - [The Hardware](#the-hardware)
+  - [The Software](#the-software)
+  - [The Cloud](#the-software)
 - [Mission Statement](#mission-statement)
   - [Our Mission](#our-mission)
   - [Our Story](#our-story)
