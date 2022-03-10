@@ -1,8 +1,30 @@
-# Open Fermentation Project
-
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)&nbsp;<img src="https://img.shields.io/badge/OFS v1-Open%20Fermentation%20Project%20v1-yellowgreen">
 
-## Hardware and Device Overview
+<img src="../assets/open-fermentation-project-logo-v2_500px.png" width="200"/>
+
+# Hardware and Device Overview
+
+## Contents
+
+- [The Software (Overview)](#the-software)
+  - [Recipe Phases](#recipe-phases)
+    - [Incubation](#incubation)
+    - [Curing](#curing)
+    - [Finishing](#finishing)
+  - [Managing Recipes](#managing-recipes)
+  - [Recipe Parameters](#recipe-parameters)
+    - [Temperature](#temperature)
+    - [Temperature Variance](#temperature-variance)
+    - [Temperature Run Time](#temperature-run-time)
+    - [Temperature Idle Time](#temperature-idle-time)
+    - [Humidity](#humidity)
+    - [Humidity Variance](#humidity-variance)
+    - [Humidity Run Time](#humidity-run-time)
+    - [Humidity Idle Time](#humidity-idle-time)
+    - [Cycle Time Toggle](#cycle-time-toggle)
+    - [Cycle Time](#cycle-time)
+
+## Overview
 
 The Saluminator Appliance was designed to be put together using commodity, DIN mounted components that anyone with basic electrical and software skills can build one of our systems. This document provides all of the needed materials and wiring schematics to build yoiur own wall mounted system and get started with precision fermentations.
 
