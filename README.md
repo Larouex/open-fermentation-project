@@ -78,62 +78,10 @@ We designed the Saluminator for the production of fermented products and specifi
 
 Recipes in the Saluminator are fixed with a starting time and a ending time. The time between is the “Recipe Cycle” and it can be as simple as one set of settings applied to the whole fermentation cycle or more complex with three(3) phases in the cycle automatically managed by the Saluminator’s automation software.'
 
-[Click Here for Software](./software/)
+[Click here for Software](./software/)
 
 # The Cloud
 
 Overview of the Metrics and Telemetry that Communicated to the Cloud for Analysis and Machine Learning.
 
-## AZURE IOT CENTRAL
-
-The Saluiminator has optional capabilities to connect and seamlessly integrate your appliance with Microsoft's Azure IoT Central subscription offering. Azure IoT Central provides scalable telemetry processing and visualizations, data export and connected communications with your Salmuninator. Learn More...
-
-## TELEMETRY FEATURES
-
-Each time the Samulinator takes a reading of a sensor, the data is sent to Azure IoT Central to record the values. This keeps an ongoing record of things like temperature and humidity readings.
-
-- ### State Changes
-
-  The Saluminator tracks the changes associated with the AC Relays that toggle the Humidifier, Dehumifier, Chiller and Heater. This data is aggregated along with the telemetry to support machine learning to create the perfect ambiance in the curing chamber.
-
-- ### Tracking Events
-
-  We track overrides, shut downs, restarts and other signficant events for the Saluminator.
-
-## RECIPE REPORTING
-
-- ### Incubation Started
-
-  The date and time that the Incubate phase STARTED.
-
-- ### Incubation Ended
-
-  The date and time that the Incubate phase ENDED.
-
-- ### Incubation Percentage Completed
-
-  The amount of completion for the Incubate phase relative to the current date and time.
-
-- ### Cure Started
-
-  The date and time that the Cure phase STARTED. Cure Ended The date and time that the Cure phase ENDED.
-
-- ### Cure Percentage Completed
-
-  The amount of completion for the Cure phase relative to the current date and time.
-
-- ### Finish Started
-
-  The date and time that the Finish phase STARTED. Cure Ended The date and time that the Cure phase ENDED.
-
-- ### Finish Percentage Completed
-
-  The amount of completion for the Finish phase relative to the current date and time.
-
-- ### Checkpoint Hour
-
-  Checkpoint pointer to the exact hour that the Salumintor is at for the whole recipe cycle.
-
-- ### Last Reported from Device
-
-  The date and time that the last sending of the properties data from the Saluminator.
+[Click here for Cloud](./cloud/)
