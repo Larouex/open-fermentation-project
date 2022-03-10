@@ -1,6 +1,10 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)&nbsp;<img src="https://img.shields.io/badge/OFS v1-Open%20Fermentation%20Project%20v1-yellowgreen">
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)&nbsp;<a href="https://apps.open-fermentation.org/"><img src="https://img.shields.io/badge/OFS v1-Open%20Fermentation%20Project%20v1-yellowgreen"></a>&nbsp;<a href="https://apps.azureiotcentral.com/">
+<img src="https://img.shields.io/badge/Azure IoT Central-Open%20Fermentation%20Project%20v1-blue"></a>&nbsp;<a href="https://www.saluminator.com/">
+<img src="https://img.shields.io/badge/IoT-Saluminator%20Appliance%20v4-purple"></a>
 
 <img src="../assets/open-fermentation-project-logo-v2_500px.png" width="300"/>
+
+# The Software
 
 ## Contents
 
@@ -22,7 +26,7 @@
     - [Cycle Time Toggle](#cycle-time-toggle)
     - [Cycle Time](#cycle-time)
 
-# The Software
+## Overview
 
 Recipes in the Saluminator are fixed with a starting time and a ending time. The time between is the “Recipe Cycle” and it can be as simple as one set of settings applied to the whole fermentation cycle or more complex with three(3) phases in the cycle automatically managed by the Saluminator’s automation software.
 
