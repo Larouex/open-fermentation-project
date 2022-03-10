@@ -18,13 +18,13 @@
   - [The Cloud Management Interface](#the-cloud-management-interface)
     - [Connectivity Panel](#connectivity-panel)
       - [Ethernet Wired Status](#ethernet-wired-status)
-      - [Wifi Status and Strength of Signal](#wifi-status and-strength-of-signal)
+      - [Wifi Status and Strength of Signal](#wifi-status-and-strength-of-signal)
       - [Cloud Connected](#cloud-connected)
-      - [Connected to Azure IoT Central](#connected to-azure-iot-central)
+      - [Connected to Azure IoT Central](#connected-to-azure-iot-central)
     - [Status Panel](#status-panel)
       - [Registered](#registered)
-      - [Verionsing](#versioning)
-      - [Loggin](#loggin)
+      - [Versioning](#versioning)
+      - [Logging](#logging)
 
 ## Overview
 
