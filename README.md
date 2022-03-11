@@ -27,21 +27,23 @@ The Open Fermentation Project is...
 - The Automation Software to Manage a Fermentation Recipe Lifecycle
 - Cloud Integration for Telemetry and Monitoring
 
-The **Saluminator "Curing" Appliance** is a registered trademark of Larouex Gourmet Foods LLC. The appliance was developed by Larry W Jordan Jr. The trademark and logo are registered for commercial products and projects.
-
-The **Open Fermentation Project** allows for the non-commercial use of everything!
+The **Saluminator&reg; "Curing" Appliance** is a registered trademark of Larouex Gourmet Foods LLC. The appliance was developed by Larry W Jordan Jr. The trademark and logo are registered for commercial products and projects.
 
 &nbsp;<img src="./assets/SaluminatorLogoTrans.png" width="300"/>
 
+The **Open Fermentation Project** allows for the non-commercial use of everything!
+
 ## The Hardware
 
-We have opened up the design and provide complete instructions on how to build the device. We encourage folks to build one for themselves and the only restriction is that we ask that you do not apply the Saluminator trademark for any commercial projects, products or collateral without our express wriiten consent.
+We have opened up the design and are providing complete instructions on how to build the Saluminator&reg; Fermenation device. We encourage folks to build one for themselves!
+
+The only restriction is that we ask that you do not apply the Saluminator&reg; Trademark for any commercial projects, products or collateral without our express written consent.
 
 [Click here for Hardware](./hardware/)
 
 ## The Software
 
-Recipes in the Saluminator are fixed with a starting time and a ending time. The time between is the “Recipe Cycle” and it can be as simple as one set of settings applied to the whole fermentation cycle or more complex with three(3) phases in the cycle automatically managed by the Saluminator’s automation software.'
+Recipes in the Saluminator&reg; are fixed with a starting time and a ending time. The time between is the “Recipe Cycle” and it can be as simple as one set of settings applied to the whole fermentation cycle or more complex with three(3) phases in the cycle automatically managed by the device's automation software.
 
 [Click here for Software](./software/)
 
@@ -63,7 +65,7 @@ Launched in 2022, the Open Fermentation Project began with a simple vision: to m
 
 It all began several years ago when I started to develop a unique software and hardware with the goal to open source it. I wanted anyone with basic engineering skills to be able to put together our system. Little did I know, it was the beginning of the Open Fermentation Project.
 
-Today, our hallmark product is the “Saluminator” — an appliance that promises to bring precision curing and fermentation to home and custom curing chambers. We offer everything from complete DIY kits to fully assembled Saluminators to allow you to cure meats and other recipes that require temperature, humidity and time control. Recipe management is the core of the Saluminator IoT Management Automation System and we have worked closely with design experts on perfecting its user interface.
+Today, our hallmark product is the “Saluminator&reg;” — an appliance that promises to bring precision curing and fermentation to home and custom curing chambers. We offer everything from complete DIY kits to fully assembled Saluminators to allow you to cure meats and other recipes that require temperature, humidity and time control. Recipe management is the core of the Saluminator IoT Management Automation System and we have worked closely with design experts on perfecting its user interface.
 
 As proponents of open design, we have proudly made our design accessible and encourage everyone to build one of their own. We share all the details with you and invite you to follow our step-by-step instructions that make integration flawless.
 
