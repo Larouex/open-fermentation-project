@@ -8,23 +8,13 @@
 
 ## Contents
 
-- [The Software (Overview)](#the-software)
-  - [Recipe Phases](#recipe-phases)
-    - [Incubation](#incubation)
-    - [Curing](#curing)
-    - [Finishing](#finishing)
-  - [Managing Recipes](#managing-recipes)
-  - [Recipe Parameters](#recipe-parameters)
-    - [Temperature](#temperature)
-    - [Temperature Variance](#temperature-variance)
-    - [Temperature Run Time](#temperature-run-time)
-    - [Temperature Idle Time](#temperature-idle-time)
-    - [Humidity](#humidity)
-    - [Humidity Variance](#humidity-variance)
-    - [Humidity Run Time](#humidity-run-time)
-    - [Humidity Idle Time](#humidity-idle-time)
-    - [Cycle Time Toggle](#cycle-time-toggle)
-    - [Cycle Time](#cycle-time)
+- [Overview](#overvie)
+  - [Hardware Bill of Materials](#hardware-bill-of-materials)
+  - [Wiring](#incubation)
+  - [Ferrules](#curing)
+  - [Wire Ferrule Crimping Tool](#wire-ferrule-crimping-tool)
+  - [Schematic for AM2315](#schematic-for-am2315)
+  - [Schematic for AC Relay Board](#schematic-relay-board)
 
 ## Overview
 
@@ -68,10 +58,12 @@ Wire ferrule crimping tool is used to terminate bootlace ferrule with stranded w
 
 [View on Amazon](https://www.amazon.com/IWISS-Self-adjusting-Hexagonal-AWG23-10-End-sleeves/dp/B00H950AK4/ref=pd_bxgy_1/133-1670461-0417717?pd_rd_w=LbGxv&pf_rd_p=6b3eefea-7b16-43e9-bc45-2e332cbf99da&pf_rd_r=MD0HCV4WACCEFB882M6R&pd_rd_r=e6f5cbed-6ce5-440c-9a1d-14d2de9da7a1&pd_rd_wg=aTqDM&pd_rd_i=B00H950AK4&psc=1)
 
-### Wiring Schematic for AM2315 Sealed Temperature and Humidity Sensor
+### Schematic for AM2315
 
+Wiring Schematic for AM2315 Sealed Temperature and Humidity Sensor
 <img src="../assets/SaluminatorV4_AM2315_Pinout_ReTerminal_Header.png" width="400"/>
 
-### Wiring Schematic for 8 Relay Board for AC Control
+### Schematic Relay Board
 
+Wiring Schematic for 8 Relay Board for AC Control
 <img src="../assets/SaluminatorV4_Relay_Pinout_ReTerminal_Header.png" width="400"/>
