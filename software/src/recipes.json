@@ -1,0 +1,54 @@
+[
+    {
+      "Name": "Salumi Toscano",
+      "Incubate": {
+        "Cycle Time Toggle": 1,
+        "Cycle Time": 18,
+        "Temperature": {
+          "Desired": 77,
+          "Variance": 3,
+          "Run Time": 3,
+          "Idle Time": 5
+        },
+        "Humidity": {
+          "Desired": 80,
+          "Variance": 3,
+          "Run Time": 3,
+          "Idle Time": 5
+        }
+      },
+      "Cure": {
+        "Cycle Time Toggle": 24,
+        "Cycle Time": 25,
+        "Temperature": {
+          "Desired": 62,
+          "Variance": 3,
+          "Run Time": 3,
+          "Idle Time": 5
+        },
+        "Humidity": {
+          "Desired": 65,
+          "Variance": 3,
+          "Run Time": 3,
+          "Idle Time": 5
+        }
+      },
+      "Finish": {
+        "Cycle Time Toggle": 24,
+        "Cycle Time": 10,
+        "Temperature": {
+          "Desired": 60,
+          "Variance": 2,
+          "Run Time": 3,
+          "Idle Time": 5
+        },
+        "Humidity": {
+          "Desired": 75,
+          "Variance": 3,
+          "Run Time": 3,
+          "Idle Time": 5
+        }
+      }
+    }
+  ]
+  
