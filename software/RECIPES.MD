@@ -35,15 +35,22 @@ Recipes in the Saluminator are fixed with a starting time and a ending time. The
 
 As an example, take a classic Tuscan salumi that consists of three distinct phases...
 
-### Incubation
+| Phase| Time| Temperature | Humditiy|
+| ---------------------- | ------------------------------ | -------- | -------------- |
+| **Incubation**              | 12 Hours                       | 85 F      | 90% RH|
+| **Curing**               | 25 Days                       | 60 F      | 75% RH|
+| **Finishing**               | 10 Days                       | 58 F      | 60% RH|
+
+
+- ### Incubation
 
   This is the very first phase the salumi goes through in order to kick the starter culture and begin the fermentation. This consists of higher heat and humidity usually between 8 to 12 hours.
 
-### Curing
+- ### Curing
 
   This is the longest time in the salumi and is marked by a consistent temperature and humidity with constant air flow. The goal is remove 30% of the water weight from the salumi.
 
-### Finishing
+- ### Finishing
 
   The final stage that typically keeps the temperature and humidity low to achieve minimal moisture and weight loss. This is an optional phase and is used to cure a bit longer and if you desire a harder texture.
 

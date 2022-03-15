@@ -136,6 +136,22 @@ def get_audit_table_definition():
 
 
 # -------------------------------------------------------------------------------
+#   Function:   get_relay_table_definition
+#   Usage:      Audit Table Definition
+# -------------------------------------------------------------------------------
+def get_relay_table_definition():
+    sql_table_description = """ CREATE TABLE IF NOT EXISTS relay (
+                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    recipe_phase TEXT NOT NULL,
+                                    recipe_hour INTEGER NOT NULL,
+                                    event_datetime TEXT NOT NULL,
+                                    event_type TEXT NOT NULL,
+                                    event_description TEXT NOT NULL
+                                ); """
+    return sql_table_description
+
+
+# -------------------------------------------------------------------------------
 #   Function:   audit_event
 #   Usage:      Insert Audit event into the database
 # -------------------------------------------------------------------------------

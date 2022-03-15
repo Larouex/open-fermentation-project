@@ -3,15 +3,15 @@
       "Name": "Salumi Toscano",
       "Incubate": {
         "Cycle Time Toggle": 1,
-        "Cycle Time": 18,
+        "Cycle Time": 12,
         "Temperature": {
-          "Desired": 77,
+          "Desired": 85,
           "Variance": 3,
           "Run Time": 3,
           "Idle Time": 5
         },
         "Humidity": {
-          "Desired": 80,
+          "Desired": 90,
           "Variance": 3,
           "Run Time": 3,
           "Idle Time": 5
@@ -21,24 +21,8 @@
         "Cycle Time Toggle": 24,
         "Cycle Time": 25,
         "Temperature": {
-          "Desired": 62,
-          "Variance": 3,
-          "Run Time": 3,
-          "Idle Time": 5
-        },
-        "Humidity": {
-          "Desired": 65,
-          "Variance": 3,
-          "Run Time": 3,
-          "Idle Time": 5
-        }
-      },
-      "Finish": {
-        "Cycle Time Toggle": 24,
-        "Cycle Time": 10,
-        "Temperature": {
           "Desired": 60,
-          "Variance": 2,
+          "Variance": 3,
           "Run Time": 3,
           "Idle Time": 5
         },
@@ -48,7 +32,75 @@
           "Run Time": 3,
           "Idle Time": 5
         }
+      },
+      "Finish": {
+        "Cycle Time Toggle": 24,
+        "Cycle Time": 10,
+        "Temperature": {
+          "Desired": 58,
+          "Variance": 2,
+          "Run Time": 3,
+          "Idle Time": 5
+        },
+        "Humidity": {
+          "Desired": 60,
+          "Variance": 3,
+          "Run Time": 3,
+          "Idle Time": 5
+        }
       }
-    }
+    },
+    {
+        "Name": "Saucisson Sec",
+        "Incubate": {
+          "Cycle Time Toggle": 1,
+          "Cycle Time": 12,
+          "Temperature": {
+            "Desired": 85,
+            "Variance": 3,
+            "Run Time": 3,
+            "Idle Time": 5
+          },
+          "Humidity": {
+            "Desired": 90,
+            "Variance": 3,
+            "Run Time": 3,
+            "Idle Time": 5
+          }
+        },
+        "Cure": {
+          "Cycle Time Toggle": 24,
+          "Cycle Time": 20,
+          "Temperature": {
+            "Desired": 60,
+            "Variance": 3,
+            "Run Time": 3,
+            "Idle Time": 5
+          },
+          "Humidity": {
+            "Desired": 75,
+            "Variance": 3,
+            "Run Time": 3,
+            "Idle Time": 5
+          }
+        },
+        "Finish": {
+          "Cycle Time Toggle": 24,
+          "Cycle Time": 5,
+          "Temperature": {
+            "Desired": 58,
+            "Variance": 2,
+            "Run Time": 3,
+            "Idle Time": 5
+          },
+          "Humidity": {
+            "Desired": 60,
+            "Variance": 3,
+            "Run Time": 3,
+            "Idle Time": 5
+          }
+        }
+      }
+    
   ]
   
