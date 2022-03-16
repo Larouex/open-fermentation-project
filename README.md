@@ -29,7 +29,7 @@ The **Open Fermentation Project SPC** is...
 
 The **Saluminator&reg; "Curing" Appliance** is a registered trademark of Larouex Gourmet Foods LLC. The appliance was developed by Larry W Jordan Jr. The trademark and logo are registered for commercial products and projects.
 
-The **Open Fermentation Project SPC** is a Social Purpose Corporation formed in Washington State. The definitio is below...
+The **Open Fermentation Project SPC** is a Social Purpose Corporation formed in Washington State. The definition is below...
 
 _A social purpose corporation (an “SPC”) is a Washington corporation that has organized itself to pursue one or more social purposes._
 
@@ -67,7 +67,7 @@ The **Open Fermentation Project SPC** exists to make automated fermentation acce
 
 Launched in 2022, the **Open Fermentation Project SPC** began with a simple vision: to make automated fermentation more accessible.
 
-It all began several years ago when I started to develop a unique software and hardware with the goal to open source it. I wanted anyone with basic engineering skills to be able to put together our system. Little did I know, it was the beginning of the Open Fermentation Project.
+It all began several years ago when I started to develop a unique software and hardware with the goal to open source it. I wanted anyone with basic engineering skills to be able to put together our system. Little did I know, it was the beginning of the **Open Fermentation Project SPC**.
 
 Today, our hallmark product is the “Saluminator&reg;” — an appliance that promises to bring precision curing and fermentation to home and custom curing chambers. We offer everything from complete DIY kits to fully assembled Saluminators to allow you to cure meats and other recipes that require temperature, humidity and time control. Recipe management is the core of the Saluminator&reg; IoT Management Automation System and we have worked closely with design experts on perfecting its user interface.
 
