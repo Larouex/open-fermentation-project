@@ -21,7 +21,7 @@
 
 # Welcome!
 
-The Open Fermentation Project is...
+The **Open Fermentation Project SPC** is...
 
 - Reference Hardware for an Industrial IoT "Internet of Things" Fermentation Appliance
 - The Automation Software to Manage a Fermentation Recipe Lifecycle
@@ -29,9 +29,13 @@ The Open Fermentation Project is...
 
 The **Saluminator&reg; "Curing" Appliance** is a registered trademark of Larouex Gourmet Foods LLC. The appliance was developed by Larry W Jordan Jr. The trademark and logo are registered for commercial products and projects.
 
+The **Open Fermentation Project SPC** is a Social Purpose Corporation formed in Washington State. The definitio is below...
+
+_A social purpose corporation (an “SPC”) is a Washington corporation that has organized itself to pursue one or more social purposes._
+
 &nbsp;<img src="./assets/SaluminatorLogoTrans.png" width="300"/>
 
-The **Open Fermentation Project** allows for the non-commercial use of everything!
+The **Open Fermentation Project SPC** allows for the non-commercial use of everything!
 
 ## The Hardware
 
@@ -57,15 +61,15 @@ Overview of the Metrics and Telemetry that Communicated to the Cloud for Analysi
 
 ## OUR MISSION
 
-The Open Fermentation Project exists to make automated fermentation accessible to all. Fermentation makes food more nutritious and is a process likely used to create some of your favorite foods and drinks. Inspired by artisans and foodies alike, we give you the tools you need to engineer your personal getaway to artisanal food. The result is artisan-level produces that help people stay healthy.
+The **Open Fermentation Project SPC** exists to make automated fermentation accessible to all. Fermentation makes food more nutritious and is a process likely used to create some of your favorite foods and drinks. Inspired by artisans and foodies alike, we give you the tools you need to engineer your personal getaway to artisanal food. The result is artisan-level produces that help people stay healthy.
 
 ## OUR STORY
 
-Launched in 2022, the Open Fermentation Project began with a simple vision: to make automated fermentation more accessible.
+Launched in 2022, the **Open Fermentation Project SPC** began with a simple vision: to make automated fermentation more accessible.
 
 It all began several years ago when I started to develop a unique software and hardware with the goal to open source it. I wanted anyone with basic engineering skills to be able to put together our system. Little did I know, it was the beginning of the Open Fermentation Project.
 
-Today, our hallmark product is the “Saluminator&reg;” — an appliance that promises to bring precision curing and fermentation to home and custom curing chambers. We offer everything from complete DIY kits to fully assembled Saluminators to allow you to cure meats and other recipes that require temperature, humidity and time control. Recipe management is the core of the Saluminator IoT Management Automation System and we have worked closely with design experts on perfecting its user interface.
+Today, our hallmark product is the “Saluminator&reg;” — an appliance that promises to bring precision curing and fermentation to home and custom curing chambers. We offer everything from complete DIY kits to fully assembled Saluminators to allow you to cure meats and other recipes that require temperature, humidity and time control. Recipe management is the core of the Saluminator&reg; IoT Management Automation System and we have worked closely with design experts on perfecting its user interface.
 
 As proponents of open design, we have proudly made our design accessible and encourage everyone to build one of their own. We share all the details with you and invite you to follow our step-by-step instructions that make integration flawless.
 
