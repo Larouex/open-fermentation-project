@@ -4,7 +4,7 @@
 
 # The Hardware
 
-<img src="../assets/open-fermentation-project-logo-v2_500px.png" width="300"/>
+<img src="../assets/open-fermentation-project-logo-v2-750.png" width="500"/>
 
 ## Contents
 

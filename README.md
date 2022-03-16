@@ -2,7 +2,7 @@
 <img src="https://img.shields.io/badge/Azure IoT Central-Open%20Fermentation%20Project%20v1-blue"></a>&nbsp;<a href="https://www.saluminator.com/">
 <img src="https://img.shields.io/badge/IoT-Saluminator%20Appliance%20v4-purple"></a>
 
-<img src="./assets/open-fermentation-project-logo-v2_500px.png" width="300"/>
+<img src="./assets/open-fermentation-project-logo-v2-750.png" width="500"/>
 
 ## Contents
 
