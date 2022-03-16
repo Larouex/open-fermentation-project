@@ -31,7 +31,7 @@ The **Saluminator&reg; "Curing" Appliance** is a registered trademark of Larouex
 
 The **Open Fermentation Project SPC** is a Social Purpose Corporation formed in Washington State. The definition is below...
 
-_A social purpose corporation (an “SPC”) is a Washington corporation that has organized itself to pursue one or more social purposes._
+> _A social purpose corporation (an “SPC”) is a Washington corporation that has organized itself to pursue one or more social purposes._
 
 &nbsp;<img src="./assets/SaluminatorLogoTrans.png" width="300"/>
 
