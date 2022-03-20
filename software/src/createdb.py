@@ -266,14 +266,16 @@ async def main(argv):
 
     # validate names and file naming pattern
     existing_recipe = [x for x in recipe_data["Name"] if x["Name"] == recipe_name]
-    if len(existing_device) == 0:
+    if len(existing_recipe) == 0:
         # Missing Recipe Name in recipes.json. It is required, so fail
         print("[ERROR] -r --recipename must match a recipe name in recipes.json.")
         return
     
     # create the file name
-    active_recipe_file_name =  active_recipe_name_pattern.format(recipe_name)
+    active_recipe_file_name =  config_data["DatabaseNamingPattern"].format(recipe_name)
     print_header.print(__file__, "Main", "active_recipe_file_name {active_recipe_file_name}".format(active_recipe_file_name))
+
+    return
 
     # Database - Create file name
     current_date_and_time = datetime.now()
