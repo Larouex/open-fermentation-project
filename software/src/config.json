@@ -9,9 +9,9 @@
   "Database Naming Pattern": "active_recipe_{recipe_name}.db",
   "Correct Recipe Checkpoint Drift": true,
   "Device": {
-    "DeviceNamePrefix": "saluminator-{id}",
+    "Device Name Prefix": "saluminator-{id}",
     "NameSpace": "saluminatorIndustrialV4",
-    "DefaultComponentId": "dtmi:saluminatorIndustrialV4:Saluminator;1"
+    "Default Component Id": "dtmi:saluminatorIndustrialV4:Saluminator;1"
   },
   "ClassLoggingMaps": [
     {

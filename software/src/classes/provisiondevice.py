@@ -81,12 +81,12 @@ class ProvisionDevice:
             self.id_device = Id
             self.namespace = self.config["Device"]["NameSpace"]
             self.device_default_component_id = self.config["Device"][
-                "DefaultComponentId"
+                "Default Component Id"
             ]
-            self.device_name_prefix = self.config["Device"]["DeviceNamePrefix"]
+            self.device_name_prefix = self.config["Device"]["Device Name Prefix"]
             self.device_name = self.device_name_prefix.format(id=self.id_device)
             self.device_default_component_id = self.config["Device"][
-                "DefaultComponentId"
+                "Default Component Id"
             ]
 
             # Load all our cache data
@@ -115,7 +115,7 @@ class ProvisionDevice:
 
             # Azure IoT Central SDK call to set the payload and provision the device
             provisioning_device_client.provisioning_payload = '{"iotcModelId":"%s"}' % (
-                self.device_to_provision["Device"]["DefaultComponentId"]
+                self.device_to_provision["Device"]["Default Component Id"]
             )
             registration_result = await provisioning_device_client.register()
             self.logger.info(
@@ -210,7 +210,7 @@ class ProvisionDevice:
         newDeviceToProvision = {
             "Device": {
                 "Name": self.device_name,
-                "DefaultComponentId": self.device_default_component_id,
+                "Default Component Id": self.device_default_component_id,
                 "LastProvisioned": str(datetime.datetime.now()),
                 "Secrets": {},
             }
@@ -224,7 +224,7 @@ class ProvisionDevice:
 
         newDeviceSecret = {
             "Name": self.device_name,
-            "DefaultComponentId": self.device_default_component_id,
+            "Default Component Id": self.device_default_component_id,
             "AssignedHub": "",
             "DeviceSymmetricKey": device_symmetric_key,
             "LastProvisioned": str(datetime.datetime.now()),
@@ -241,7 +241,7 @@ class ProvisionDevice:
     def create_device_capability_model(self):
         newDeviceCapabilityModel = {
             "Name": self.device_name,
-            "DefaultComponentId": self.device_default_component_id,
+            "Default Component Id": self.device_default_component_id,
             "LastProvisioned": str(datetime.datetime.now()),
         }
 

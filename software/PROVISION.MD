@@ -54,7 +54,7 @@ HELP for provisiondevices.py
                          result in a device provisioned with the name: saluminator-1
        USAGE: -r 5
        DEFAULT: 1
-       NOTE: The Prefix for your devices is located in the config.json file ['Device']['DeviceNamePrefix']
+       NOTE: The Prefix for your devices is located in the config.json file ['Device']['Device Name Prefix']
 
     -n or --numberofdevices - The value is used to enumerate and provision the device(s) count specified.
                               NOTE: LIMIT OF 10 DEVICES PER SESSION. You can run the provisiondevices.py via

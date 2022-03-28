@@ -13,6 +13,8 @@
 - [Contents](#Contents)
 - [Overview](#Overview)
 - [Config](#Config)
+  _ [Main Section](#MainSection)
+  _ [Device Section](#DeviceSection)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -30,6 +32,8 @@ This document outlines all of the configuration options for the Saluminator&reg;
 - **LOCATION**: ./software/src/config.json
 
 This is the core configuration file for the Saluminator&reg; System. Let's go through all of the details from the top of the file and work our way down...
+
+#### <a name='MainSection'></a>Main Section
 
 ```json
   "AppName": "SaluminatorV4",
@@ -57,12 +61,6 @@ The **Read Delay In Seconds** in used to place a pause after reading the ambient
 The **Temperature Format** is used to indicate Fahrenheit (F) or Celsius (C) when monitoring the ambient and chamber temperature readings.
 
 ```json
-  "NameSpace": "saluminatorIndustrialV4",
-```
-
-The **NameSpace** value is used to indicate the unique _namespace_ when communicating to IoT Central and in modeling for mapping to telemetry. This is covered more in depth in the [Azure IoT Central](./IOTCENTRAL.MD) document.
-
-```json
   "Database Naming Pattern": "active_recipe_{recipe_name}.db",
 ```
 
@@ -73,3 +71,56 @@ The **Database Naming Pattern** is a string pattern that is used to insert the _
 ```
 
 The **Correct Recipe Checkpoint Drift** is an important option that affects the way in which a recipe is _restarted_ after you monitoring has been interrupted for an active recipe. This could be because you stopped it manually or a power outage, etc.
+
+#### <a name='DeviceSection'></a>Device Section
+
+```json
+  "Device": {
+    "Device Name Prefix": "saluminator-{id}",
+    "NameSpace": "saluminatorIndustrialV4",
+    "Default Component Id": "dtmi:saluminatorIndustrialV4:Saluminator;1"
+  },
+```
+
+The **Device Name Prefix** indicates the string that prefix your provisioned device in Azure IoT Central. For example, when you run the _provisiondevice.py_ script with the option --registerid set to '1', it would result in a device provisioned with the name: saluminator-1. You can read more detail on this in the [Provision Device to Azure IoT Central](./PROVISION.MD) document.
+
+The **NameSpace** value is used to indicate the unique _namespace_ when communicating to IoT Central and in modeling for mapping to telemetry. This is covered in depth in the [Azure IoT Central](./IOTCENTRAL.MD) document.
+
+The **Default Component Id** is the Id for the assigned device model in Azure IoT Central. This is covered in depth in the [Azure IoT Central](./IOTCENTRAL.MD) document.
+
+#### Status Section
+
+The status section wires up an optional RGB Led for flashing status during the telemetry loop.
+
+```json
+  "Status": {
+    "Pins": {
+      "Red": 5,
+      "Green": 6,
+      "Blue": 16
+    }
+  },
+```
+
+#### Relays Section
+
+The **Relays** section indicates the GPIO (BCM) pins that signal the ON/OFF to the _Relay_ board.
+
+```json
+  "Relays": {
+    "Pins": {
+      "Humidifier": 6,
+      "DeHumidifier": 17,
+      "Heater": 27,
+      "Chiller": 22,
+      "Fan": 5,
+      "Light": 26,
+      "Open1": 23,
+      "Open2": 24
+    }
+  },
+```
+
+```json
+  "AmbientPin": 25
+```

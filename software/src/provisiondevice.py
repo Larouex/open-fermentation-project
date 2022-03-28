@@ -49,7 +49,7 @@ async def main(argv):
             # device name from the config file
             config = Config(Log)
             config = config.data
-            device_name_prefix = config["Device"]["DeviceNamePrefix"]
+            device_name_prefix = config["Device"]["Device Name Prefix"]
             device_name_prefix = device_name_prefix.format(id=1)
 
             print(
@@ -83,7 +83,7 @@ async def main(argv):
             print("       USAGE: -r 5")
             print("       DEFAULT: 1")
             print(
-                "       NOTE: The Prefix for your devices is located in the config.json file ['Device']['DeviceNamePrefix']"
+                "       NOTE: The Prefix for your devices is located in the config.json file ['Device']['Device Name Prefix']"
             )
             print("")
             print(

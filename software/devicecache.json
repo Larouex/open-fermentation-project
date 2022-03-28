@@ -3,7 +3,7 @@
     {
       "Device": {
         "Name": "cold-hub-1",
-        "DefaultComponentId": "dtmi:coldHubStorage:mainComponent;1",
+        "Default Component Id": "dtmi:coldHubStorage:mainComponent;1",
         "LastProvisioned": "2021-02-24 14:07:38.414719",
         "Secrets": null
       }
