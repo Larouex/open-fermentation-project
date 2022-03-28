@@ -13,10 +13,12 @@
 - [Contents](#Contents)
 - [Overview](#Overview)
 - [Config](#Config)
-  - [Main Section](#MainSection)
-  - [Device Section](#DeviceSection)
-  - [Status Section](#StatusSection)
-  - [Relays Section](#RelaysSection)
+  _ [Main Section](#MainSection)
+  _ [Device Section](#DeviceSection)
+  _ [Status Section](#StatusSection)
+  _ [Relays Section](#RelaysSection)
+- [Alerts](#Alerts)
+- [Secrets](#Secrets)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -127,7 +129,7 @@ The **Relays** section indicates the GPIO (BCM) pins that signal the ON/OFF to t
   "AmbientPin": 25
 ```
 
-## Alerts
+## <a name='Alerts'></a>Alerts
 
 - **FILE**: <a href="./src/alerts.json">alerts.json</a>
 - **LOCATION**: ./software/src/alerts.json
@@ -175,7 +177,7 @@ The _alerts.json_ file contains strings that are used when we execute scripts wi
 - **Dump**
   Prints to the console or logging the string along with the contents of the file.
 
-## Secrets
+## <a name='Secrets'></a>Secrets
 
 - **FILE**: <a href="./src/secrets.json">secrets.json</a>
 - **LOCATION**: ./software/src/secrets.json
@@ -190,8 +192,6 @@ Open the _secrets.json_ file in Visual Studio Code and let's start configuring t
 
 **IMPORTANT: Make sure to check your .gitignore to verify that "secrets.json" is in the exclusion list and that it does not get checked in!**
 _The file should be dithered in your Visual Studio Code Explorer window._
-
-### Create our Local Configuration File Connection Secrets
 
 Set "UseKeyVault" to false and fill out the section "LocalSecrets" and populate the SaS key values from your application via the Admin, Device Connection page in IoT Central. If you want to get deeper into connecting Devices to IoT Central, go here: [LINK: Get connected to Azure IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/core/concepts-get-connected)
 
