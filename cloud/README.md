@@ -4,7 +4,7 @@
 
 # The Cloud
 
-<img src="../assets/open-fermentation-project-logo-v2-750.png" width="500"/>
+<img src="../assets/open-fermentation-project-logo-v2-750.png" width="250"/>
 
 ## Contents
 

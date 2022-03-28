@@ -2,9 +2,9 @@
 <img src="https://img.shields.io/badge/Azure IoT Central-Open%20Fermentation%20Project%20v1-blue"></a>&nbsp;<a href="https://www.saluminator.com/">
 <img src="https://img.shields.io/badge/IoT-Saluminator%20Appliance%20v4-purple"></a>
 
-<img src="../../assets/open-fermentation-project-logo-v2-750.png" width="500"/>
+<img src="../assets/open-fermentation-project-logo-v2-750.png" width="250"/>
 
-# Create Recipe Database
+# Provision Device to Azure IoT Central
 
 ## Contents
 
@@ -16,41 +16,68 @@
   - [Database Details](#database-details)
     - [Details for the _tracking_ table](#details-for-the-tracking-table)
 
-<img src="../../assets/python-icon.png" width="50" class="pull-left"/>
-
 ## Overview
 
-The Create Database script is the first script we run when we setup a new recipe for a fermentation cycle. The database technology we are using is based on SQLite and uses the Python sqllite package that is included in Python 3.x.
+The Provision Device script is used to register and provision your Saluminator&reg; device with Azure IoT Central. This enables your Saluminator&reg; to use all of the features of the Saluminator&reg;application for IoT Central to send and visualize telemetry, run jobs and communicate from the cloud to the Saluminator&reg; device.
 
-- **FILE**: <a href="./createdb.py">createdb.py</a>
+- **FILE**: <a href="./src/provisiondevice.py">provisiondevice.py</a>
+- **LOCATION**: ./software/src/provisiondevice.py
 - **DEPENDANCIES**:
-  - <a href="./recipes.json">recipes.json</a>
-  - <a href="./currentrecipe.json">currentrecipe.json</a>
-  - <a href="./config.json">config.json</a>
+  - <a href="./src/devicecacahe.json">devicecacahe.json</a>
+  - <a href="./src/config.json">config.json</a>
+  - <a href="./src/alerts.json">alerts.json</a>
 
 ## Script Parameters
 
-**Basic**
+Let's look at all the options by running the script with --help option...
 
-- **-h** or **--help** - Print out this Help Information
-- **-v** or **--verbose** - Debug Mode with lots of Data will be Output to Assist with Debugging
-- **-d** or **--debug** - Debug Mode with lots of DEBUG Data will be Output to Assist with Tracing and Debugging
+```bash
+python ./provisiondevice.py --help
+```
 
-**Required**
+<b>Output</b>
 
-- **-r RECIPE_NAME** or **--recipename RECIPE_NAME** - The name provided must exist in the file named 'recipes.json' and is part of the arrays of recipes that can be defined.
+```bash
+----------------------------------------------------------------------------------------------------------------
+HELP for provisiondevices.py
+----------------------------------------------------------------------------------------------------------------
+
+  BASIC PARAMETERS...
+
+  -h or --help - Print out this Help Information
+  -v or --verbose - Debug Mode with lots of Data will be Output to Assist with Debugging
+  -d or --debug - Debug Mode with lots of DEBUG Data will be Output to Assist with Tracing and Debugging
+
+  OPTIONAL PARAMETERS...
+
+    -r or --registerid - This numeric value will get appended to your provisioned device. Example '1' would
+                         result in a device provisioned with the name: saluminator-1
+       USAGE: -r 5
+       DEFAULT: 1
+       NOTE: The Prefix for your devices is located in the config.json file ['Device']['DeviceNamePrefix']
+
+    -n or --numberofdevices - The value is used to enumerate and provision the device(s) count specified.
+                              NOTE: LIMIT OF 10 DEVICES PER SESSION. You can run the provisiondevices.py via
+                              a script and indicate --registerid with the sequential numbering if you want to
+                              provision more devices.
+       USAGE: -n 10
+       DEFAULT: 1
+
+----------------------------------------------------------------------------------------------------------------
+```
 
 **Example**
 
 ```bash
-    (src)$ python createdb.py --verbose --recipename 'Salumi Toscano'
+python provisiondevice.py --verbose --registerid 1 --numberofdevices 1
 ```
 
 ## Details
 
 The script executes the following actions...
 
-- Creates the database file.
+- Loads the config.json file.
+- Loads the devicecacahe.json file.
 - Add the tables for the recipe life-cycle tracking, auditing, and the current status of the relays.
   - **Table names:** tracking, audit and relay
 - Generate the fine grained “by hour” recipe entries into the recipe life-cycle tracking table.
@@ -59,7 +86,7 @@ The script executes the following actions...
 This fisrt parameter that gets filled in is the naming pattern for the database. This is verbose and it designed to make it easy to look at the file name and see the active recipe name. This items is located in the config.json file:
 
 ```json
-"DatabaseNamingPattern": "active_recipe_{recipe_name}.db"
+"Database Naming Pattern": "active_recipe_{recipe_name}.db"
 ```
 
 Based on the parameter passed into the script for --recipename, we first lookup that recipe and all of it's details from the recipes.json file. <a href="./createdb.py">Click here for</a>&nbsp;the details on the parameters in the recipes.json file and an detailed explanation of Recipe Management...

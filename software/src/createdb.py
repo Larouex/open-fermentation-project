@@ -6,7 +6,7 @@
 #
 #   https://github.com/Larouex/open-fermentation-project
 #
-#   (c) 2022 Larouex Software Design LLC
+#   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
 import getopt, sys, time, string, threading, asyncio, os
@@ -219,7 +219,9 @@ async def main(argv):
             print("")
             print("  REQUIRED PARAMETERS...")
             print("")
-            print("    -r or --recipename - The name provided must exist in the file named: recipes.json and is part of the")
+            print(
+                "    -r or --recipename - The name provided must exist in the file named: recipes.json and is part of the"
+            )
             print("                          arrays of recipes that can be defined.")
             print("       USAGE: -r 'Salumi Toscano'")
             print("       USAGE: --recipename 'Salumi Toscano'")
@@ -245,10 +247,16 @@ async def main(argv):
 
         if current_argument in ("-r", "--recipename"):
             recipe_name = current_value
-            Log.info("Recipe name is specified as: {recipename}".format(recipename = recipe_name))
+            Log.info(
+                "Recipe name is specified as: {recipename}".format(
+                    recipename=recipe_name
+                )
+            )
         else:
             # Missing Recipe Name. It is required, so fail
-            print("[ERROR] -r --recipename must be specified and match a recipe name in recipes.json.")
+            print(
+                "[ERROR] -r --recipename must be specified and match a recipe name in recipes.json."
+            )
             return
 
     logger = Log
@@ -270,10 +278,16 @@ async def main(argv):
         # Missing Recipe Name in recipes.json. It is required, so fail
         print("[ERROR] -r --recipename must match a recipe name in recipes.json.")
         return
-    
+
     # create the file name
-    active_recipe_file_name =  config_data["DatabaseNamingPattern"].format(recipe_name)
-    print_header.print(__file__, "Main", "active_recipe_file_name {active_recipe_file_name}".format(active_recipe_file_name))
+    active_recipe_file_name = config_data["Database Naming Pattern"].format(recipe_name)
+    print_header.print(
+        __file__,
+        "Main",
+        "active_recipe_file_name {active_recipe_file_name}".format(
+            active_recipe_file_name
+        ),
+    )
 
     return
 
@@ -311,7 +325,6 @@ async def main(argv):
         "Completed Database Creation.",
     )
     audit_event(conn, audit_event_1)
-
 
     # init the values
     completeness = 0

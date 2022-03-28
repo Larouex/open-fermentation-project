@@ -1,47 +1,46 @@
 {
-    "ServerDiscoveryName": "Saluminator",
-    "Description": "Monitoring of Saluminator Fermentation System",
-    "ApplicationUri": "urn:saluminatorIndustrialV4:Server",
-    "TelemetryFrequencyInSeconds": 10,
-    "ReadTimeBetweenTemperatureInSeconds": 5,
-    "TemperatureFormat": "F",
+  "AppName": "SaluminatorV4",
+  "Description": "Monitoring of Saluminator Fermentation System",
+  "Enable Cloud Telemetry": true,
+  "Telemetry Frequency In Seconds": 60,
+  "Read Delay In Seconds": 5,
+  "Temperature Format": "F",
+  "NameSpace": "saluminatorIndustrialV4",
+  "Database Naming Pattern": "active_recipe_{recipe_name}.db",
+  "Correct Recipe Checkpoint Drift": true,
+  "Device": {
+    "DeviceNamePrefix": "saluminator-{id}",
     "NameSpace": "saluminatorIndustrialV4",
-    "DatabaseNamingPattern": "active_recipe_{recipe_name}.db",
-    "ClassLoggingMaps": [
-      {
-        "Name": "DeviceClient",
-        "LoggingId": "DEVICE CLIENT"
-      },
-      {
-        "Name": "ProvisionDevice",
-        "LoggingId": "PROVISION DEVICE"
-      }
-    ],
-    "Status": {
-      "Pins": {
-        "Red": 5,
-        "Green": 6,
-        "Blue": 16
-      }
+    "DefaultComponentId": "dtmi:saluminatorIndustrialV4:Saluminator;1"
+  },
+  "ClassLoggingMaps": [
+    {
+      "Name": "DeviceClient",
+      "LoggingId": "DEVICE CLIENT"
     },
-    "Relays": {
-      "Pins": {
-        "Humidifier": 6,
-        "DeHumidifier": 17,
-        "Heater": 27,
-        "Chiller": 22,
-        "Fan": 5,
-        "Light": 26,
-        "Open1": 23,
-        "Open2": 24
-      }
-    },
-    "AmbientPin": 25,
-    "Device": {
-      "DeviceNamePrefix": "saluminator-{id}",
-      "NameSpace": "saluminatorIndustrialV4",
-      "DefaultComponentId": "dtmi:saluminatorIndustrialV4:Saluminator;1"
-    },
-    "Correct Recipe Checkpoint Drift": true
-  }
-  
+    {
+      "Name": "ProvisionDevice",
+      "LoggingId": "PROVISION DEVICE"
+    }
+  ],
+  "Status": {
+    "Pins": {
+      "Red": 5,
+      "Green": 6,
+      "Blue": 16
+    }
+  },
+  "Relays": {
+    "Pins": {
+      "Humidifier": 6,
+      "DeHumidifier": 17,
+      "Heater": 27,
+      "Chiller": 22,
+      "Fan": 5,
+      "Light": 26,
+      "Open1": 23,
+      "Open2": 24
+    }
+  },
+  "AmbientPin": 25
+}

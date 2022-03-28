@@ -6,13 +6,13 @@
 #
 #   https://github.com/Larouex/open-fermentation-project
 #
-#   (c) 2022 Larouex Software Design LLC
+#   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
 import base64, hmac, hashlib
 
-class SymmetricKey():
 
+class SymmetricKey:
     def __init__(self, Log):
         self.logger = Log
         self.data = []
@@ -25,8 +25,9 @@ class SymmetricKey():
             signing_key = base64.b64decode(symmetric_key.encode("utf-8"))
             signed_hmac = hmac.HMAC(signing_key, message, hashlib.sha256)
             device_key_encoded = base64.b64encode(signed_hmac.digest())
-            self.logger.debug("Generated Device Key: %s", str(device_key_encoded.decode("utf-8")))
+            self.logger.debug(
+                "Generated Device Key: %s", str(device_key_encoded.decode("utf-8"))
+            )
             return device_key_encoded.decode("utf-8")
         except Exception as ex:
             self.logger.warning("Failed to Generate Device Key: %s", ex)
-

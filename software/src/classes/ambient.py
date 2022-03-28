@@ -5,7 +5,7 @@
 #
 #   https://github.com/Larouex/open-fermentation-project
 #
-#   (c) 2022 Larouex Software Design LLC
+#   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
 import json, sys, time, string, threading, asyncio, os, copy
@@ -14,15 +14,15 @@ import logging
 # our classes
 from classes.config import Config
 
-class DeviceClient():
 
+class DeviceClient:
     def __init__(self, Log, DeviceName):
-      self.logger = Log
+        self.logger = Log
 
-      # Azure Device
-      self.device_name = DeviceName
-      self.device_secrets = []
-      self.device_client = None
+        # Azure Device
+        self.device_name = DeviceName
+        self.device_secrets = []
+        self.device_client = None
 
     # -------------------------------------------------------------------------------
     #   Function:   connect
@@ -30,30 +30,34 @@ class DeviceClient():
     # -------------------------------------------------------------------------------
     async def connect(self):
 
-      try:
+        try:
 
-        # load the secrets
-        secrets = Secrets(self.logger)
-        secrets.init()
-        self.device_secrets = secrets.get_device_secrets(self.device_name)
-        print("here secrets")
-        print(self.device_secrets)
+            # load the secrets
+            secrets = Secrets(self.logger)
+            secrets.init()
+            self.device_secrets = secrets.get_device_secrets(self.device_name)
+            print("here secrets")
+            print(self.device_secrets)
 
-        self.device_client = IoTHubDeviceClient.create_from_symmetric_key(
-            symmetric_key = self.device_secrets["Device"]["Secrets"]["DeviceSymmetricKey"],
-            hostname = self.device_secrets["Device"]["Secrets"]["AssignedHub"],
-            device_id = self.device_name,
-            websockets=True
-        )
-        await self.device_client.connect()
-        self.logger.info("[DEVICE CLIENT] %s" % self.device_client)
+            self.device_client = IoTHubDeviceClient.create_from_symmetric_key(
+                symmetric_key=self.device_secrets["Device"]["Secrets"][
+                    "DeviceSymmetricKey"
+                ],
+                hostname=self.device_secrets["Device"]["Secrets"]["AssignedHub"],
+                device_id=self.device_name,
+                websockets=True,
+            )
+            await self.device_client.connect()
+            self.logger.info("[DEVICE CLIENT] %s" % self.device_client)
 
-      except Exception as ex:
-        self.logger.error("[ERROR] %s" % ex)
-        self.logger.error("[TERMINATING] We encountered an error creating and connecting the device in the Class::DeviceClient" )
-        return None
+        except Exception as ex:
+            self.logger.error("[ERROR] %s" % ex)
+            self.logger.error(
+                "[TERMINATING] We encountered an error creating and connecting the device in the Class::DeviceClient"
+            )
+            return None
 
-      return
+        return
 
     # -------------------------------------------------------------------------------
     #   Function:   send_telemetry
@@ -61,18 +65,18 @@ class DeviceClient():
     #               Iot Central to the Node Id's for the Opc Server.
     # -------------------------------------------------------------------------------
     async def send_telemetry(self, Telemetry, InterfacelId, InterfaceInstanceName):
-      msg = Message(json.dumps(Telemetry))
-      msg.content_encoding = "utf-8"
-      msg.content_type = "application/json"
-      msg.custom_properties["$.ifname"] = InterfaceInstanceName
-      msg.custom_properties["$.ifid"] = InterfacelId
-      await self.device_client.send_message(msg)
-      self.logger.info("[MESSAGE] %s" % msg)
+        msg = Message(json.dumps(Telemetry))
+        msg.content_encoding = "utf-8"
+        msg.content_type = "application/json"
+        msg.custom_properties["$.ifname"] = InterfaceInstanceName
+        msg.custom_properties["$.ifid"] = InterfacelId
+        await self.device_client.send_message(msg)
+        self.logger.info("[MESSAGE] %s" % msg)
 
     # -------------------------------------------------------------------------------
     #   Function:   disconnect
     #   Usage:      Disconnects from the IoT Hub
     # -------------------------------------------------------------------------------
     async def disconnect(self):
-      self.device_client.disconnect()
-      return
+        self.device_client.disconnect()
+        return

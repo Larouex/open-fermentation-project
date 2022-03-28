@@ -2,7 +2,7 @@
 <img src="https://img.shields.io/badge/Azure IoT Central-Open%20Fermentation%20Project%20v1-blue"></a>&nbsp;<a href="https://www.saluminator.com/">
 <img src="https://img.shields.io/badge/IoT-Saluminator%20Appliance%20v4-purple"></a>
 
-<img src="../assets/open-fermentation-project-logo-v2-750.png" width="500"/>
+<img src="../assets/open-fermentation-project-logo-v2-750.png" width="250"/>
 
 # The Software
 
@@ -21,5 +21,13 @@ The content below is the deep dive into each of the Python scripts, modules, cla
 
 ## Saluminator&reg; Software
 
-- [Create Database](./src/CREATEDB.MD)
+The following docs are deep-dives into the specific scripts and modules that comprise the Saluminator&reg; system. I recommmend that you read them in the order intended to get an overview of the usage and sequence when initially setting up your system and then monitoring the recipe.
+
+- [Configure System Files](./CONFIGURE.MD)
+  Guidance and suggestions for the json files for configuration, security, recipes, etc.
+
+- [Create Database](./CREATEDB.MD)
+  The Create Database script is the first script we run when we setup a new recipe for a fermentation cycle.
+
+- [Provision Device to Azure IoT Central](./PROVISION.MD)
   The Create Database script is the first script we run when we setup a new recipe for a fermentation cycle.

@@ -6,7 +6,7 @@
 #
 #   https://github.com/Larouex/open-fermentation-project
 #
-#   (c) 2022 Larouex Software Design LLC
+#   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
 import json, logging

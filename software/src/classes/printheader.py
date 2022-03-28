@@ -5,26 +5,38 @@
 #
 #   https://github.com/Larouex/open-fermentation-project
 #
-#   (c) 2022 Larouex Software Design LLC
+#   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
 import json
 import logging
+from classes.config import Config
+
 
 class PrintHeader:
     def __init__(self, Logger, Verbose):
         self._logger = Logger
         self._verbose = Verbose
 
+        # Load the configuration file
+        self._config = Config(self._logger)
+        self._config = self._config.data
+
     def print(self, module_name, method_name, message):
 
-        if (self._verbose == true):
+        if self._verbose == True:
             print_message = " VERBOSE MESSAGE"
-            print_message = " SCRIPT: {module_name}".format(module_name = module_name)
-            print_message = " METHOD: {method_name}".format(method_name = method_name)
-            print_message = " MESSAGE: {message}".format(message = message)
+            print_message = " APP NAME: {app_name}".format(
+                app_name=self._config["AppName"]
+            )
+            print_message = " APP DESC: {app_desc}".format(
+                app_desc=self._config["Description"]
+            )
+            print_message = " SCRIPT: {module_name}".format(module_name=module_name)
+            print_message = " METHOD: {method_name}".format(method_name=method_name)
+            print_message = " MESSAGE: {message}".format(message=message)
             print("")
             print("-------------------------------------------------")
             print(print_message)
             print("-------------------------------------------------")
-        return 
+        return
