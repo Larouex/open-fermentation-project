@@ -4,34 +4,33 @@
 
 <img src="../assets/open-fermentation-project-logo-v2-750.png" width="250"/>
 
-# System Configuration
+# System Configuration Files
 
-## 1. <a name='Contents'></a>Contents
+## <a name='Contents'></a>Contents
 
 <!-- vscode-markdown-toc -->
 
-- 1. [Contents](#Contents)
-- 2. [Overview](#Overview)
-- 3. [Config](#Config)
+- [Contents](#Contents)
+- [Overview](#Overview)
+- [Config](#Config)
 
 <!-- vscode-markdown-toc-config
-	numbering=true
+	numbering=false
 	autoSave=true
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-## 2. <a name='Overview'></a>Overview
+## <a name='Overview'></a>Overview
 
 This document outlines all of the configuration options for the Saluminator&reg; device and scripts.
 
+## <a name='Config'></a>Config
+
 - **FILE(S)**:
   - <a href="./src/config.json">config.json</a>
-  - <a href="./src/alerts.json">alerts.json</a>
 - **LOCATION**: ./software/src/\*
 
-## 3. <a name='Config'></a>Config
-
-This is the core system configuration file named: <a href="./src/config.json">config.json</a> and let's go through all of the details from the top of the file and work our way down...
+This is the core configuration file for the Saluminator&reg; System. Let's go through all of the details from the top of the file and work our way down...
 
 ```json
   "AppName": "SaluminatorV4",
