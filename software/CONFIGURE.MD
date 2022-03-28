@@ -26,9 +26,8 @@ This document outlines all of the configuration options for the Saluminator&reg;
 
 ## <a name='Config'></a>Config
 
-- **FILE(S)**:
-  - <a href="./src/config.json">config.json</a>
-- **LOCATION**: ./software/src/\*
+- **FILE**: <a href="./src/config.json">config.json</a>
+- **LOCATION**: ./software/src/config.json
 
 This is the core configuration file for the Saluminator&reg; System. Let's go through all of the details from the top of the file and work our way down...
 

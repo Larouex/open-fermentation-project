@@ -10,21 +10,37 @@ The software for the **Saluminator&reg;** and the **Open Fermentation Project SP
 
 The content below is the deep dive into each of the Python scripts, modules, classes and cloud integration for Azure Iot Central to create your own implementation end to end.
 
-## Contents
+## <a name='Contents'></a>Contents
 
-- [Overview](#overview)
+<!-- vscode-markdown-toc -->
 
-## Recipe Management
+- [Contents](#Contents)
+- [Recipe Management](#RecipeManagement)
+- [Saluminator&reg; Software](#SaluminatorregSoftware)
+  - [Configure](#Configure)
+  - [Initialize](#Initialize)
+
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+## <a name='RecipeManagement'></a>Recipe Management
 
 - [Recipe Management Details](./RECIPES.MD)
   Recipes in the Saluminator&reg; are fixed with a starting time and a ending time.
 
-## Saluminator&reg; Software
+## <a name='SaluminatorregSoftware'></a>Saluminator&reg; Software
 
 The following docs are deep-dives into the specific scripts and modules that comprise the Saluminator&reg; system. I recommmend that you read them in the order intended to get an overview of the usage and sequence when initially setting up your system and then monitoring the recipe.
 
+### <a name='Configure'></a>Configure
+
 - [Configure System Files](./CONFIGURE.MD)
   Guidance and suggestions for the json files for configuration, security, recipes, etc.
+
+### <a name='Initialize'></a>Initialize
 
 - [Create Database](./CREATEDB.MD)
   The Create Database script is the first script we run when we setup a new recipe for a fermentation cycle.
