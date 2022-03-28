@@ -13,8 +13,10 @@
 - [Contents](#Contents)
 - [Overview](#Overview)
 - [Config](#Config)
-  _ [Main Section](#MainSection)
-  _ [Device Section](#DeviceSection)
+  - [Main Section](#MainSection)
+  - [Device Section](#DeviceSection)
+  - [Status Section](#StatusSection)
+  - [Relays Section](#RelaysSection)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -88,7 +90,7 @@ The **NameSpace** value is used to indicate the unique _namespace_ when communic
 
 The **Default Component Id** is the Id for the assigned device model in Azure IoT Central. This is covered in depth in the [Azure IoT Central](./IOTCENTRAL.MD) document.
 
-#### Status Section
+#### <a name='StatusSection'></a>Status Section
 
 The status section wires up an optional RGB Led for flashing status during the telemetry loop.
 
@@ -102,7 +104,7 @@ The status section wires up an optional RGB Led for flashing status during the t
   },
 ```
 
-#### Relays Section
+#### <a name='RelaysSection'></a>Relays Section
 
 The **Relays** section indicates the GPIO (BCM) pins that signal the ON/OFF to the _Relay_ board.
 
@@ -123,4 +125,133 @@ The **Relays** section indicates the GPIO (BCM) pins that signal the ON/OFF to t
 
 ```json
   "AmbientPin": 25
+```
+
+## Alerts
+
+- **FILE**: <a href="./src/alerts.json">alerts.json</a>
+- **LOCATION**: ./software/src/alerts.json
+
+The _alerts.json_ file contains strings that are used when we execute scripts with the _--verbose_ and _--debug_ options.
+
+```json
+{
+  "Alerts": {
+    "Config": {
+      "Loaded": "Loaded Config file: {0}",
+      "Updated": "Updated Config file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "DPSCache": {
+      "Loaded": "Loaded DPS Cache file: {0}",
+      "Updated": "Updated DPS Cache file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "DeviceCache": {
+      "Loaded": "Loaded Device Cache file: {0}",
+      "Updated": "Updated Device Cache file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "Secrets": {
+      "Loaded": "Loaded Secrets file: {0}",
+      "Updated": "Updated Secrets file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "DcmTemplate": {
+      "Loaded": "Loaded DCM Template file: {0}",
+      "Updated": "Updated DCM Template file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    }
+  }
+}
+```
+
+- **Loaded**
+  Prints to the console or logging the string along with the FQN file name.
+
+- **Updated**
+  Prints to the console or logging the string along with the FQN file name.
+
+- **Dump**
+  Prints to the console or logging the string along with the contents of the file.
+
+## Secrets
+
+- **FILE**: <a href="./src/secrets.json">secrets.json</a>
+- **LOCATION**: ./software/src/secrets.json
+
+The first step to setting up your secrets file is to copy the template and create the secrets.json file in the /src folder. Execute the following from the _/software/src_ folder...
+
+```bash
+cp secrets_template.json secrets.json
+```
+
+Open the _secrets.json_ file in Visual Studio Code and let's start configuring the options.
+
+**IMPORTANT: Make sure to check your .gitignore to verify that "secrets.json" is in the exclusion list and that it does not get checked in!**
+_The file should be dithered in your Visual Studio Code Explorer window._
+
+### Create our Local Configuration File Connection Secrets
+
+Set "UseKeyVault" to false and fill out the section "LocalSecrets" and populate the SaS key values from your application via the Admin, Device Connection page in IoT Central. If you want to get deeper into connecting Devices to IoT Central, go here: [LINK: Get connected to Azure IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/core/concepts-get-connected)
+
+You fill in the values into the "secrets.json" file with the pasted values from IoT Central Device Connection page.
+
+**For example...**
+
+```json
+  "ScopeId": "<Your Scope ID from IoT Central Device Connect Page>"
+```
+
+![alt text](../assets/iotc-app-perms-device-connect.png "IoT Central Device Connection Page")
+Copy the value from the ScopeId field (outlined in red) and paste the value into the Json
+
+```json
+  "ScopeId": "0ne001F823C"
+```
+
+Complete this for the "Primary" and "Secondary" values for both "DeviceConnect->SaSKeys" and "GatewayConnect->SaSKeys"
+
+```json
+{
+  "UseKeyVault": false,
+  "ProvisioningHost": "global.azure-devices-provisioning.net",
+  "LocalSecrets": {
+    "ScopeId": "<Your Scope ID from IoT Central Device Connect Page>",
+    "DeviceConnect": {
+      "SaSKeys": {
+        "Primary": "<Your Primary Key from IoT Central Device Connect Page>",
+        "Secondary": "<Your Secondary Key from IoT Central Device Connect Page>"
+      }
+    },
+    "GatewayConnect": {
+      "SaSKeys": {
+        "Primary": "<Your Gateway Primary Key from IoT Central Device Connect Page>",
+        "Secondary": "<Your Gateway Secondary Key from IoT Central Device Connect Page>"
+      }
+    }
+  },
+  "KeyVaultSecrets": {
+    "KeyVaultUri": "",
+    "TenantId": "",
+    "ClientId": "",
+    "ClientSecret": "",
+    "ScopeId": "",
+    "DeviceConnect": {
+      "SaSKeys": {
+        "Primary": "",
+        "Secondary": ""
+      }
+    },
+    "GatewayConnect": {
+      "SaSKeys": {
+        "Primary": "",
+        "Secondary": ""
+      }
+    }
+  },
+  "Device": {
+    "Secrets": {}
+  }
+}
 ```
