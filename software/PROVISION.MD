@@ -8,24 +8,27 @@
 
 ## Contents
 
-- [Create Recipe Database](#create-recipe-database)
+- [Provision Device to Azure IoT Central](#provision-device-to-azure-iot-central)
   - [Contents](#contents)
   - [Overview](#overview)
   - [Script Parameters](#script-parameters)
   - [Details](#details)
   - [Database Details](#database-details)
     - [Details for the _tracking_ table](#details-for-the-tracking-table)
+    - [Details for the _audit_ table](#details-for-the-audit-table)
+    - [Details for the _relay_ table](#details-for-the-relay-table)
 
 ## Overview
 
-The Provision Device script is used to register and provision your Saluminator&reg; device with Azure IoT Central. This enables your Saluminator&reg; to use all of the features of the Saluminator&reg;application for IoT Central to send and visualize telemetry, run jobs and communicate from the cloud to the Saluminator&reg; device.
+The Provision Device script is used to register and provision your Saluminator&reg; device with Azure IoT Central. This enables your Saluminator&reg; to use all of the features of the IoT Central **Saluminator&reg; application** that enables sending and visualizing telemetry, running jobs and communicate from the cloud to the Saluminator&reg; device.
 
 - **FILE**: <a href="./src/provisiondevice.py">provisiondevice.py</a>
 - **LOCATION**: ./software/src/provisiondevice.py
 - **DEPENDANCIES**:
-  - <a href="./src/devicecacahe.json">devicecacahe.json</a>
   - <a href="./src/config.json">config.json</a>
   - <a href="./src/alerts.json">alerts.json</a>
+  - <a href="./src/devicecache.json">devicecache.json</a>
+  - <a href="./src/secrets.json">secrets.json</a>
 
 ## Script Parameters
 
@@ -76,8 +79,9 @@ python provisiondevice.py --verbose --registerid 1 --numberofdevices 1
 
 The script executes the following actions...
 
-- Loads the config.json file.
-- Loads the devicecacahe.json file.
+- Loads the **config.json** file.
+- Loads the **devicecache.json** file.
+- Loads the **secrets.json** file.
 - Add the tables for the recipe life-cycle tracking, auditing, and the current status of the relays.
   - **Table names:** tracking, audit and relay
 - Generate the fine grained “by hour” recipe entries into the recipe life-cycle tracking table.

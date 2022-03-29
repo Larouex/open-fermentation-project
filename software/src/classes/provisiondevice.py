@@ -12,10 +12,12 @@
 import time, logging, string, json, os, binascii, threading, datetime, pprint
 
 # Our classes
+from classes.config import Config
 from classes.devicecache import DeviceCache
 from classes.secrets import Secrets
 from classes.symmetrickey import SymmetricKey
-from classes.config import Config
+from classes.printheader import PrintHeader
+from classes.printerror import PrintError
 
 # uses the Azure IoT Device SDK for Python (Native Python libraries)
 from azure.iot.device.aio import ProvisioningDeviceClient
@@ -29,43 +31,40 @@ class ProvisionDevice:
     timer_ran = False
     dcm_value = None
 
-    def __init__(self, Log):
+    def __init__(self, Log, Verbose):
 
         # Initialization
-        self.logger = Log
-        self.id_device = None
+        self._logger = Log
+        self._verbose = Verbose
+        self._module = "ProvisionDevice"
+        self._method = None
 
         # Load the configuration file
-        self.config = Config(self.logger)
-        self.config = self.config.data
-
-        # Logging Mappers
-        data = [
-            x for x in self.config["ClassLoggingMaps"] if x["Name"] == "ProvisionDevice"
-        ]
-        self.class_name_map = data[0]["LoggingId"]
+        self._config = Config(self._logger)
+        self._config_cache_data = self.config.data
 
         # Symmetric Key
-        self.symmetrickey = SymmetricKey(self.logger)
+        self._symmetrickey = SymmetricKey(self._logger)
 
         # Secrets Cache
-        self.secrets = None
-        self.secrets_cache_data = []
+        self._secrets = None
+        self._secrets_cache_data = []
 
         # Devices Cache
-        self.devices_cache = None
-        self.devices_cache_data = []
+        self._devices_cache = None
+        self._devices_cache_data = []
 
         # meta
-        self.application_uri = None
-        self.namespace = None
-        self.device_name = None
-        self.device_default_component_id = None
-        self.device_capability_model = []
-        self.device_name_prefix = None
-        self.ignore_interface_ids = []
-        self.device_to_provision = None
-        self.device_to_provision_array = []
+        self._id_device = None
+        self._application_uri = None
+        self._namespace = None
+        self._device_name = None
+        self._device_default_component_id = None
+        self._device_capability_model = []
+        self._device_name_prefix = None
+        self._ignore_interface_ids = []
+        self._device_to_provision = None
+        self._device_to_provision_array = []
 
     # -------------------------------------------------------------------------------
     #   Function:   provision_devices
@@ -75,17 +74,19 @@ class ProvisionDevice:
     # -------------------------------------------------------------------------------
     async def provision_devices(self, Id):
 
+        self._method = "provision_devices"
+
         # First up we gather all of the needed provisioning meta-data and secrets
         try:
 
-            self.id_device = Id
-            self.namespace = self.config["Device"]["NameSpace"]
-            self.device_default_component_id = self.config["Device"][
+            self._id_device = Id
+            self._namespace = self._config_cache_data["Device"]["NameSpace"]
+            self._device_default_component_id = self._config_cache_data["Device"][
                 "Default Component Id"
             ]
-            self.device_name_prefix = self.config["Device"]["Device Name Prefix"]
-            self.device_name = self.device_name_prefix.format(id=self.id_device)
-            self.device_default_component_id = self.config["Device"][
+            self._device_name_prefix = self._config_cache_data["Device"]["Device Name Prefix"]
+            self._device_name = self._device_name_prefix.format(id=self.id_device)
+            self._device_default_component_id = self._config_cache_data["Device"][
                 "Default Component Id"
             ]
 
@@ -93,20 +94,18 @@ class ProvisionDevice:
             self.load_caches()
 
             # this is our working device for things we provision in this session
-            self.device_to_provision = self.create_device_to_provision()
+            self._device_to_provision = self.create_device_to_provision()
 
-            self.logger.info("************************************************")
-            self.logger.info("[%s] DEVICE TO PROVISION" % self.class_name_map)
-            self.logger.info(pprint.pformat(self.device_to_provision))
-            self.logger.info("************************************************")
+            if self._verbose == True:
+                PrintHeader.print(self._module, self._method, self.device_to_provision)
 
             # Azure IoT Central SDK Call to create the provisioning_device_client
             provisioning_device_client = (
                 ProvisioningDeviceClient.create_from_symmetric_key(
-                    provisioning_host=self.secrets.get_provisioning_host(),
-                    registration_id=self.device_to_provision["Device"]["Name"],
-                    id_scope=self.secrets.get_scope_id(),
-                    symmetric_key=self.device_to_provision["Device"]["Secrets"][
+                    provisioning_host=self._secrets.get_provisioning_host(),
+                    registration_id=self._device_to_provision["Device"]["Name"],
+                    id_scope=self._secrets.get_scope_id(),
+                    symmetric_key=self._device_to_provision["Device"]["Secrets"][
                         "DeviceSymmetricKey"
                     ],
                     websockets=True,
@@ -115,20 +114,21 @@ class ProvisionDevice:
 
             # Azure IoT Central SDK call to set the payload and provision the device
             provisioning_device_client.provisioning_payload = '{"iotcModelId":"%s"}' % (
-                self.device_to_provision["Device"]["Default Component Id"]
+                self._device_to_provision["Device"]["Default Component Id"]
             )
             registration_result = await provisioning_device_client.register()
-            self.logger.info(
-                "[%s] RESULT %s" % (self.class_name_map, registration_result)
-            )
-            self.logger.info(
-                "[%s] DEVICE SYMMETRIC KEY %s"
+
+            if self._verbose == True:
+                PrintHeader.print(self._module, self._method, "RESULT %s" % (registration_result))
+
+            if self._verbose == True:
+                PrintHeader.print(self._module, self._method, "DEVICE SYMMETRIC KEY %s"
                 % (
-                    self.class_name_map,
-                    self.device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
+                    self._device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
                 )
             )
-            self.device_to_provision["Device"]["Secrets"][
+
+            self._device_to_provision["Device"]["Secrets"][
                 "AssignedHub"
             ] = registration_result.registration_state.assigned_hub
 
@@ -139,68 +139,70 @@ class ProvisionDevice:
             # Update Secrets Cache Data for Devices
             existing_device = [
                 x
-                for x in self.secrets_cache_data["Devices"]
-                if x["Device"]["Name"] == self.device_to_provision["Device"]["Name"]
+                for x in self._secrets_cache_data["Devices"]
+                if x["Device"]["Name"] == self._device_to_provision["Device"]["Name"]
             ]
 
             if len(existing_device) == 0:
-                self.secrets_cache_data["Devices"].append(self.device_to_provision)
+                self._secrets_cache_data["Devices"].append(self._device_to_provision)
             else:
                 index = 0
-                for device in self.secrets_cache_data["Devices"]:
+                for device in self._secrets_cache_data["Devices"]:
                     if (
                         device["Device"]["Name"]
-                        == self.device_to_provision["Device"]["Name"]
+                        == self._device_to_provision["Device"]["Name"]
                     ):
-                        self.secrets_cache_data["Devices"][index][
+                        self._secrets_cache_data["Devices"][index][
                             "Device"
-                        ] = self.device_to_provision["Device"]
+                        ] = self._device_to_provision["Device"]
                         break
                     else:
                         index = index + 1
 
             # Update Full Device Information to the Secrets file.
             # IMPORTANT: This hides the secrets in file in .gitignore
-            self.secrets.update_file_device_secrets(self.secrets_cache_data["Devices"])
+            self._secrets.update_file_device_secrets(self._secrets_cache_data["Devices"])
 
             # Hide secrets from device cache file
-            self.device_to_provision["Device"]["Secrets"] = None
+            self._device_to_provision["Device"]["Secrets"] = None
             existing_device = [
                 x
-                for x in self.devices_cache_data["Devices"]
-                if x["Device"]["Name"] == self.device_to_provision["Device"]["Name"]
+                for x in self._devices_cache_data["Devices"]
+                if x["Device"]["Name"] == self._device_to_provision["Device"]["Name"]
             ]
+            
             if len(existing_device) == 0:
-                self.devices_cache_data["Devices"].append(self.device_to_provision)
+                self._devices_cache_data["Devices"].append(self._device_to_provision)
 
             index = 0
-            for device in self.devices_cache_data["Devices"]:
+            for device in self._devices_cache_data["Devices"]:
                 if (
                     device["Device"]["Name"]
-                    == self.device_to_provision["Device"]["Name"]
+                    == self._device_to_provision["Device"]["Name"]
                 ):
-                    self.devices_cache_data["Devices"][index][
+                    self._devices_cache_data["Devices"][index][
                         "Device"
-                    ] = self.device_to_provision["Device"]
+                    ] = self._device_to_provision["Device"]
                     break
                 else:
                     index = index + 1
 
-            self.devices_cache.update_file(self.devices_cache_data)
+            self._devices_cache.update_file(self._devices_cache_data)
 
-            self.logger.info("************************************************")
-            self.logger.info("[%s] SUCCESS:" % self.class_name_map)
-            self.logger.info(pprint.pformat(self.device_to_provision))
-            self.logger.info("************************************************")
+            if self._verbose == True:
+                PrintHeader.print(self._module, self._method, "SUCCESS %s"
+                % (
+                    self._device_to_provision
+                )
+            )
 
             return
 
         except Exception as ex:
-            self.logger.error("[ERROR] %s" % ex)
-            self.logger.error(
-                "[TERMINATING] We encountered an error in provision_devices()"
-            )
+            PrintError.print(self._module, self._method, ex)
 
+        return
+        
     # -------------------------------------------------------------------------------
     #   Function:   create_device_to_provision`
     #   Usage:      Returns a Devices Array
@@ -209,22 +211,22 @@ class ProvisionDevice:
 
         newDeviceToProvision = {
             "Device": {
-                "Name": self.device_name,
-                "Default Component Id": self.device_default_component_id,
+                "Name": self._device_name,
+                "Default Component Id": self._device_default_component_id,
                 "LastProvisioned": str(datetime.datetime.now()),
                 "Secrets": {},
             }
         }
-        print(self.secrets.get_device_primary_key())
+        print(self._secrets.get_device_primary_key())
 
         # Get device symmetric key
-        device_symmetric_key = self.symmetrickey.compute_derived_symmetric_key(
-            self.device_name, self.secrets.get_device_secondary_key()
+        device_symmetric_key = self._symmetrickey.compute_derived_symmetric_key(
+            self._device_name, self._secrets.get_device_secondary_key()
         )
 
         newDeviceSecret = {
-            "Name": self.device_name,
-            "Default Component Id": self.device_default_component_id,
+            "Name": self._device_name,
+            "Default Component Id": self._device_default_component_id,
             "AssignedHub": "",
             "DeviceSymmetricKey": device_symmetric_key,
             "LastProvisioned": str(datetime.datetime.now()),
@@ -240,8 +242,8 @@ class ProvisionDevice:
     # -------------------------------------------------------------------------------
     def create_device_capability_model(self):
         newDeviceCapabilityModel = {
-            "Name": self.device_name,
-            "Default Component Id": self.device_default_component_id,
+            "Name": self._device_name,
+            "Default Component Id": self._device_default_component_id,
             "LastProvisioned": str(datetime.datetime.now()),
         }
 
@@ -267,11 +269,11 @@ class ProvisionDevice:
     def load_caches(self):
 
         # Secrets Cache
-        self.secrets = Secrets(self.logger)
-        self.secrets_cache_data = self.secrets.data
+        self._secrets = Secrets(self._logger)
+        self._secrets_cache_data = self._secrets.data
 
         # Devices Cache
-        self.devices_cache = DevicesCache(self.logger)
-        self.devices_cache_data = self.devices_cache.data
+        self._devices_cache = DevicesCache(self._logger)
+        self._devices_cache_data = self._devices_cache.data
 
         return

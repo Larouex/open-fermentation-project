@@ -13,16 +13,6 @@
     "NameSpace": "saluminatorIndustrialV4",
     "Default Component Id": "dtmi:saluminatorIndustrialV4:Saluminator;1"
   },
-  "ClassLoggingMaps": [
-    {
-      "Name": "DeviceClient",
-      "LoggingId": "DEVICE CLIENT"
-    },
-    {
-      "Name": "ProvisionDevice",
-      "LoggingId": "PROVISION DEVICE"
-    }
-  ],
   "Status": {
     "Pins": {
       "Red": 5,

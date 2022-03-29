@@ -6,19 +6,20 @@
 
 # System Configuration Files
 
-## <a name='Contents'></a>Contents
+## Contents
 
 <!-- vscode-markdown-toc -->
 
-- [Contents](#Contents)
-- [Overview](#Overview)
-- [Config](#Config)
-  - [Main Section](#MainSection)
-  - [Device Section](#DeviceSection)
-  - [Status Section](#StatusSection)
-  - [Relays Section](#RelaysSection)
-- [Alerts](#Alerts)
-- [Secrets](#Secrets)
+- [System Configuration Files](#system-configuration-files)
+  - [Contents](#contents)
+  - [Overview](#overview)
+  - [Config](#config)
+      - [Main Section](#main-section)
+    - [Device Section](#device-section)
+    - [Status Section](#status-section)
+    - [Relays Section](#relays-section)
+  - [Secrets](#secrets)
+  - [Alerts](#alerts)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -26,18 +27,18 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-## <a name='Overview'></a>Overview
+## Overview
 
 This document outlines all of the configuration options for the Saluminator&reg; device and scripts.
 
-## <a name='Config'></a>Config
+## Config
 
 - **FILE**: <a href="./src/config.json">config.json</a>
 - **LOCATION**: ./software/src/config.json
 
 This is the core configuration file for the Saluminator&reg; System. Let's go through all of the details from the top of the file and work our way down...
 
-#### <a name='MainSection'></a>Main Section
+#### Main Section
 
 ```json
   "AppName": "SaluminatorV4",
@@ -76,7 +77,7 @@ The **Database Naming Pattern** is a string pattern that is used to insert the _
 
 The **Correct Recipe Checkpoint Drift** is an important option that affects the way in which a recipe is _restarted_ after you monitoring has been interrupted for an active recipe. This could be because you stopped it manually or a power outage, etc.
 
-#### <a name='DeviceSection'></a>Device Section
+### Device Section
 
 ```json
   "Device": {
@@ -92,7 +93,7 @@ The **NameSpace** value is used to indicate the unique _namespace_ when communic
 
 The **Default Component Id** is the Id for the assigned device model in Azure IoT Central. This is covered in depth in the [Azure IoT Central](./IOTCENTRAL.MD) document.
 
-#### <a name='StatusSection'></a>Status Section
+### Status Section
 
 The status section wires up an optional RGB Led for flashing status during the telemetry loop.
 
@@ -106,7 +107,7 @@ The status section wires up an optional RGB Led for flashing status during the t
   },
 ```
 
-#### <a name='RelaysSection'></a>Relays Section
+### Relays Section
 
 The **Relays** section indicates the GPIO (BCM) pins that signal the ON/OFF to the _Relay_ board.
 
@@ -124,63 +125,53 @@ The **Relays** section indicates the GPIO (BCM) pins that signal the ON/OFF to t
     }
   },
 ```
+The **Pins** are are based on BCM or the Broadcom pinout pattern. You can modify this is the code for the <a href="./src/monitor.py">monitor.py</a> script to be declared as...
+
+```code
+  # Set state moode
+  GPIO.setmode(GPIO.BCM)
+```
+Each pin maps to the relay control input to the 8 way Relay board. The following helper function is in the <a href="./src/monitor.py">monitor.py</a> script and reads the declared values from the section and assigns to a list for enumeration and usage in setting up the Raspberry Pi GPIO pins, etc.
+
+```code
+# -------------------------------------------------------------------------------
+#   Monitor Init
+# -------------------------------------------------------------------------------
+async def get_relay_pins(config):
+
+    # get relay pins
+    list = {
+        "Humidifier": config["Relays"]["Pins"]["Humidifier"],
+        "DeHumidifier": config["Relays"]["Pins"]["DeHumidifier"],
+        "Heater": config["Relays"]["Pins"]["Heater"],
+        "Chiller": config["Relays"]["Pins"]["Chiller"],
+        "Fan": config["Relays"]["Pins"]["Fan"],
+        "Light": config["Relays"]["Pins"]["Light"],
+        "Open1": config["Relays"]["Pins"]["Open1"],
+        "Open2": config["Relays"]["Pins"]["Open2"],
+    }
+
+    return list
+
+```
+Finally we have one more reference to the Pin that is used to communicate with the AM2302 Ambient Temperature Sensor.
 
 ```json
   "AmbientPin": 25
 ```
 
-## <a name='Alerts'></a>Alerts
-
-- **FILE**: <a href="./src/alerts.json">alerts.json</a>
-- **LOCATION**: ./software/src/alerts.json
-
-The _alerts.json_ file contains strings that are used when we execute scripts with the _--verbose_ and _--debug_ options.
-
-```json
-{
-  "Alerts": {
-    "Config": {
-      "Loaded": "Loaded Config file: {0}",
-      "Updated": "Updated Config file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "DPSCache": {
-      "Loaded": "Loaded DPS Cache file: {0}",
-      "Updated": "Updated DPS Cache file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "DeviceCache": {
-      "Loaded": "Loaded Device Cache file: {0}",
-      "Updated": "Updated Device Cache file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "Secrets": {
-      "Loaded": "Loaded Secrets file: {0}",
-      "Updated": "Updated Secrets file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "DcmTemplate": {
-      "Loaded": "Loaded DCM Template file: {0}",
-      "Updated": "Updated DCM Template file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    }
-  }
-}
-```
-
-- **Loaded**
-  Prints to the console or logging the string along with the FQN file name.
-
-- **Updated**
-  Prints to the console or logging the string along with the FQN file name.
-
-- **Dump**
-  Prints to the console or logging the string along with the contents of the file.
-
-## <a name='Secrets'></a>Secrets
+## Secrets
 
 - **FILE**: <a href="./src/secrets.json">secrets.json</a>
 - **LOCATION**: ./software/src/secrets.json
+
+The secrets file is used to retreive the keys needed to provision your Saluminator&reg; device and send telemetry to Azure IoT Central. There are a number of ways to handle authentication to IoT Central (and by implementation, the Azure IoT Hub). These include...
+
+- X.509 certificates
+- Trusted Platform Module (TPM)
+- Symmetric key
+
+The **Open Fermentation Project** uses the SaSKey (Symmetric key) capability to provision and connect to Azure IoT Central. 
 
 The first step to setting up your secrets file is to copy the template and create the secrets.json file in the /src folder. Execute the following from the _/software/src_ folder...
 
@@ -255,3 +246,51 @@ Complete this for the "Primary" and "Secondary" values for both "DeviceConnect->
   }
 }
 ```
+
+## Alerts
+
+- **FILE**: <a href="./src/alerts.json">alerts.json</a>
+- **LOCATION**: ./software/src/alerts.json
+
+The _alerts.json_ file contains strings that are used when we execute scripts with the _--verbose_ and _--debug_ options.
+
+```json
+{
+  "Alerts": {
+    "Config": {
+      "Loaded": "Loaded Config file: {0}",
+      "Updated": "Updated Config file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "DPSCache": {
+      "Loaded": "Loaded DPS Cache file: {0}",
+      "Updated": "Updated DPS Cache file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "DeviceCache": {
+      "Loaded": "Loaded Device Cache file: {0}",
+      "Updated": "Updated Device Cache file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "Secrets": {
+      "Loaded": "Loaded Secrets file: {0}",
+      "Updated": "Updated Secrets file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    },
+    "DcmTemplate": {
+      "Loaded": "Loaded DCM Template file: {0}",
+      "Updated": "Updated DCM Template file: {0}",
+      "Dump": "Dumped Config file: {0}"
+    }
+  }
+}
+```
+
+- **Loaded**
+  Prints to the console or logging the string along with the FQN file name.
+
+- **Updated**
+  Prints to the console or logging the string along with the FQN file name.
+
+- **Dump**
+  Prints to the console or logging the string along with the contents of the file.

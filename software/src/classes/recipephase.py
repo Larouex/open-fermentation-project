@@ -18,6 +18,7 @@ from sqlite3 import Error
 
 class RecipePhase:
     def __init__(self, Log, Verbose, Database, Started):
+        
         self.logger = Log
         self._verbose = Verbose
 
