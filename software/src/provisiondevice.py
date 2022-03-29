@@ -18,9 +18,9 @@ from classes.config import Config
 # -------------------------------------------------------------------------------
 #   Provision Device
 # -------------------------------------------------------------------------------
-async def provision_device(Id, NumberOfDevices):
+async def provision_device(Id, NumberOfDevices, verbose):
 
-    provisiondevice = ProvisionDevice(Log)
+    provisiondevice = ProvisionDevice(Log, verbose)
     id = int(Id)
     await provisiondevice.provision_device(id)
     return True
@@ -106,8 +106,10 @@ async def main(argv):
             )
             return
 
+        verbose = False
         if current_argument in ("-v", "--verbose"):
             Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
+            verbose = True
             Log.info("Verbose Logging Mode...")
         else:
             Log.basicConfig(format="%(levelname)s: %(message)s")
@@ -151,7 +153,7 @@ async def main(argv):
                 )
                 return
 
-    await provision_device(id, number_of_devices)
+    await provision_device(id, number_of_devices, verbose)
 
 
 if __name__ == "__main__":

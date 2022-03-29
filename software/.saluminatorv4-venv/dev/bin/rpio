@@ -1,0 +1,345 @@
+#!/home/pi/Projects/open-fermentation-project/software/.saluminatorv4-venv/dev/bin/python
+# -*- coding: utf-8 -*-
+"""
+Command-line interface to RPIO. Its a multitool which allows you to inspect
+and manipulate GPIO's system wide; including gpios used by other processes.
+
+Here are some examples of how to use `rpio`:
+
+    Inspect the function and state of gpios (with -i/--inspect):
+
+        $ rpio -i 7
+        $ rpio -i 7,8,9
+        $ rpio -i 1-9
+
+        # Example output for `rpio -i 1-9` (non-existing are ommitted):
+        GPIO 2: ALT0   (1)
+        GPIO 3: ALT0   (1)
+        GPIO 4: INPUT  (0)
+        GPIO 7: OUTPUT (0)
+        GPIO 8: INPUT  (1)
+        GPIO 9: INPUT  (0)
+
+    Inspect all GPIO's on this board (with -I/--inspect-all):
+
+        $ rpio -I
+
+    Set GPIO 7 to either `1` or `0` (with -s/--set):
+
+        $ rpio -s 7:1
+
+        You can only write to pins that have been set up as OUTPUT. You can
+        set this yourself with `--setoutput <gpio-id>`.
+
+    Wait for interrupt events on GPIOs (with -w/--wait_for_interrupts). You
+    can specify an edge (eg. `:rising`; default='both') as well as `:pullup`,
+    `:pulldown` or `pulloff`.
+
+        $ rpio -w 7
+        $ rpio -w 7:rising
+        $ rpio -w 7:falling:pullup
+
+        $ rpio -w 7:rising:pullup,17,18
+        $ rpio -w 1-9
+
+    Setup a pin as INPUT (optionally with software resistor):
+
+        $ rpio --setinput 7
+        $ rpio --setinput 7:pullup
+        $ rpio --setinput 7:pulldown
+
+    Setup a pin as OUTPUT (optionally with an initial value (0 or 1)):
+
+        $ rpio --setoutput 8
+        $ rpio --setoutput 8:1
+
+    Show raspberry pi system info:
+
+        $ rpio --sysinfo
+
+        # Example output:
+        Model B, Revision 2.0, RAM: 256 MB, Maker: Sony
+
+Author: Chris Hager <chris@linuxuser.at>
+License: LGPLv3+
+URL: https://github.com/metachris/RPIO
+"""
+import os
+import sys
+# Automatically invoke sudo if non-root
+if os.geteuid() != 0:
+    print("Script not started as root. Running sudo...")
+    args = ['sudo', sys.executable] + sys.argv + [os.environ]
+    # the next line replaces the currently-running process with the sudo
+    os.execlpe('sudo', *args)
+    exit(-1)
+
+import logging
+from logging import debug, info, warn, error
+from optparse import OptionParser
+
+
+def interrupt_callback(gpio_id, value):
+    logging.info("GPIO %s interrupt: value = %s" % (gpio_id, value))
+
+
+def main():
+    # Prepare help and options
+    usage = """usage: %prog [options]"""
+    desc = ("Inspect and modify GPIOs on the Raspberry Pi. See "
+            "https://github.com/metachris/RPIO for more info.")
+    parser = OptionParser(usage=usage, description=desc)
+
+    parser.add_option("-i", "--inspect", dest="show",
+            help=("Inspect GPIO function (IN/OUT/ALT0) and state. For multiple "
+                "GPIOs separate ids with commas (eg. `-i 17,18,19`) "
+                "or specify a range (eg. `-i 2-20`)"), metavar="gpio-id")
+
+    parser.add_option("-I", "--inspect-all", dest="inspect_all", 
+            help="Inspect all available GPIOs", action="store_true")
+
+    parser.add_option("-w", "--wait_for_interrupts", dest="interrupt",
+            help=("Show interrupt events on specified gpio-id[:edge"
+                "[:pullupdn] (eg. `-w 17` or `-w 17:rising:pulldown`). "
+                "For multiple GPIO's, separate the ids with a "
+                "comma (eg. -w 17:pullup,18:falling) or specify a range (eg. "
+                "`-w 17-19`)"), metavar="gpio-id")
+
+    parser.add_option("-s", "--set", dest="write",
+            help=("Set GPIO output to either 1 or 0. Eg. `--set 17:0`"),
+            metavar="gpio-id")
+
+    parser.add_option("--setinput", dest="setinput",
+            help=("Setup a GPIO as INPUT. Optional pullup/down by adding "
+                    "`:pullup` or `:pulldown` after the gpio-id (eg. "
+                    "`--setinput 17:pulldown`)"), metavar="gpio-id")
+
+    parser.add_option("--setoutput", dest="setoutput",
+            help="Setup a GPIO as OUTPUT (with optional initial value). Eg. "
+                    "`--setoutput 17:1` (for default high).",
+                    metavar="gpio-id")
+
+    parser.add_option("--sysinfo", dest="sysinfo",
+            help="Show model, revision, mb-ram and maker of this Raspberry",
+            action="store_true")
+
+    parser.add_option("--update-man", dest="update_manpage",
+            help="Update the man page for rpio", action="store_true")
+
+    parser.add_option("--update-rpio", dest="update_rpio",
+            help="Update RPIO to the latest version", action="store_true")
+
+    parser.add_option("-v", "--verbose", dest="verbose", action="store_true")
+    parser.add_option("--version", dest="version", action="store_true")
+
+    # Parse options and arguments now
+    (options, args) = parser.parse_args()
+
+    # We need to set the loglevel before importing RPIO
+    if options.verbose:
+        log_level = logging.DEBUG
+        log_format = '%(levelname)s | %(asctime)-15s | %(message)s'
+    else:
+        log_level = logging.INFO
+        log_format = '%(message)s'
+    logging.basicConfig(format=log_format, level=log_level)
+
+    import RPIO
+    RPIO.setwarnings(False)
+
+    def is_valid_gpio_id(gpio_id):
+        return gpio_id in (RPIO.GPIO_LIST_R1 if RPIO.RPI_REVISION == 1 \
+                     else RPIO.GPIO_LIST_R2)
+
+    def validate_gpio_id_or_die(gpio_id):
+        if not is_valid_gpio_id(gpio_id):
+            error("GPIO %s: not a valid gpio-id for this board" % gpio_id)
+            exit(5)
+
+    # Process startup argument
+    show_help = True
+    if options.version:
+        show_help = False
+        info("RPIO v%s (gpio-lib v%s)" % RPIO.version())
+
+
+    if options.setoutput:
+        show_help = False
+        parts = options.setoutput.split(":")
+        gpio_id = int(parts[0])
+        validate_gpio_id_or_die(gpio_id)
+        initial_value = -1 if len(parts) == 1 else \
+                RPIO.HIGH if int(parts[1]) else RPIO.LOW
+        RPIO.setup(gpio_id, RPIO.OUT, initial=initial_value)
+
+
+    if options.setinput:
+        show_help = False
+        parts = options.setinput.split(":")
+        gpio_id = int(parts[0])
+        validate_gpio_id_or_die(gpio_id)
+
+        if len(parts) == 1:
+            RPIO.setup(gpio_id, RPIO.IN)
+            debug("GPIO %s setup as INPUT" % gpio_id)
+        else:
+            if parts[1] == "pullup":
+                RPIO.setup(gpio_id, RPIO.IN, pull_up_down=RPIO.PUD_UP)
+                debug("GPIO %s setup as INPUT with PULLUP resistor" % gpio_id)
+            elif parts[1] == "pulldown":
+                RPIO.setup(gpio_id, RPIO.IN, pull_up_down=RPIO.PUD_DOWN)
+                debug("GPIO %s setup as INPUT with PULLDOWN resistor" % \
+                        gpio_id)
+            elif parts[1] == "pulloff":
+                RPIO.setup(gpio_id, RPIO.IN, pull_up_down=RPIO.PUD_OFF)
+            else:
+                raise ValueError("Error: '%s' not (pullup, pulldown, pulloff)" \
+                        % parts[1])
+
+
+    if options.show or options.inspect_all:
+        show_help = False
+        ids = options.show
+        if options.inspect_all:
+            pins = RPIO.GPIO_LIST_R1 if RPIO.RPI_REVISION == 1 \
+                    else RPIO.GPIO_LIST_R2
+            id_list = list(pins)
+            id_list.sort()
+            ids = ",".join([str(gpio) for gpio in id_list if gpio >= 0])
+
+        # gpio-ids can either be a single value, comma separated or a range
+        show_nonexists = True
+        if "-" in ids:
+            # eg 2-20
+            n1, n2 = ids.split("-")
+            gpio_ids = [n for n in range(int(n1), int(n2) + 1)]
+            show_nonexists = False
+        else:
+            gpio_ids = ids.split(",")
+
+        for gpio_id_str in gpio_ids:
+            gpio_id = int(gpio_id_str)
+            if is_valid_gpio_id(gpio_id):
+                f = RPIO.gpio_function(gpio_id)
+                info("GPIO %s: %-6s (%s)" % (gpio_id, \
+                        RPIO._RPIO.GPIO_FUNCTIONS[f], \
+                        1 if RPIO.forceinput(gpio_id) else 0))
+            else:
+                if show_nonexists:
+                    error("GPIO %s: does not exist" % gpio_id)
+
+
+    if options.write:
+        show_help = False
+        gpio_id_str, value_str = options.write.split(":")
+        gpio_id = int(gpio_id_str)
+        validate_gpio_id_or_die(gpio_id)
+
+        f = RPIO.gpio_function(gpio_id)
+        if f == 0:
+            RPIO.forceoutput(gpio_id, int(value_str))
+
+        else:
+            error(("Cannot output to GPIO %s, because it is setup as %s. Use "
+                    "--setoutput %s first.") % (gpio_id_str, \
+                    RPIO._RPIO.GPIO_FUNCTIONS[f], gpio_id))
+
+
+    if options.interrupt:
+        show_help = False
+        # gpio-ids can either be a single value, comma separated or a range
+        is_range = False
+        if "-" in options.interrupt:
+            # eg 2-20
+            n1, n2 = options.interrupt.split("-")
+            gpio_ids = [str(n) for n in range(int(n1), int(n2) + 1)]
+            is_range = True
+        else:
+            gpio_ids = options.interrupt.split(",")
+
+        for gpio_id_str in gpio_ids:
+            parts = gpio_id_str.split(":")  # gpio_id[, (edge|pud)]x2
+            gpio_id = int(parts[0])
+            if not is_valid_gpio_id(gpio_id):
+                # If we are setting up interrupts for a range of GPIOs,
+                # we just skip those that don't exist. Else we error out.
+                if is_range:
+                    continue
+                error("GPIO %s: not a valid gpio-id for this board" % gpio_id)
+                RPIO.cleanup()
+                exit(5)
+
+            edge = "both"
+            pull_updn = RPIO.PUD_OFF
+            if len(parts) > 1:
+                for part in parts[1:]:
+                    if part in ("falling", "rising", "both"):
+                        edge = part
+                    elif part in ("pullup", "pulldown", "pulloff"):
+                        pull_updn = RPIO.PUD_UP if part == "pullup" else \
+                                RPIO.PUD_DOWN if part == "pulldown" else \
+                                RPIO.PUD_OFF
+
+            try:
+                RPIO.add_interrupt_callback(gpio_id, interrupt_callback, \
+                        edge=edge, pull_up_down=pull_updn)
+
+            except Exception as e:
+                error(e)
+
+        info("Waiting for interrupts (exit with Ctrl+C) ...")
+        try:
+            RPIO.wait_for_interrupts()
+        except KeyboardInterrupt:
+            pass
+
+
+    if options.update_manpage:
+        try:
+            #Python3
+            import urllib.request as urllib
+        except:
+            import urllib
+        show_help = False
+        url = "https://raw.github.com/metachris/RPIO/v%s/source/scripts/man/rpio.1" \
+                % RPIO.VERSION
+        mandir = "/usr/local/man/man1"
+        manfile = "%s/rpio.1" % mandir
+        info("Downloading '%s' ..." % url)
+        content = urllib.urlopen(url).read()
+        if not os.path.exists(mandir):
+            os.makedirs(mandir)
+        with open(manfile, "wb") as f:
+            f.write(content)
+        info("Manpage successfully installed into '%s'. Try `man rpio`." % \
+                manfile)
+
+
+    if options.update_rpio:
+        import subprocess
+        show_help = False
+        try:
+            subprocess.call(["easy_install", "-U", "RPIO"])
+            os.system("rpio --update-man")
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                # handle file not found error.
+                error("`easy_install` not found. Please install it with "
+                        "'sudo apt-get install python-setuptools'")
+                exit(6)
+            else:
+                # Something else went wrong
+                raise
+
+
+    if options.sysinfo:
+        show_help = False
+        s = "%s: Model %s, Revision %s, RAM: %s MB, Maker: %s" % \
+                RPIO.sysinfo()
+        info(s)
+
+    if show_help:
+        parser.print_help()
+
+
+main()

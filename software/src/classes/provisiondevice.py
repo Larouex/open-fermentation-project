@@ -41,7 +41,7 @@ class ProvisionDevice:
 
         # Load the configuration file
         self._config = Config(self._logger)
-        self._config_cache_data = self.config.data
+        self._config_cache_data = self._config.data
 
         # Symmetric Key
         self._symmetrickey = SymmetricKey(self._logger)
@@ -67,12 +67,12 @@ class ProvisionDevice:
         self._device_to_provision_array = []
 
     # -------------------------------------------------------------------------------
-    #   Function:   provision_devices
+    #   Function:   provision_device
     #   Usage:      Grabs the Defined Devices and Provisions into IoT Central
     #               a provisioning call to associated a device template to the node
     #               interface based on the twin, device or gateway pattern
     # -------------------------------------------------------------------------------
-    async def provision_devices(self, Id):
+    async def provision_device(self, Id):
 
         self._method = "provision_devices"
 

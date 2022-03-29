@@ -1,0 +1,15 @@
+# =============================================================================
+# `requirements.txt` installs all dependant packages
+# =============================================================================
+asyncio
+cryptography
+wifi
+RPIO
+adafruit-circuitpython-busdevice
+adafruit-circuitpython-am2320
+adafruit-circuitpython-dht
+azure.iot.device
+azure.identity
+azure.keyvault.certificates
+azure.keyvault.secrets
+azure.keyvault.keys
