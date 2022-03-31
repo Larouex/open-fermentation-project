@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PYTHON=python3
+#PYTHON=python3
+PYTHON=python
 
 myname=$(basename "$0")
 mydir=$(cd $(dirname "$0") && pwd)

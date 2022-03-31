@@ -12,12 +12,13 @@
 import time, logging, string, json, os, binascii, threading, datetime, pprint
 
 # Our classes
+import classes.constants as CONSTANTS
+from classes.printheader import PrintHeader
+from classes.printerror import PrintError
 from classes.config import Config
 from classes.devicecache import DeviceCache
 from classes.secrets import Secrets
 from classes.symmetrickey import SymmetricKey
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
 
 # uses the Azure IoT Device SDK for Python (Native Python libraries)
 from azure.iot.device.aio import ProvisioningDeviceClient
@@ -37,22 +38,25 @@ class ProvisionDevice:
         self._logger = Log
         self._verbose = Verbose
         self._module = "ProvisionDevice"
-        self._method = None
+
+        # Tracing and Errors
+        self._print_header = PrintHeader(Log, Verbose)
+        self._print_error = PrintError(Log, Verbose)
 
         # Load the configuration file
-        self._config = Config(self._logger)
+        self._config = Config(Log)
         self._config_cache_data = self._config.data
 
         # Symmetric Key
-        self._symmetrickey = SymmetricKey(self._logger)
+        self._symmetrickey = SymmetricKey(Log, Verbose)
 
         # Secrets Cache
         self._secrets = None
         self._secrets_cache_data = []
 
         # Devices Cache
-        self._devices_cache = None
-        self._devices_cache_data = []
+        self._device_cache = None
+        self._device_cache_data = []
 
         # meta
         self._id_device = None
@@ -74,7 +78,7 @@ class ProvisionDevice:
     # -------------------------------------------------------------------------------
     async def provision_device(self, Id):
 
-        self._method = "provision_devices"
+        method = "provision_devices"
 
         # First up we gather all of the needed provisioning meta-data and secrets
         try:
@@ -85,7 +89,7 @@ class ProvisionDevice:
                 "Default Component Id"
             ]
             self._device_name_prefix = self._config_cache_data["Device"]["Device Name Prefix"]
-            self._device_name = self._device_name_prefix.format(id=self.id_device)
+            self._device_name = self._device_name_prefix.format(id=self._id_device)
             self._device_default_component_id = self._config_cache_data["Device"][
                 "Default Component Id"
             ]
@@ -96,8 +100,7 @@ class ProvisionDevice:
             # this is our working device for things we provision in this session
             self._device_to_provision = self.create_device_to_provision()
 
-            if self._verbose == True:
-                PrintHeader.print(self._module, self._method, self.device_to_provision)
+            self._print_header.print(self._module, method, self._device_to_provision, CONSTANTS.INFO)
 
             # Azure IoT Central SDK Call to create the provisioning_device_client
             provisioning_device_client = (
@@ -118,15 +121,12 @@ class ProvisionDevice:
             )
             registration_result = await provisioning_device_client.register()
 
-            if self._verbose == True:
-                PrintHeader.print(self._module, self._method, "RESULT %s" % (registration_result))
+            self._print_header.print(self._module, method, "RESULT %s" % (registration_result), CONSTANTS.INFO)
 
-            if self._verbose == True:
-                PrintHeader.print(self._module, self._method, "DEVICE SYMMETRIC KEY %s"
-                % (
-                    self._device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
-                )
-            )
+            self._print_header.print(self._module, method, "DEVICE SYMMETRIC KEY %s"
+            % (
+                self._device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
+            ), CONSTANTS.INFO)
 
             self._device_to_provision["Device"]["Secrets"][
                 "AssignedHub"
@@ -167,39 +167,37 @@ class ProvisionDevice:
             self._device_to_provision["Device"]["Secrets"] = None
             existing_device = [
                 x
-                for x in self._devices_cache_data["Devices"]
+                for x in self._device_cache_data["Devices"]
                 if x["Device"]["Name"] == self._device_to_provision["Device"]["Name"]
             ]
             
             if len(existing_device) == 0:
-                self._devices_cache_data["Devices"].append(self._device_to_provision)
+                self._device_cache_data["Devices"].append(self._device_to_provision)
 
             index = 0
-            for device in self._devices_cache_data["Devices"]:
+            for device in self._device_cache_data["Devices"]:
                 if (
                     device["Device"]["Name"]
                     == self._device_to_provision["Device"]["Name"]
                 ):
-                    self._devices_cache_data["Devices"][index][
+                    self._device_cache_data["Devices"][index][
                         "Device"
                     ] = self._device_to_provision["Device"]
                     break
                 else:
                     index = index + 1
 
-            self._devices_cache.update_file(self._devices_cache_data)
+            self._device_cache.update_file(self._device_cache_data)
 
-            if self._verbose == True:
-                PrintHeader.print(self._module, self._method, "SUCCESS %s"
-                % (
-                    self._device_to_provision
-                )
-            )
+            self._print_header.print(self._module, method, "SUCCESS %s"
+            % (
+                self._device_to_provision
+            ), CONSTANTS.INFO)
 
             return
 
         except Exception as ex:
-            PrintError.print(self._module, self._method, ex)
+            self._print_error.print(self._module, method, ex)
 
         return
         
@@ -208,33 +206,39 @@ class ProvisionDevice:
     #   Usage:      Returns a Devices Array
     # -------------------------------------------------------------------------------
     def create_device_to_provision(self):
+        method = "create_device_to_provision"
+        try:
 
-        newDeviceToProvision = {
-            "Device": {
+            newDeviceToProvision = {
+                "Device": {
+                    "Name": self._device_name,
+                    "Default Component Id": self._device_default_component_id,
+                    "LastProvisioned": str(datetime.datetime.now()),
+                    "Secrets": {},
+                }
+            }
+
+            # Get device symmetric key
+            device_symmetric_key = self._symmetrickey.compute_derived_symmetric_key(
+                self._device_name, self._secrets.get_device_secondary_key()
+            )
+
+            newDeviceSecret = {
                 "Name": self._device_name,
                 "Default Component Id": self._device_default_component_id,
+                "AssignedHub": "",
+                "DeviceSymmetricKey": device_symmetric_key,
                 "LastProvisioned": str(datetime.datetime.now()),
-                "Secrets": {},
             }
-        }
-        print(self._secrets.get_device_primary_key())
 
-        # Get device symmetric key
-        device_symmetric_key = self._symmetrickey.compute_derived_symmetric_key(
-            self._device_name, self._secrets.get_device_secondary_key()
-        )
+            newDeviceToProvision["Device"]["Secrets"] = newDeviceSecret
+        
+            return newDeviceToProvision
 
-        newDeviceSecret = {
-            "Name": self._device_name,
-            "Default Component Id": self._device_default_component_id,
-            "AssignedHub": "",
-            "DeviceSymmetricKey": device_symmetric_key,
-            "LastProvisioned": str(datetime.datetime.now()),
-        }
+        except Exception as ex:
+            self._print_error.print(self._module, method, ex)
 
-        newDeviceToProvision["Device"]["Secrets"] = newDeviceSecret
-
-        return newDeviceToProvision
+        return
 
     # -------------------------------------------------------------------------------
     #   Function:   create_device_capability_model
@@ -269,11 +273,11 @@ class ProvisionDevice:
     def load_caches(self):
 
         # Secrets Cache
-        self._secrets = Secrets(self._logger)
+        self._secrets = Secrets(self._logger, self._verbose)
         self._secrets_cache_data = self._secrets.data
 
         # Devices Cache
-        self._devices_cache = DevicesCache(self._logger)
-        self._devices_cache_data = self._devices_cache.data
+        self._device_cache = DeviceCache(self._logger, self._verbose)
+        self._device_cache_data = self._device_cache.data
 
         return

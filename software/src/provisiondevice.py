@@ -34,6 +34,7 @@ async def main(argv):
     # defaults
     id = 1
     number_of_devices = 1
+    verbose = False
 
     # execution state from args
     short_options = "hvdr:n:"
@@ -106,11 +107,10 @@ async def main(argv):
             )
             return
 
-        verbose = False
         if current_argument in ("-v", "--verbose"):
             Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
-            verbose = True
             Log.info("Verbose Logging Mode...")
+            verbose = True
         else:
             Log.basicConfig(format="%(levelname)s: %(message)s")
 
