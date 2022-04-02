@@ -1,10 +1,12 @@
 # =============================================================================
 # `requirements.txt` installs all dependant packages
 # =============================================================================
+virtualenv
+wheel
 asyncio
 cryptography
 wifi
-RPIO
+#rpi-gpio
 sty
 adafruit-circuitpython-busdevice
 adafruit-circuitpython-am2320

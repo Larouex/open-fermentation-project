@@ -8,30 +8,24 @@
 
 ## Contents
 
-<!-- vscode-markdown-toc -->
-
-- [System Configuration Files](#system-configuration-files)
+- [Setting up the Environment](#setting-up-the-environment)
   - [Contents](#contents)
   - [Overview](#overview)
-  - [Config](#config)
-    - [Main Section](#main-section)
-    - [Device Section](#device-section)
-    - [Status Section](#status-section)
-    - [Relays Section](#relays-section)
-  - [Secrets](#secrets)
-  - [Alerts](#alerts)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+  - [Setting up the Development Toolchain for your Workstation](#setting-up-the-development-toolchain-for-your-workstation)
+    - [Install Git](#install-git)
+    - [Install Visual Studio Code](#install-visual-studio-code)
+    - [Install Python](#install-python)
+    - [Upgrading pip](#upgrading-pip)
+    - [Install all the Tools for Visual Studio Code](#install-all-the-tools-for-visual-studio-code)
+    - [Install the Requirements for the Virtual Environment and Python](#install-the-requirements-for-the-virtual-environment-and-python)
 
 ## Overview
 
 You will want to setup your development environment on your main machine (your desktop or laptop) and the Debain operating system environment on the Raspberry Pi.
 
 On your workstation this involved setting up the development toolchain (all that is needed to edit the software) and on the Raspberry Pi, the latest version of Python, a virtual environment for isolation of the Saluminator&reg; software when you are testing and running the monitoring.
+
+**NOTE:** This is not a comprehensive set of instructions on setting up. There are a number of issues you may encounter with Python, versioning and other little nits. That is what the interwebs are for :)
 
 ## Setting up the Development Toolchain for your Workstation
 
@@ -75,8 +69,8 @@ On Linux or macOS (Open Terminal):
 
 On Windows (from a CMD window or Powershell):
 
-```
-    python -m pip install -U pip
+```bash
+python -m pip install -U pip
 ```
 
 ### Install all the Tools for Visual Studio Code
@@ -88,3 +82,23 @@ These are a set of tools we will use to develop our apps on the Raspberry Pi. Yo
 ![alt text](../assets/vs-code-remote-ssh-sml.png "VS Code Remote SSH")
 
 ![alt text](../assets/vs-code-remote-edit-sml.png "VS Code Remote SSH Edit")
+
+### Install the Requirements for the Virtual Environment and Python
+
+Next let's install an alternate to pip using setup.pg
+
+```bash
+python -m pip install --upgrade setuptools
+```
+Let's install the Python Virtual Environment...
+
+```bash
+python -m pip install --user virtualenv
+```
+
+Start the Virtual Environment..
+
+Install the Requirments...
+```bash
+python -m pip install -r requirements.txt
+```

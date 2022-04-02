@@ -101,8 +101,12 @@ class ProvisionDevice:
             self._device_to_provision = self.create_device_to_provision()
 
             # __Verbose__
-            self._print_header.print(self._module, self.__name__, self._device_to_provision, CONSTANTS.INFO)
-
+            self._print_header.print(self._module, method, self._device_to_provision, CONSTANTS.INFO)
+            self._print_header.print(self._module, method, "DEVICE SYMMETRIC KEY %s"
+            % (
+                self._device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
+            ), CONSTANTS.INFO)
+            
             # Azure IoT Central SDK Call to create the provisioning_device_client
             provisioning_device_client = (
                 ProvisioningDeviceClient.create_from_symmetric_key(
@@ -123,11 +127,7 @@ class ProvisionDevice:
             registration_result = await provisioning_device_client.register()
 
             # __Verbose__
-            self._print_header.print(self._module, self.__name__, "RESULT %s" % (registration_result), CONSTANTS.INFO)
-            self._print_header.print(self._module, self.__name__, "DEVICE SYMMETRIC KEY %s"
-            % (
-                self._device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
-            ), CONSTANTS.INFO)
+            self._print_header.print(self._module, method, "RESULT: %s" % (registration_result), CONSTANTS.INFO)
 
             self._device_to_provision["Device"]["Secrets"][
                 "AssignedHub"

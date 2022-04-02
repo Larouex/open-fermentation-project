@@ -1,4 +1,12 @@
 {
   "Devices": [
+    {
+      "Device": {
+        "Name": "saluminator-1",
+        "Default Component Id": "dtmi:saluminatorIndustrialV4:Saluminator;1",
+        "LastProvisioned": "2022-04-01 20:24:09.442005",
+        "Secrets": null
+      }
+    }
   ]
 }
