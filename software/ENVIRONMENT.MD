@@ -85,20 +85,34 @@ These are a set of tools we will use to develop our apps on the Raspberry Pi. Yo
 
 ### Install the Requirements for the Virtual Environment and Python
 
-Next let's install an alternate to pip using setup.pg
+This next set of steps are all executed from the command line and will result in a virtual environment that supports the running of the Saluminator&reg; scripts and modifications, etc.
 
-```bash
-python -m pip install --upgrade setuptools
+First, open a powershell terminal in Visual Studio Code and set the powershell execution policy to allow scripts...
+
+```ps1
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
-Let's install the Python Virtual Environment...
 
-```bash
+Next, install the Python Virtual Environment...
+
+```ps1
 python -m pip install --user virtualenv
 ```
 
-Start the Virtual Environment..
+Create the virtual environment for the Saluminator&reg; software..
 
-Install the Requirments...
-```bash
+```ps1
+python -m venv ./.saluminatorv4-venv/dev
+```
+
+and then start the virtual environment..
+
+```ps1
+.\.saluminatorv4-venv\dev\Scripts\Activate.ps1
+```
+
+Install the requirements...
+```ps1
 python -m pip install -r requirements.txt
 ```
+
