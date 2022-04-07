@@ -120,6 +120,7 @@ python -m pip install -r requirements.txt
 
 Verify the Environment...
 ```ps1
+cd src
 python test-verify-env-dev.py
 ```
 

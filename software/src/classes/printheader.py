@@ -10,29 +10,24 @@
 # ==================================================================================
 import json, logging, pprint
 
-from classes.config import Config
 import classes.constants as CONSTANTS
 
 class PrintHeader:
-    def __init__(self, Logger, Verbose):
+    def __init__(self, Logger, Verbose, Config):
 
         # init
         self._logger = Logger
         self._verbose = Verbose
-
-        # Load the configuration file
-        self._config = Config(self._logger, self._verbose)
-        self._config = self._config.data
+        self._config_cache_data = Config.data
 
     def print(self, ModuleName, MethodName, Message, MessageType, NoHeader):
         
         if self._verbose == True:
-            print_message = "VERBOSE MESSAGE\n"
-            print_message += "APP NAME: {app_name}\n".format(
-                app_name = self._config["AppName"]
+            print_message = "APP NAME: {app_name}\n".format(
+                app_name = self._config_cache_data["AppName"]
             )
             print_message += "APP DESC: {app_desc}\n".format(
-                app_desc = self._config["Description"]
+                app_desc = self._config_cache_data["Description"]
             )
             print_message += "SCRIPT: {module_name}\n".format(module_name = ModuleName)
             print_message += "METHOD: {method_name}".format(method_name = MethodName)
@@ -45,8 +40,12 @@ class PrintHeader:
                 print("-------------------------------------------------")
 
             print_message = "{message}".format(message = Message)
-            pp = pprint.PrettyPrinter(indent=2, width=80, compact=True)
-            pp.pprint(print_message)
+            print(print_message)
             
+        return
+
+    def forceprint(self, ModuleName, MethodName, Message, MessageType, NoHeader):
+        self._verbose =  True
+        print(ModuleName, MethodName, Message, MessageType, NoHeader)
         return
 

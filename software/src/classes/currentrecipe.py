@@ -11,12 +11,13 @@
 import json
 import logging
 
-
 class CurrentRecipe:
-    def __init__(self, Logger, Verbose):
-        self._logger = Logger
-        self._verbose = Verbose
-        self.load_file()
+
+    def __init__(self, Log):
+        
+        # init
+        self._filename = "currentrecipe.json"
+        self._data = self.load_file()
 
     @property
     def data(self):
@@ -24,39 +25,23 @@ class CurrentRecipe:
 
     def load_file(self):
 
-        with open("currentrecipe.json", "r") as config_file:
+        try:
+            with open(self._filename, "r") as config_file:
+                return json.load(config_file)
+        
+        except Exception as ex:
+            print("CURRENTRECIPE ERROR: {}", ex)
 
-            self._data = json.load(config_file)
-            alerts = self.load_alerts()
-            self._logger.debug(
-                alerts["Alerts"]["CurrentRecipe"]["Loaded"].format(self.data)
-            )
-
-            if self._verbose == True:
-                print("")
-                print("-------------------------------------------------")
-                print(" CurrentRecipe.py::load_file")
-                print("-------------------------------------------------")
-                print("Data->", self._data)
+        
+        return 
 
     def update_file(self, data):
 
-        with open("currentrecipe.json", "w") as configs_file:
-
-            alerts = self.load_alerts()
-            self._logger.debug(
-                alerts["Alerts"]["CurrentRecipe"]["Updated"].format(data)
-            )
-
-            if self._verbose == True:
-                print("")
-                print("-------------------------------------------------")
-                print(" CurrentRecipe.py::update_file")
-                print("-------------------------------------------------")
-                print("Data->", data)
-
-            configs_file.write(json.dumps(data, indent=2))
-
-    def load_alerts(self):
-        with open("alerts.json", "r") as alerts_file:
-            return json.load(alerts_file)
+        try:
+            with open(self._filename, "w") as configs_file:
+                configs_file.write(json.dumps(data, indent=2))
+        
+        except Exception as ex:
+            print("CURRENTRECIPE ERROR: {}", ex)
+        
+        return 

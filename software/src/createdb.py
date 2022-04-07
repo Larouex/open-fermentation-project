@@ -9,9 +9,9 @@
 #   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
-import getopt, sys, time, string, threading, asyncio, os
+import argparse, getopt, sys, time, string, threading, asyncio, os
 from datetime import datetime, date
-from distutils.command.config import config
+#from distutils.command.config import config
 from decimal import *
 from gettext import NullTranslations
 import logging as Log
@@ -177,127 +177,76 @@ def audit_event(conn, task):
         print("Exception::createdb.py(audit_event)->", e)
         return None
 
+# -------------------------------------------------------------------------------
+#   Function:   create_current_recipe
+#   Usage:      Returns a json Object to Update Current Recipe
+# -------------------------------------------------------------------------------
+def create_current_recipe(ActiveRecipeName, Started):
+    newRecipe = {
+        "Database": ActiveRecipeName,
+        "Started": Started,
+        "Current Checkpoint": 1
+    }
+
+    return newRecipe
+
 
 # -------------------------------------------------------------------------------
 #   main()
 # -------------------------------------------------------------------------------
 async def main(argv):
 
-    # get desired options from the passed command line args
-    verbose = False
-    recipe_name = None
-    short_options = "hvdr:"
-    long_options = ["help", "verbose", "debug", "recipename="]
-    full_cmd_arguments = sys.argv
-    argument_list = full_cmd_arguments[1:]
+    # execution state from args
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--verbose", dest='verbose', action="store_true", help="Output important information when executing.")
+    parser.add_argument("-r", "--recipename", dest='recipename', help="Indicate the Recipe Name that exists in the recipes.json File.")
+    #parser.add_argument('--debug', action='store_true')
+    args = parser.parse_args()
+    _verbose = args.verbose
+    _recipe_name = args.recipename
 
-    try:
-        arguments, values = getopt.getopt(argument_list, short_options, long_options)
-    except getopt.error as err:
-        print("ERROR::createdb.py(main)->", str(err))
+    if _recipe_name != None:
+        Log.info(
+            "Recipe name is specified as: {recipename}".format(
+                recipename = _recipe_name
+            )
+        )
+    else:
+        # Missing Recipe Name. It is required, so fail
+        print(
+            "[ERROR] -r --recipename must be specified and match a recipe name in recipes.json."
+        )
+        return
 
-    for current_argument, current_value in arguments:
-
-        if current_argument in ("-h", "--help"):
-            print(
-                "------------------------------------------------------------------------------------------------------------------------------------------"
-            )
-            print("HELP for createdb.py")
-            print(
-                "------------------------------------------------------------------------------------------------------------------------------------------"
-            )
-            print("")
-            print("  BASIC PARAMETERS...")
-            print("")
-            print("  -h or --help - Print out this Help Information")
-            print(
-                "  -v or --verbose - Debug Mode with lots of Data will be Output to Assist with Debugging"
-            )
-            print(
-                "  -d or --debug - Debug Mode with lots of DEBUG Data will be Output to Assist with Tracing and Debugging"
-            )
-            print("")
-            print("  REQUIRED PARAMETERS...")
-            print("")
-            print(
-                "    -r or --recipename - The name provided must exist in the file named: recipes.json and is part of the"
-            )
-            print("                          arrays of recipes that can be defined.")
-            print("       USAGE: -r 'Salumi Toscano'")
-            print("       USAGE: --recipename 'Salumi Toscano'")
-            print("       DEFAULT: N/A, script will fail if not provided.")
-            print("")
-            print(
-                "------------------------------------------------------------------------------------------------------------------------------------------"
-            )
-            return
-
-        if current_argument in ("-v", "--verbose"):
-            verbose = True
-            Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
-            Log.info("Verbose Logging Mode...")
-        else:
-            Log.basicConfig(format="%(levelname)s: %(message)s")
-
-        if current_argument in ("-d", "--debug"):
-            Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.DEBUG)
-            Log.info("Debug Logging Mode...")
-        else:
-            Log.basicConfig(format="%(levelname)s: %(message)s")
-
-        if current_argument in ("-r", "--recipename"):
-            recipe_name = current_value
-            Log.info(
-                "Recipe name is specified as: {recipename}".format(
-                    recipename=recipe_name
-                )
-            )
-        else:
-            # Missing Recipe Name. It is required, so fail
-            print(
-                "[ERROR] -r --recipename must be specified and match a recipe name in recipes.json."
-            )
-            return
-
-    logger = Log
-
-    # Messaging
-    print_header = PrintHeader(logger, verbose)
 
     # Load the configuration file
-    config = Config(logger)
-    config_data = config.data
+    config = Config(Log)
+    config_cache_data = config.data
+
+    # Messaging
+    print_header = PrintHeader(Log, _verbose, config)
 
     # Get the recipes array from the recipes.json file
-    recipes = Recipes(logger)
-    recipe_data = recipes.data
+    recipes = Recipes(Log)
+    recipes_cache_data = recipes.data
 
     # validate names and file naming pattern
-    existing_recipe = [x for x in recipe_data["Name"] if x["Name"] == recipe_name]
+    existing_recipe = [x for x in recipes_cache_data if x["Name"] == _recipe_name]
     if len(existing_recipe) == 0:
         # Missing Recipe Name in recipes.json. It is required, so fail
         print("[ERROR] -r --recipename must match a recipe name in recipes.json.")
         return
 
     # create the file name
-    active_recipe_file_name = config_data["Database Naming Pattern"].format(recipe_name)
-    print_header.print(
-        __file__,
-        "Main",
-        "active_recipe_file_name {active_recipe_file_name}".format(
-            active_recipe_file_name
-        ),
-    )
-
-    return
+    active_recipe_file_name = config_cache_data["Database Naming Pattern"].format(recipe_name = _recipe_name.replace(" ", "_").lower())
 
     # Database - Create file name
     current_date_and_time = datetime.now()
     current_date_and_time_string = str(current_date_and_time)
 
     # Load the currentrecipe file
-    current_recipe = CurrentRecipe(logger, True)
-    current_recipe_data = current_recipe.data
+    current_recipe = CurrentRecipe(Log)
+    current_recipe_cache_data = current_recipe.data
 
     # create con object to connect
     root_directory = os.path.dirname(os.path.abspath(__file__))
@@ -331,7 +280,7 @@ async def main(argv):
     recipe_hour = 1
 
     # Lets Populate the Checkpoint Activities
-    for recipe in recipe_cache_data:
+    for recipe in recipes_cache_data:
         if recipe["Name"] == "Salumi Toscano":
 
             print("-------------------------------------------------------")
@@ -436,6 +385,9 @@ async def main(argv):
 
         print("Completed!")
         print("-------------------------------------------------------")
+
+        # Update current recipe file
+        current_recipe.update_file(create_current_recipe(active_recipe_file_name, current_date_and_time_string))
 
         break
     else:

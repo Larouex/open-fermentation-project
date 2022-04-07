@@ -9,32 +9,38 @@
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
 import json, logging
-import classes.constants as CONSTANT
-import sqlite3
-
 
 class Recipes:
-    def __init__(self, logger):
-        self.logger = logger
-        self.load_file()
 
-    def __init__(self, logger):
-        self.logger = logger
-        self.load_file()
+    def __init__(self, Log):
+        
+        # init
+        self._filename = "recipes.json"
+        self._data = self.load_file()
+
+    @property
+    def data(self):
+        return self._data
 
     def load_file(self):
-        with open("recipes.json", "r") as config_file:
-            self.data = json.load(config_file)
-            alerts = self.load_alerts()
+        
+        try:
+            with open(self._filename, "r") as config_file:
+                return json.load(config_file)
+        
+        except Exception as ex:
+            print("RECIPES ERROR: {}", ex)
+        
+        return 
 
-            # self.logger.debug(alerts["Alerts"]["Recipes"]["Loaded"].format(self.data))
 
     def update_file(self, data):
-        with open("recipes.json", "w") as configs_file:
-            alerts = self.load_alerts()
-            self.logger.debug(alerts["Alerts"]["Recipes"]["Updated"].format(self.data))
-            configs_file.write(json.dumps(data, indent=2))
 
-    def load_alerts(self):
-        with open("recipes.json", "r") as alerts_file:
-            return json.load(alerts_file)
+        try:
+            with open(self._filename, "w") as configs_file:
+                configs_file.write(json.dumps(data, indent=2))
+        
+        except Exception as ex:
+            print("RECIPES ERROR: {}", ex)
+        
+        return 
