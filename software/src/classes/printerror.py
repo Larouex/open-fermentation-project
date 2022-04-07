@@ -14,11 +14,13 @@ from classes.config import Config
 
 class PrintError:
     def __init__(self, Logger, Verbose):
+
+        # init
         self._logger = Logger
         self._verbose = Verbose
 
         # Load the configuration file
-        self._config = Config(self._logger)
+        self._config = Config(self._logger, self._verbose)
         self._config = self._config.data
 
     def print(self, module_name, method_name, message):

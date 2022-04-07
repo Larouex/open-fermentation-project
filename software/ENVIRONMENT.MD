@@ -18,6 +18,7 @@
     - [Upgrading pip](#upgrading-pip)
     - [Install all the Tools for Visual Studio Code](#install-all-the-tools-for-visual-studio-code)
     - [Install the Requirements for the Virtual Environment and Python](#install-the-requirements-for-the-virtual-environment-and-python)
+      - [NOTE: This is the steps for Powershell on Windows](#note-this-is-the-steps-for-powershell-on-windows)
 
 ## Overview
 
@@ -84,6 +85,7 @@ These are a set of tools we will use to develop our apps on the Raspberry Pi. Yo
 ![alt text](../assets/vs-code-remote-edit-sml.png "VS Code Remote SSH Edit")
 
 ### Install the Requirements for the Virtual Environment and Python
+#### NOTE: This is the steps for Powershell on Windows
 
 This next set of steps are all executed from the command line and will result in a virtual environment that supports the running of the Saluminator&reg; scripts and modifications, etc.
 
@@ -116,3 +118,9 @@ Install the requirements...
 python -m pip install -r requirements.txt
 ```
 
+Verify the Environment...
+```ps1
+python test-verify-env-dev.py
+```
+
+**Congratulations!** Your system is configured. Next, let's setup the environment on the Raspberry Pi.

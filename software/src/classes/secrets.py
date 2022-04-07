@@ -187,7 +187,7 @@ class Secrets:
             message += "[GATEWAY PRIMARY KEY]: %s\n" % self.gateway_primary_key
             message += "[GATEWAY SECONDARY KEY]: %s" % self.gateway_secondary_key
             
-            self._print_header.print(self._module, self._method, message, CONSTANTS.INFO)
+            self._print_header.print(self._module, self._method, message, CONSTANTS.INFO, True)
 
         except Exception as ex:
             self._print_error.print(self._module, self._method, ex)
