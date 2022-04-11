@@ -20,7 +20,6 @@ from sqlite3 import Error
 # Our classes
 from classes.config import Config
 from classes.recipes import Recipes
-from classes.recipes import Recipes
 from classes.currentrecipe import CurrentRecipe
 from classes.recipephase import RecipePhase
 import classes.constants as CONSTANTS

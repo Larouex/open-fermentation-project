@@ -8,8 +8,6 @@
 
 ## Contents
 
-<!-- vscode-markdown-toc -->
-
 - [System Configuration Files](#system-configuration-files)
   - [Contents](#contents)
   - [Overview](#overview)
@@ -19,12 +17,6 @@
     - [Status Section](#status-section)
     - [Relays Section](#relays-section)
   - [Secrets](#secrets)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
 
 ## Overview
 
