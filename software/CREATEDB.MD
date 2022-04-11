@@ -245,8 +245,6 @@ METHOD: main()
 Location: C:\Projects\open-fermentation-project\software\src\active_recipe_salumi_toscano.db
 Current Checkpoint: 1
 (Tracking) From the Tracking table, the first row and last row...
-```
-```json
 [{
 	'id': 1,
 	'recipe_phase': 'Incubate',
@@ -280,11 +278,7 @@ Current Checkpoint: 1
 	'humidity_run_time': 3,
 	'humidity_idle_time': 5
 }]
-```
-```bash
 (Tracking) Current Checkpoint from the Tracking table...
-```
-```json
 {
 	'id': 1,
 	'recipe_phase': 'Incubate',
