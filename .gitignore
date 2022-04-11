@@ -1,3 +1,4 @@
+secrets.json
 *.pdf
 .saluminatorv4-venv/
 __pycache__/

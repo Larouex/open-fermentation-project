@@ -8,7 +8,7 @@
 #   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
-import getopt, sys, time, string, threading, asyncio, os
+import argparse, sys, time, string, threading, asyncio, os
 import logging as Log
 
 # Our classes
@@ -32,72 +32,48 @@ async def main(argv):
     _method = "main()"
 
     # execution state from args
-    short_options = "hvd"
-    long_options = ["help", "verbose", "debug"]
-    full_cmd_arguments = sys.argv
-    argument_list = full_cmd_arguments[1:]
-    arguments, values = getopt.getopt(argument_list, short_options, long_options)
+    _parser = argparse.ArgumentParser()
+    _parser.add_argument("-v", "--verbose", dest='verbose', action="store_true", help="Output Important information when executing.")
+    _parser.add_argument("-d", "--debug", dest='debug', action="store_true", help="Output Debug information when executing.")
+    args = _parser.parse_args()
 
-    for current_argument, current_value in arguments:
+    # gather parameters
+    _verbose = args.verbose
+    _debug = args.debug
 
-        if current_argument in ("-h", "--help"):
-            print(
-                "------------------------------------------------------------------------------------------------------------------------------------------"
-            )
-            print("HELP for test-verify-env-dev.py")
-            print(
-                "------------------------------------------------------------------------------------------------------------------------------------------"
-            )
-            print("")
-            print("  BASIC PARAMETERS...")
-            print("")
-            print("  -h or --help - Print out this Help Information")
-            print(
-                "  -v or --verbose - Debug Mode with lots of Data will be Output to Assist with Debugging"
-            )
-            print(
-                "  -d or --debug - Debug Mode with lots of DEBUG Data will be Output to Assist with Tracing and Debugging"
-            )
-            print(
-                "------------------------------------------------------------------------------------------------------------------------------------------"
-            )
-            return
+    if _verbose:
+        Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
+        Log.info("Verbose Logging Mode...")
+    else:
+        Log.basicConfig(format="%(levelname)s: %(message)s")
 
-        if current_argument in ("-v", "--verbose"):
-            _verbose = True
-            Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
-            Log.info("Verbose Logging Mode...")
-        else:
-            Log.basicConfig(format="%(levelname)s: %(message)s")
+    if _debug:
+        Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.DEBUG)
+        Log.info("Debug Logging Mode...")
+    else:
+        Log.basicConfig(format="%(levelname)s: %(message)s")
 
-        if current_argument in ("-d", "--debug"):
-            Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.DEBUG)
-            Log.info("Debug Logging Mode...")
-        else:
-            Log.basicConfig(format="%(levelname)s: %(message)s")
 
+    # Load the configuration file
+    _config = Config(Log)
 
     # Tracing and Errors
-    _print_header = PrintHeader(Log, _verbose)
-    _print_error = PrintError(Log, _verbose)
+    _print_header = PrintHeader(Log, _verbose, _config)
+    _print_error = PrintError(Log, _verbose, _config)
 
     # __Verbose__
     _message = "Testing and Verifying the Environment..."
     _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, False)
 
-    # Load the configuration file
-    _config = Config(Log, _verbose)
-    _config_cache_data = _config.data
-
     # __Verbose__
     _message = "SUCCESS: Loaded the Configuration File (config.json)!"
     _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, True)
     if (_verbose == True):
-        _message = "CONTENTS: {contents}".format(contents = _config_cache_data)
+        _message = "CONTENTS: {contents}".format(contents = _config.data)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
 
     # Load the devicecache file
-    _devicecache = DeviceCache(Log, _verbose)
+    _devicecache = DeviceCache(Log)
     _devicecache_cache_data = _devicecache.data
 
     # __Verbose__
@@ -115,21 +91,21 @@ async def main(argv):
     _message = "SUCCESS: Loaded the Secrets File (secrets.json)!"
     _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, True)
     if (_verbose == True):
-        _message = "(Secrets) PROVISIONING HOST: {contents}".format(contents = _secrets.get_provisioning_host())
+        _message = "(Secrets) PROVISIONING HOST: {contents}".format(contents = _secrets.provisioning_host)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
-        _message = "(Secrets) SCOPE ID: {contents}".format(contents = _secrets.get_scope_id())
+        _message = "(Secrets) SCOPE ID: {contents}".format(contents = _secrets.scope_id)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
-        _message = "(Secrets) DEVICE PRIMARY KEY: {contents}".format(contents = _secrets.get_device_primary_key())
+        _message = "(Secrets) DEVICE PRIMARY KEY: {contents}".format(contents = _secrets.device_primary_key)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
-        _message = "(Secrets) DEVICE SECONDARY KEY: {contents}".format(contents = _secrets.get_device_secondary_key())
+        _message = "(Secrets) DEVICE SECONDARY KEY: {contents}".format(contents = _secrets.device_secondary_key)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
-        _message = "(Secrets) GATEWAY PRIMARY KEY: {contents}".format(contents = _secrets.get_gateway_primary_key())
+        _message = "(Secrets) GATEWAY PRIMARY KEY: {contents}".format(contents = _secrets.gateway_primary_key)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
-        _message = "(Secrets) GATEWAY SECONDARY KEY: {contents}".format(contents = _secrets.get_gateway_secondary_key())
+        _message = "(Secrets) GATEWAY SECONDARY KEY: {contents}".format(contents = _secrets.gateway_secondary_key)
         _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
 
     # Load the recipes file
-    _recipes = Recipes(Log, _verbose)
+    _recipes = Recipes(Log)
     _recipes_cache_data = _recipes.data
 
     # __Verbose__

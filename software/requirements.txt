@@ -7,7 +7,6 @@ asyncio
 cryptography
 wifi
 #rpi-gpio
-sty
 adafruit-circuitpython-busdevice
 adafruit-circuitpython-am2320
 adafruit-circuitpython-dht

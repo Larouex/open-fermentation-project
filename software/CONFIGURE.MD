@@ -19,7 +19,6 @@
     - [Status Section](#status-section)
     - [Relays Section](#relays-section)
   - [Secrets](#secrets)
-  - [Alerts](#alerts)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -247,50 +246,3 @@ Complete this for the "Primary" and "Secondary" values for both "DeviceConnect->
 }
 ```
 
-## Alerts
-
-- **FILE**: <a href="./src/alerts.json">alerts.json</a>
-- **LOCATION**: ./software/src/alerts.json
-
-The _alerts.json_ file contains strings that are used when we execute scripts with the _--verbose_ and _--debug_ options.
-
-```json
-{
-  "Alerts": {
-    "Config": {
-      "Loaded": "Loaded Config file: {0}",
-      "Updated": "Updated Config file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "DPSCache": {
-      "Loaded": "Loaded DPS Cache file: {0}",
-      "Updated": "Updated DPS Cache file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "DeviceCache": {
-      "Loaded": "Loaded Device Cache file: {0}",
-      "Updated": "Updated Device Cache file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "Secrets": {
-      "Loaded": "Loaded Secrets file: {0}",
-      "Updated": "Updated Secrets file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    },
-    "DcmTemplate": {
-      "Loaded": "Loaded DCM Template file: {0}",
-      "Updated": "Updated DCM Template file: {0}",
-      "Dump": "Dumped Config file: {0}"
-    }
-  }
-}
-```
-
-- **Loaded**
-  Prints to the console or logging the string along with the FQN file name.
-
-- **Updated**
-  Prints to the console or logging the string along with the FQN file name.
-
-- **Dump**
-  Prints to the console or logging the string along with the contents of the file.
