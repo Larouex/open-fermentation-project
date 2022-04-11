@@ -84,7 +84,10 @@ class Secrets:
     # Propeties you can query
     @property
     def scope_id(self):
-        return self._data["KeyVaultSecrets"]["ScopeId"]
+        if self._data["UseKeyVault"]:
+            return self._data["KeyVaultSecrets"]["ScopeId"]
+        else:
+            return self._data["LocalSecrets"]["ScopeId"]
 
     @property
     def device_primary_key(self):

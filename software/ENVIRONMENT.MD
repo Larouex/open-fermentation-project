@@ -124,4 +124,13 @@ cd src
 python test-verify-env-dev.py
 ```
 
+You will see something similar to the output below...
+```ps1
+(Config) SUCCESS: Loaded the Configuration File (config.json)!
+(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)!
+(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)!
+(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)!
+```
+**NOTE:** You can examine the contents of the various json files by adding the --verbose option to the test-verify-env-dev.py script.
+
 **Congratulations!** Your system is configured. Next, let's setup the environment on the Raspberry Pi.

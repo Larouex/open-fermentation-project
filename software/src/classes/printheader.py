@@ -20,7 +20,7 @@ class PrintHeader:
         self._verbose = Verbose
         self._config_cache_data = Config.data
 
-    def print(self, ModuleName, MethodName, Message, MessageType, NoHeader):
+    def print(self, ModuleName, MethodName, Message, NoHeader):
         
         if self._verbose == True:
             print_message = "APP NAME: {app_name}\n".format(
@@ -35,17 +35,17 @@ class PrintHeader:
             # CONSTANTS.INFO
             if (NoHeader != True):
                 print("")
-                print("-------------------------------------------------")
+                print("-------------------------------------------------------------")
                 print(print_message)
-                print("-------------------------------------------------")
+                print("-------------------------------------------------------------")
 
             print_message = "{message}".format(message = Message)
             print(print_message)
             
         return
 
-    def forceprint(self, ModuleName, MethodName, Message, MessageType, NoHeader):
-        self._verbose =  True
-        print(ModuleName, MethodName, Message, MessageType, NoHeader)
+    def forceprint(self, Message):
+        print_message = "{message}".format(message = Message)
+        print(print_message)
         return
 

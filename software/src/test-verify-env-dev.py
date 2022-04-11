@@ -63,57 +63,56 @@ async def main(argv):
 
     # __Verbose__
     _message = "Testing and Verifying the Environment..."
-    _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, False)
+    _print_header.print(_module, _method, _message, False)
 
     # __Verbose__
-    _message = "SUCCESS: Loaded the Configuration File (config.json)!"
-    _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, True)
+    _message = "(Config) SUCCESS: Loaded the Configuration File (config.json)!"
+    _print_header.forceprint(_message)
     if (_verbose == True):
-        _message = "CONTENTS: {contents}".format(contents = _config.data)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _message = "(Config) CONTENTS: {contents}".format(contents = _config.data)
+        _print_header.print(_module, _method, _message, True)
 
     # Load the devicecache file
     _devicecache = DeviceCache(Log)
-    _devicecache_cache_data = _devicecache.data
 
     # __Verbose__
-    _message = "SUCCESS: Loaded the Device Cache File (devicecache.json)!"
-    _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, True)
+    _message = "(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)!"
+    _print_header.forceprint(_message)
     if (_verbose == True):
-        _message = "CONTENTS: {contents}".format(contents = _devicecache_cache_data)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _message = "(DeviceCache) CONTENTS: {contents}".format(contents = _devicecache.data)
+        _print_header.print(_module, _method, _message, True)
 
     # Load the secrets file
     _secrets = Secrets(Log, _verbose)
-    _secrets_cache_data = _secrets.data
 
     # __Verbose__
-    _message = "SUCCESS: Loaded the Secrets File (secrets.json)!"
-    _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, True)
+    _message = "(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)!"
+    _print_header.forceprint(_message)
     if (_verbose == True):
         _message = "(Secrets) PROVISIONING HOST: {contents}".format(contents = _secrets.provisioning_host)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _print_header.print(_module, _method, _message, True)
         _message = "(Secrets) SCOPE ID: {contents}".format(contents = _secrets.scope_id)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _print_header.print(_module, _method, _message, True)
         _message = "(Secrets) DEVICE PRIMARY KEY: {contents}".format(contents = _secrets.device_primary_key)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _print_header.print(_module, _method, _message, True)
         _message = "(Secrets) DEVICE SECONDARY KEY: {contents}".format(contents = _secrets.device_secondary_key)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _print_header.print(_module, _method, _message, True)
         _message = "(Secrets) GATEWAY PRIMARY KEY: {contents}".format(contents = _secrets.gateway_primary_key)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _print_header.print(_module, _method, _message, True)
         _message = "(Secrets) GATEWAY SECONDARY KEY: {contents}".format(contents = _secrets.gateway_secondary_key)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _print_header.print(_module, _method, _message, True)
 
     # Load the recipes file
     _recipes = Recipes(Log)
-    _recipes_cache_data = _recipes.data
 
     # __Verbose__
-    _message = "SUCCESS: Loaded the Recipes File (recipes.json)!"
-    _print_header.forceprint(_module, _method, _message, CONSTANTS.INFO, True)
+    _message = "(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)!"
+    _print_header.forceprint(_message)
     if (_verbose == True):
-        _message = "CONTENTS: {contents}".format(contents = _recipes_cache_data)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _message = "(Recipes) CONTENTS: {contents}".format(contents = _recipes.data)
+        _print_header.print(_module, _method, _message, True)
 
+    return
+    
 if __name__ == "__main__":
     asyncio.run(main(sys.argv[1:]))
