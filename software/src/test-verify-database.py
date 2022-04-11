@@ -27,61 +27,74 @@ import classes.constants as CONSTANTS
 from classes.printheader import PrintHeader
 from classes.printerror import PrintError
 
-
 # -------------------------------------------------------------------------------
 #   main()
 # -------------------------------------------------------------------------------
 async def main(argv):
 
-    # init
+    # Initialization
+    _verbose = False
     _module = "test-verify-database"
     _method = "main()"
 
     # execution state from args
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose", action="store_true", help="Output important information when executing.")
-    #parser.add_argument('--debug', action='store_true')
-    args = parser.parse_args()
+    _parser = argparse.ArgumentParser()
+    _parser.add_argument("-v", "--verbose", dest='verbose', action="store_true", help="Output Important information when executing.")
+    _parser.add_argument("-d", "--debug", dest='debug', action="store_true", help="Output Debug information when executing.")
+    args = _parser.parse_args()
+
+    # gather parameters
     _verbose = args.verbose
+    _debug = args.debug
+
+    if _verbose:
+        Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
+        Log.info("Verbose Logging Mode...")
+    else:
+        Log.basicConfig(format="%(levelname)s: %(message)s")
+
+    if _debug:
+        Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.DEBUG)
+        Log.info("Debug Logging Mode...")
+    else:
+        Log.basicConfig(format="%(levelname)s: %(message)s")
+
 
     # Load the configuration file
-    config = Config(Log)
-    config_cache_data = config.data
+    _config = Config(Log)
 
     # Tracing and Errors
-    _print_header = PrintHeader(Log, _verbose, config)
-    _print_error = PrintError(Log, _verbose, config)
+    _print_header = PrintHeader(Log, _verbose, _config)
+    _print_error = PrintError(Log, _verbose, _config)
+
+    # Load the recipes file
+    _recipes = Recipes(Log)
 
     # Load the currentrecipe file
-    recipes = Recipes(Log)
-    recipes_cache_data = recipes.data
-
-    # Load the currentrecipe file
-    current_recipe = CurrentRecipe(Log)
-    current_recipe_cache_data = current_recipe.data
+    _current_recipe = CurrentRecipe(Log)
 
     # verify locations
-    root_directory = os.path.dirname(os.path.abspath(__file__))
-    database_location = root_directory + "\\" + current_recipe_cache_data["Database"]
+    _root_directory = os.path.dirname(os.path.abspath(__file__))
+    _database_location = _root_directory + "\\" + _current_recipe.data["Database"]
 
     # __Verbose__
     if (_verbose):
-        _message = "Root: {directory}".format(directory = root_directory)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, False)
-        _message = "Location: {location}".format(location = database_location)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, True)
+        _message = "Root: {directory}".format(directory = _root_directory)
+        _print_header.print(_module, _method, _message, False)
+        _message = "Location: {location}".format(location = _database_location)
+        _print_header.print(_module, _method, _message, True)
 
     # test phases
-    recipephase = RecipePhase(Log, _verbose, database_location, current_recipe_cache_data["Started"])
-    current_checkpoint = current_recipe_cache_data["Current Checkpoint"]
+    _recipephase = RecipePhase(Log, _verbose, _database_location, _current_recipe.data["Started"])
+    _current_checkpoint = _current_recipe.data["Current Checkpoint"]
 
     # __Verbose__
     if (_verbose):
-        _message = "Current Checkpoint: {checkpoint}".format(checkpoint = current_checkpoint)
-        _print_header.print(_module, _method, _message, CONSTANTS.INFO, False)
+        _message = "Current Checkpoint: {checkpoint}".format(checkpoint = _current_checkpoint)
+        _print_header.print(_module, _method, _message, False)
 
     # Show All Record from DB
-    json_result = recipephase.view_tracking()
+    json_result = _recipephase.view_tracking_start_end()
     if json_result == None:
         print("---------------------------------------------------------------------")
         print("  SHOW ALL TRACKING RECORDS ERROR!!!")
@@ -93,7 +106,7 @@ async def main(argv):
         print(json_result)
 
     # Show Current Checkpoint Record from DB
-    json_result = await recipephase.select_tracking_by_checkpoint(current_checkpoint)
+    json_result = await _recipephase.select_tracking_by_checkpoint(_current_checkpoint)
     if json_result == None:
         print("---------------------------------------------------------------------")
         print("  SHOW CURRENT CHECKPOINT TRACKING RECORD IN FORMATTED JSON")

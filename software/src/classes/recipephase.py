@@ -115,6 +115,71 @@ class RecipePhase:
             return None
 
     # -------------------------------------------------------------------------------
+    #   Function:   view_tracking_start_end
+    #   Usage:      Show first and last rows in tracking
+    # -------------------------------------------------------------------------------
+    def view_tracking_start_end(self):
+
+        try:
+
+            # Connect and Open tracking table
+            cur = self._connection.cursor()
+
+            json_rows_result = []
+
+            # Select First row
+            cur.execute("SELECT * FROM tracking WHERE id=(SELECT MIN(id) FROM tracking)")
+            rows = cur.fetchall()
+            for row in rows:
+                json_result = {
+                    "id": row[0],
+                    "recipe_phase": row[1],
+                    "recipe_hour": row[2],
+                    "completeness": row[3],
+                    "started_datetime": row[4],
+                    "completed_datetime": row[5],
+                    "temperature_format": row[6],
+                    "temperature_desired": row[7],
+                    "temperature_variance": row[8],
+                    "temperature_run_time": row[9],
+                    "temperature_idle_time": row[10],
+                    "humidity_desired": row[11],
+                    "humidity_variance": row[12],
+                    "humidity_run_time": row[13],
+                    "humidity_idle_time": row[14],
+                }
+                json_rows_result.append(json_result)
+
+            # Select First row
+            cur.execute("SELECT * FROM tracking WHERE id=(SELECT MAX(id) FROM tracking)")
+            rows = cur.fetchall()
+            for row in rows:
+                json_result = {
+                    "id": row[0],
+                    "recipe_phase": row[1],
+                    "recipe_hour": row[2],
+                    "completeness": row[3],
+                    "started_datetime": row[4],
+                    "completed_datetime": row[5],
+                    "temperature_format": row[6],
+                    "temperature_desired": row[7],
+                    "temperature_variance": row[8],
+                    "temperature_run_time": row[9],
+                    "temperature_idle_time": row[10],
+                    "humidity_desired": row[11],
+                    "humidity_variance": row[12],
+                    "humidity_run_time": row[13],
+                    "humidity_idle_time": row[14],
+                }
+                json_rows_result.append(json_result)
+
+            return json_rows_result
+
+        except Exception as e:
+            print("Exception::recipephase.py(view_tracking)->", e)
+            return None
+
+    # -------------------------------------------------------------------------------
     #   Function:   select_tracking_by_checkpoint_json
     #   Usage:      Connect to our pre configured recipe database
     # -------------------------------------------------------------------------------

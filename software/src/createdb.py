@@ -181,10 +181,11 @@ def audit_event(conn, task):
 #   Function:   create_current_recipe
 #   Usage:      Returns a json Object to Update Current Recipe
 # -------------------------------------------------------------------------------
-def create_current_recipe(ActiveRecipeName, Started):
+def create_current_recipe(DBFileName, ActiveRecipeName, Started):
     newRecipe = {
-        "Database": ActiveRecipeName,
+        "Database": DBFileName,
         "Started": Started,
+        "Recipe Name": ActiveRecipeName,
         "Current Checkpoint": 1
     }
 
@@ -218,176 +219,174 @@ async def main(argv):
         )
         return
 
-
     # Load the configuration file
-    config = Config(Log)
-    config_cache_data = config.data
+    _config = Config(Log)
 
     # Messaging
-    print_header = PrintHeader(Log, _verbose, config)
+    _print_header = PrintHeader(Log, _verbose, _config)
 
     # Get the recipes array from the recipes.json file
-    recipes = Recipes(Log)
-    recipes_cache_data = recipes.data
+    _recipes = Recipes(Log)
 
     # validate names and file naming pattern
-    existing_recipe = [x for x in recipes_cache_data if x["Name"] == _recipe_name]
-    if len(existing_recipe) == 0:
+    _existing_recipe = [x for x in _recipes.data if x["Name"] == _recipe_name]
+    if len(_existing_recipe) == 0:
         # Missing Recipe Name in recipes.json. It is required, so fail
         print("[ERROR] -r --recipename must match a recipe name in recipes.json.")
         return
 
     # create the file name
-    active_recipe_file_name = config_cache_data["Database Naming Pattern"].format(recipe_name = _recipe_name.replace(" ", "_").lower())
+    _database_file_name = _config.data["Database Naming Pattern"].format(recipe_name = _recipe_name.replace(" ", "_").lower())
 
     # Database - Create file name
-    current_date_and_time = datetime.now()
-    current_date_and_time_string = str(current_date_and_time)
+    _current_date_and_time = datetime.now()
+    _current_date_and_time_string = str(_current_date_and_time)
 
     # Load the currentrecipe file
-    current_recipe = CurrentRecipe(Log)
-    current_recipe_cache_data = current_recipe.data
+    _current_recipe = CurrentRecipe(Log)
 
     # create con object to connect
-    root_directory = os.path.dirname(os.path.abspath(__file__))
-    print("Root Directory:", root_directory)
-    database_location = root_directory + "//" + active_recipe_file_name
-    print("Database Location:", database_location)
-    conn = create_connection(database_location)
+    _root_directory = os.path.dirname(os.path.abspath(__file__))
+    _database_location = _root_directory + "//" + _database_file_name
+    _conn = create_connection(_database_location)
+    
+    print("Root Directory:", _root_directory)
+    print("Database Location:", _database_location)
 
-    if conn is not None:
+    if _conn is not None:
         # create tracking table
-        create_table(conn, get_tracking_table_definition())
+        create_table(_conn, get_tracking_table_definition())
 
         # create audit table
-        create_table(conn, get_audit_table_definition())
+        create_table(_conn, get_audit_table_definition())
 
     else:
         print("Error! cannot create the database connection.")
 
     # Register completion Audit Event
-    audit_event_1 = (
+    _audit_event_1 = (
         "DATABASE",
         0,
         datetime.now(),
         "CREATED",
         "Completed Database Creation.",
     )
-    audit_event(conn, audit_event_1)
+    audit_event(_conn, _audit_event_1)
 
     # init the values
-    completeness = 0
-    recipe_hour = 1
+    _completeness = 0
+    _recipe_hour = 1
 
     # Lets Populate the Checkpoint Activities
-    for recipe in recipes_cache_data:
-        if recipe["Name"] == "Salumi Toscano":
+    for _recipe in _recipes.data:
+        
+        if _recipe["Name"] == _recipe_name:
 
             print("-------------------------------------------------------")
             print("Found Recipe...")
 
             # Gather Times and Build Up Meta Data
-            incubate_toggle = recipe["Incubate"]["Cycle Time Toggle"]
-            incubate_time = recipe["Incubate"]["Cycle Time"]
-            cure_toggle = recipe["Cure"]["Cycle Time Toggle"]
-            cure_time = recipe["Cure"]["Cycle Time"]
-            finish_toggle = recipe["Finish"]["Cycle Time Toggle"]
-            finish_time = recipe["Finish"]["Cycle Time"]
+            _incubate_toggle = _recipe["Incubate"]["Cycle Time Toggle"]
+            _incubate_time = _recipe["Incubate"]["Cycle Time"]
+            _cure_toggle = _recipe["Cure"]["Cycle Time Toggle"]
+            _cure_time = _recipe["Cure"]["Cycle Time"]
+            _finish_toggle = _recipe["Finish"]["Cycle Time Toggle"]
+            _finish_time = _recipe["Finish"]["Cycle Time"]
 
             # create loop numbers
-            incubate_loop = (incubate_toggle * incubate_time) - 1
-            cure_loop = (cure_toggle * cure_time) - 1
-            finish_loop = (finish_toggle * finish_time) - 1
+            _incubate_loop = (_incubate_toggle * _incubate_time) - 1
+            _cure_loop = (_cure_toggle * _cure_time) - 1
+            _finish_loop = (_finish_toggle * _finish_time) - 1
 
             # Completeness - Based on all hours, percent of 100
-            completeness_value = Decimal(
-                100 / (incubate_loop + cure_loop + finish_loop)
+            _completeness_value = Decimal(
+                100 / (_incubate_loop + _cure_loop + _finish_loop)
             )
 
-            print(" Completeness=", completeness_value)
+            print(" Completeness=", _completeness_value)
 
             # Incubate
             print(" Creating Incubation Lifecycle...")
-            for x in range(0, incubate_loop):
-                tracking_incubation = (
+            for x in range(0, _incubate_loop):
+                _tracking_incubation = (
                     "Incubate",
-                    recipe_hour,
-                    str(completeness_value),
+                    _recipe_hour,
+                    str(_completeness_value),
                     None,
                     None,
                     "F",
-                    recipe["Incubate"]["Temperature"]["Desired"],
-                    recipe["Incubate"]["Temperature"]["Variance"],
-                    recipe["Incubate"]["Temperature"]["Run Time"],
-                    recipe["Incubate"]["Temperature"]["Idle Time"],
-                    recipe["Incubate"]["Humidity"]["Desired"],
-                    recipe["Incubate"]["Humidity"]["Variance"],
-                    recipe["Incubate"]["Humidity"]["Run Time"],
-                    recipe["Incubate"]["Humidity"]["Idle Time"],
+                    _recipe["Incubate"]["Temperature"]["Desired"],
+                    _recipe["Incubate"]["Temperature"]["Variance"],
+                    _recipe["Incubate"]["Temperature"]["Run Time"],
+                    _recipe["Incubate"]["Temperature"]["Idle Time"],
+                    _recipe["Incubate"]["Humidity"]["Desired"],
+                    _recipe["Incubate"]["Humidity"]["Variance"],
+                    _recipe["Incubate"]["Humidity"]["Run Time"],
+                    _recipe["Incubate"]["Humidity"]["Idle Time"],
                 )
-                create_tracking(conn, tracking_incubation)
-                recipe_hour = recipe_hour + 1
+                create_tracking(_conn, _tracking_incubation)
+                _recipe_hour = _recipe_hour + 1
 
             # Cure
             print(" Creating Cure Lifecycle...")
-            for x in range(0, cure_loop):
-                tracking_cure = (
+            for x in range(0, _cure_loop):
+                _tracking_cure = (
                     "Cure",
-                    recipe_hour,
-                    str(completeness_value),
+                    _recipe_hour,
+                    str(_completeness_value),
                     None,
                     None,
                     "F",
-                    recipe["Cure"]["Temperature"]["Desired"],
-                    recipe["Cure"]["Temperature"]["Variance"],
-                    recipe["Cure"]["Temperature"]["Run Time"],
-                    recipe["Cure"]["Temperature"]["Idle Time"],
-                    recipe["Cure"]["Humidity"]["Desired"],
-                    recipe["Cure"]["Humidity"]["Variance"],
-                    recipe["Cure"]["Humidity"]["Run Time"],
-                    recipe["Cure"]["Humidity"]["Idle Time"],
+                    _recipe["Cure"]["Temperature"]["Desired"],
+                    _recipe["Cure"]["Temperature"]["Variance"],
+                    _recipe["Cure"]["Temperature"]["Run Time"],
+                    _recipe["Cure"]["Temperature"]["Idle Time"],
+                    _recipe["Cure"]["Humidity"]["Desired"],
+                    _recipe["Cure"]["Humidity"]["Variance"],
+                    _recipe["Cure"]["Humidity"]["Run Time"],
+                    _recipe["Cure"]["Humidity"]["Idle Time"],
                 )
-                create_tracking(conn, tracking_cure)
-                recipe_hour = recipe_hour + 1
+                create_tracking(_conn, _tracking_cure)
+                _recipe_hour = _recipe_hour + 1
 
             # Finish
             print(" Creating Finish Lifecycle...")
-            for x in range(0, finish_loop):
-                completeness = 1
-                tracking_finish = (
+            for x in range(0, _finish_loop):
+                _completeness = 1
+                _tracking_finish = (
                     "Finish",
-                    recipe_hour,
-                    str(completeness_value),
+                    _recipe_hour,
+                    str(_completeness_value),
                     None,
                     None,
                     "F",
-                    recipe["Finish"]["Temperature"]["Desired"],
-                    recipe["Finish"]["Temperature"]["Variance"],
-                    recipe["Finish"]["Temperature"]["Run Time"],
-                    recipe["Finish"]["Temperature"]["Idle Time"],
-                    recipe["Finish"]["Humidity"]["Desired"],
-                    recipe["Finish"]["Humidity"]["Variance"],
-                    recipe["Finish"]["Humidity"]["Run Time"],
-                    recipe["Finish"]["Humidity"]["Idle Time"],
+                    _recipe["Finish"]["Temperature"]["Desired"],
+                    _recipe["Finish"]["Temperature"]["Variance"],
+                    _recipe["Finish"]["Temperature"]["Run Time"],
+                    _recipe["Finish"]["Temperature"]["Idle Time"],
+                    _recipe["Finish"]["Humidity"]["Desired"],
+                    _recipe["Finish"]["Humidity"]["Variance"],
+                    _recipe["Finish"]["Humidity"]["Run Time"],
+                    _recipe["Finish"]["Humidity"]["Idle Time"],
                 )
-                create_tracking(conn, tracking_finish)
-                recipe_hour = recipe_hour + 1
+                create_tracking(_conn, _tracking_finish)
+                _recipe_hour = _recipe_hour + 1
 
         # Register completion Audit Event
-        audit_event_2 = (
+        _audit_event_2 = (
             "CREATE",
             0,
             datetime.now(),
             "TRACKING",
             "Completed Recipe Tracking Insertion of all Checklpoints into the Database.",
         )
-        audit_event(conn, audit_event_2)
+        audit_event(_conn, _audit_event_2)
 
         print("Completed!")
         print("-------------------------------------------------------")
 
         # Update current recipe file
-        current_recipe.update_file(create_current_recipe(active_recipe_file_name, current_date_and_time_string))
+        _current_recipe.update_file(create_current_recipe(_database_file_name, _recipe_name, _current_date_and_time_string))
 
         break
     else:
