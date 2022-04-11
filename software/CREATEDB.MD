@@ -15,6 +15,9 @@
   - [Details](#details)
   - [Database Details](#database-details)
     - [Details for the _tracking_ table](#details-for-the-tracking-table)
+    - [Details for the _audit_ table](#details-for-the-audit-table)
+    - [Details for the _relay_ table](#details-for-the-relay-table)
+    - [Verify the Database](#verify-the-database)
 
 ## Overview
 
@@ -210,3 +213,93 @@ The _audit_ table captures the events that occur in the software. For example wh
 ### Details for the _relay_ table
 
 The _relay_ table is used to persist the state of a relay. For example, when the Temperature exceeds the desired + variance values, the relay for the Chiller will be engaged. The Relay table tracks starting time of the relay, measures the run time and idle time values and turns off the relay and resets the values for the next time.
+
+### Verify the Database
+There is a script included in the repository that provides verification to the database and helps look into the database and it's contents. In the \src directory, run the script below...
+
+```bash
+python .\test-verify-database.py -v
+```
+
+You should see something similar to the following output...
+
+```bash
+INFO: Verbose Logging Mode...
+
+-------------------------------------------------------------
+APP NAME: SaluminatorV4
+APP DESC: Monitoring of Saluminator Fermentation System
+SCRIPT: RecipePhase
+METHOD: __init__
+-------------------------------------------------------------
+Today: 2022-04-11 14:22:22.755159
+Recipe Started: 2022-04-11 13:54:34.802266
+Hours Elapsed Since Recipe Started: 0
+
+-------------------------------------------------------------
+APP NAME: SaluminatorV4
+APP DESC: Monitoring of Saluminator Fermentation System
+SCRIPT: test-verify-database
+METHOD: main()
+-------------------------------------------------------------
+Location: C:\Projects\open-fermentation-project\software\src\active_recipe_salumi_toscano.db
+Current Checkpoint: 1
+(Tracking) From the Tracking table, the first row and last row...
+```
+```json
+[{
+	'id': 1,
+	'recipe_phase': 'Incubate',
+	'recipe_hour': 1,
+	'completeness': '0.117785630153121323449028068353072740137577056884765625',
+	'started_datetime': None,
+	'completed_datetime': None,
+	'temperature_format': 'F',
+	'temperature_desired': 85,
+	'temperature_variance': 3,
+	'temperature_run_time': 3,
+	'temperature_idle_time': 5,
+	'humidity_desired': 90,
+	'humidity_variance': 3,
+	'humidity_run_time': 3,
+	'humidity_idle_time': 5
+}, {
+	'id': 849,
+	'recipe_phase': 'Finish',
+	'recipe_hour': 849,
+	'completeness': '0.117785630153121323449028068353072740137577056884765625',
+	'started_datetime': None,
+	'completed_datetime': None,
+	'temperature_format': 'F',
+	'temperature_desired': 58,
+	'temperature_variance': 2,
+	'temperature_run_time': 3,
+	'temperature_idle_time': 5,
+	'humidity_desired': 60,
+	'humidity_variance': 3,
+	'humidity_run_time': 3,
+	'humidity_idle_time': 5
+}]
+```
+```bash
+(Tracking) Current Checkpoint from the Tracking table...
+```
+```json
+{
+	'id': 1,
+	'recipe_phase': 'Incubate',
+	'recipe_hour': 1,
+	'completeness': '0.117785630153121323449028068353072740137577056884765625',
+	'started_datetime': None,
+	'completed_datetime': None,
+	'temperature_format': 'F',
+	'temperature_desired': 85,
+	'temperature_variance': 3,
+	'temperature_run_time': 3,
+	'temperature_idle_time': 5,
+	'humidity_desired': 90,
+	'humidity_variance': 3,
+	'humidity_run_time': 3,
+	'humidity_idle_time': 5
+}
+```

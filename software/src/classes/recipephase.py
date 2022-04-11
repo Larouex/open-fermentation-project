@@ -15,12 +15,24 @@ from datetime import datetime, date
 import sqlite3
 from sqlite3 import Error
 
+from classes.config import Config
+from classes.printheader import PrintHeader
+from classes.printerror import PrintError
 
 class RecipePhase:
     def __init__(self, Log, Verbose, Database, Started):
         
-        self.logger = Log
+        self._logger = Log
         self._verbose = Verbose
+        _module = "RecipePhase"
+        _method = "__init__"
+
+        # Load the configuration file
+        self._config = Config(Log)
+
+        # Tracing and Errors
+        self._print_header = PrintHeader(Log, Verbose, self._config)
+        self._print_error = PrintError(Log, Verbose, self._config)
 
         # datetime calcs
         self.today = datetime.now()
@@ -30,29 +42,18 @@ class RecipePhase:
             self._hours_since_recipe_started.total_seconds() / 3600
         )
 
-        if self._verbose == True:
-            print("")
-            print("-------------------------------------------------")
-            print(" Class::RecipePhase (Lifecycle Data)")
-            print("-------------------------------------------------")
-            print("Today->", self.today)
-            print("Recipe Started->", self._recipe_started)
-            print(
-                "Hours Elapsed Since Recipe Started-> ",
-                self._hours_since_recipe_started,
-            )
+        # __Verbose__
+        if (self._verbose):
+            _message = "Today: {today}".format(today = self.today)
+            self._print_header.print(_module, _method, _message, False)
+            _message = "Recipe Started: {started}".format(started = self._recipe_started)
+            self._print_header.print(_module, _method, _message, True)
+            _message = "Hours Elapsed Since Recipe Started: {elapsed}".format(elapsed = self._hours_since_recipe_started)
+            self._print_header.print(_module, _method, _message, True)
 
         # Create Database Connection
         self._database = Database
         self._connection = self.connect()
-
-        if self._verbose == True:
-            print("")
-            print("-------------------------------------------------")
-            print(" Class::RecipePhase (Database Access)")
-            print("-------------------------------------------------")
-            print("Database Location->", self._database)
-            print("Connection->", self._connection)
 
         return
 

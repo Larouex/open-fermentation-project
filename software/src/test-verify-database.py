@@ -59,7 +59,6 @@ async def main(argv):
     else:
         Log.basicConfig(format="%(levelname)s: %(message)s")
 
-
     # Load the configuration file
     _config = Config(Log)
 
@@ -77,21 +76,16 @@ async def main(argv):
     _root_directory = os.path.dirname(os.path.abspath(__file__))
     _database_location = _root_directory + "\\" + _current_recipe.data["Database"]
 
-    # __Verbose__
-    if (_verbose):
-        _message = "Root: {directory}".format(directory = _root_directory)
-        _print_header.print(_module, _method, _message, False)
-        _message = "Location: {location}".format(location = _database_location)
-        _print_header.print(_module, _method, _message, True)
-
     # test phases
     _recipephase = RecipePhase(Log, _verbose, _database_location, _current_recipe.data["Started"])
     _current_checkpoint = _current_recipe.data["Current Checkpoint"]
 
     # __Verbose__
     if (_verbose):
-        _message = "Current Checkpoint: {checkpoint}".format(checkpoint = _current_checkpoint)
+        _message = "Location: {location}".format(location = _database_location)
         _print_header.print(_module, _method, _message, False)
+        _message = "Current Checkpoint: {checkpoint}".format(checkpoint = _current_checkpoint)
+        _print_header.print(_module, _method, _message, True)
 
     # Show All Record from DB
     json_result = _recipephase.view_tracking_start_end()
@@ -100,10 +94,9 @@ async def main(argv):
         print("  SHOW ALL TRACKING RECORDS ERROR!!!")
         print("---------------------------------------------------------------------")
     else:
-        print("---------------------------------------------------------------------")
-        print("  SHOW ALL TRACKING RECORDS")
-        print("---------------------------------------------------------------------")
-        print(json_result)
+        _message = "(Tracking) From the Tracking table, the first row and last row..."
+        _print_header.print(_module, _method, _message, True)
+        _print_header.print(_module, _method, json_result, True)
 
     # Show Current Checkpoint Record from DB
     json_result = await _recipephase.select_tracking_by_checkpoint(_current_checkpoint)
@@ -113,10 +106,9 @@ async def main(argv):
         print("  Checkpoint was not Found in tracking table")
         print("---------------------------------------------------------------------")
     else:
-        print("---------------------------------------------------------------------")
-        print("  SHOW CURRENT CHECKPOINT TRACKING RECORD IN FORMATTED JSON")
-        print("---------------------------------------------------------------------")
-        print(json_result)
+        _message = "(Tracking) Current Checkpoint from the Tracking table..."
+        _print_header.print(_module, _method, _message, True)
+        _print_header.print(_module, _method, json_result, True)
 
 
 if __name__ == "__main__":

@@ -17,8 +17,8 @@
     - [Install Python](#install-python)
     - [Upgrading pip](#upgrading-pip)
     - [Install all the Tools for Visual Studio Code](#install-all-the-tools-for-visual-studio-code)
+    - [Get the Code!](#get-the-code)
     - [Install the Requirements for the Virtual Environment and Python](#install-the-requirements-for-the-virtual-environment-and-python)
-      - [NOTE: This is the steps for Powershell on Windows](#note-this-is-the-steps-for-powershell-on-windows)
 
 ## Overview
 
@@ -84,8 +84,41 @@ These are a set of tools we will use to develop our apps on the Raspberry Pi. Yo
 
 ![alt text](../assets/vs-code-remote-edit-sml.png "VS Code Remote SSH Edit")
 
+### Get the Code!
+
+The next step is to bring this repository to your development machine so you can work with all of the code and scripts. If you want to contribute, you can also create and submit Oull Requests!
+
+Open up a Powershell command window and type in the following...
+**NOTE: This is the steps for Powershell on Windows and you can use any directory you want**
+```ps1
+cd \
+mkdir Projects
+cd Projects
+git clone https://github.com/Larouex/open-fermentation-project.git
+cd open-fermentation-project
+dir
+```
+
+You should see something similar to the following output...
+
+```bash
+
+    Directory: C:\Projects\open-fermentation-project
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----          4/4/2022  10:52 AM                assets
+d-----         3/29/2022   8:57 AM                cloud
+d-----         3/29/2022   8:57 AM                hardware
+d-----         4/11/2022  10:48 AM                software
+-a----         3/14/2022   8:47 AM           6148 .DS_Store
+-a----         4/11/2022  11:49 AM             52 .gitignore
+-a----         3/14/2022   2:48 PM          35497 LICENSE.md
+-a----         3/29/2022   8:57 AM           6611 README.md
+```
+
 ### Install the Requirements for the Virtual Environment and Python
-#### NOTE: This is the steps for Powershell on Windows
+**NOTE: This is the steps for Powershell on Windows**
 
 This next set of steps are all executed from the command line and will result in a virtual environment that supports the running of the Saluminator&reg; scripts and modifications, etc.
 
