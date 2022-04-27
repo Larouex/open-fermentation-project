@@ -20,3 +20,8 @@ Let's walk through the configuration of the A/C path of electricity for the Salu
 * Each A/C Plug Ground is Connected to Common Ground
 
 <img src="../assets/ac-path.png"/>
+
+Here is a view of just this part of the assembly of the hardware...
+
+<img src="../assets/ac-view-hw.png"/>
+
