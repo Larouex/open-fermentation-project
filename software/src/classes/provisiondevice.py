@@ -13,12 +13,12 @@ import time, logging, string, json, os, binascii, threading, datetime, pprint
 
 # Our classes
 import classes.constants as CONSTANTS
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
-from classes.config import Config
 from classes.devicecache import DeviceCache
 from classes.secrets import Secrets
 from classes.symmetrickey import SymmetricKey
+from classes.config import Config
+from classes.printheader import PrintHeader
+from classes.printerror import PrintError
 
 # uses the Azure IoT Device SDK for Python (Native Python libraries)
 from azure.iot.device.aio import ProvisioningDeviceClient
@@ -39,9 +39,12 @@ class ProvisionDevice:
         self._verbose = Verbose
         self._module = "ProvisionDevice"
 
+        # Load the configuration file
+        self._config = Config(Log)
+
         # Tracing and Errors
-        self._print_header = PrintHeader(Log, Verbose)
-        self._print_error = PrintError(Log, Verbose)
+        self._print_header = PrintHeader(Log, Verbose, self._config)
+        self._print_error = PrintError(Log, Verbose, self._config)
 
         # Load the configuration file
         self._config = Config(Log)

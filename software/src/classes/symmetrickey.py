@@ -12,6 +12,7 @@
 import base64, hmac, hashlib
 
 import classes.constants as CONSTANTS
+from classes.config import Config
 from classes.printheader import PrintHeader
 from classes.printerror import PrintError
 
@@ -25,9 +26,12 @@ class SymmetricKey:
         self._module = "SymmetricKey"
         self._method = None
 
+        # Load the configuration file
+        self._config = Config(Log)
+
         # Tracing and Errors
-        self._print_header = PrintHeader(Log, Verbose)
-        self._print_error = PrintError(Log, Verbose)
+        self._print_header = PrintHeader(Log, Verbose, self._config)
+        self._print_error = PrintError(Log, Verbose, self._config)
 
         self.data = []
 
