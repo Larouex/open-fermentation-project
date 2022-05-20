@@ -7,6 +7,14 @@
         "LastProvisioned": "2022-04-01 20:24:09.442005",
         "Secrets": null
       }
+    },
+    {
+      "Device": {
+        "Name": "saluminator-4",
+        "Default Component Id": "dtmi:saluminatorIndustrialV4:Saluminator;1",
+        "LastProvisioned": "2022-05-20 10:36:20.263213",
+        "Secrets": null
+      }
     }
   ]
 }
