@@ -71,7 +71,8 @@ class Simulate:
         _min = self._config_cache_data["Simulation"]["Ambient Humidity"]["Minimum"]
         _max = self._config_cache_data["Simulation"]["Ambient Humidity"]["Maximum"]
         _size = 1
-        return [random.randint(_min, _max) for _ in range(_size)]
+        _value = [random.randint(_min, _max) for _ in range(_size)]
+        return int(_value[0])
 
     def get_chamber_temperature(self):            
         _min = self._config_cache_data["Simulation"]["Chamber Temperature"]["Minimum"]
@@ -83,4 +84,5 @@ class Simulate:
         _min = self._config_cache_data["Simulation"]["Chamber Humidity"]["Minimum"]
         _max = self._config_cache_data["Simulation"]["Chamber Humidity"]["Maximum"]
         _size = 1
-        return [random.randint(_min, _max) for _ in range(_size)]
+        _value = [random.randint(_min, _max) for _ in range(_size)]
+        return int(_value[0])

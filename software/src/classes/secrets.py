@@ -29,7 +29,7 @@ from azure.identity import ClientSecretCredential
 
 
 class Secrets:
-    def __init__(self, Log, Verbose):
+    def __init__(self, Log):
 
         # init
         self._filename = "secrets.json"
@@ -56,7 +56,7 @@ class Secrets:
                 return json.load(config_file)
         
         except Exception as ex:
-            print("SECRETS ERROR: {}", ex)
+            self._logger.error("SECRETS ERROR: {}", ex)
         
         return 
 
@@ -73,7 +73,7 @@ class Secrets:
                 configs_file.write(json.dumps(self._data, indent=2))
 
         except Exception as ex:
-            print("SECRETS ERROR: {}", ex)
+            self._logger.error("SECRETS ERROR: {}", ex)
         
         return 
 

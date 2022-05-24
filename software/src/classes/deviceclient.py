@@ -22,12 +22,26 @@ from classes.secrets import Secrets
 
 class DeviceClient:
     def __init__(self, Log, DeviceName):
-        self.logger = Log
+        self._logger = Log
 
         # Azure Device
-        self.device_name = DeviceName
-        self.device_secrets = []
-        self.device_client = None
+        self._device_name = DeviceName
+        self._device_secrets = []
+        self._device_client = None
+
+        self._device_symmetric_key = None
+        self._assigned_hub = None
+
+        # load the secrets
+        secrets = Secrets(self._logger)
+
+        # Get the needed device secrets
+        for x in secrets.data["Devices"]:
+            if x["Device"]["Name"] == self._device_name:
+                self._device_symmetric_key = x["Device"]["Secrets"]["DeviceSymmetricKey"]
+                self._logger.info("[DeviceSymmetricKey] %s" % self._device_symmetric_key)
+                self._assigned_hub = x["Device"]["Secrets"]["AssignedHub"]
+                self._logger.info("[AssignedHub] %s" % self._assigned_hub)
 
     # -------------------------------------------------------------------------------
     #   Function:   connect
@@ -37,27 +51,18 @@ class DeviceClient:
 
         try:
 
-            # load the secrets
-            secrets = Secrets(self.logger)
-            secrets.init()
-            self.device_secrets = secrets.get_device_secrets(self.device_name)
-            print("here secrets")
-            print(self.device_secrets)
-
-            self.device_client = IoTHubDeviceClient.create_from_symmetric_key(
-                symmetric_key=self.device_secrets["Device"]["Secrets"][
-                    "DeviceSymmetricKey"
-                ],
-                hostname=self.device_secrets["Device"]["Secrets"]["AssignedHub"],
-                device_id=self.device_name,
+            self._device_client = IoTHubDeviceClient.create_from_symmetric_key(
+                symmetric_key=self._device_symmetric_key,
+                hostname=self._assigned_hub,
+                device_id=self._device_name,
                 websockets=True,
             )
-            await self.device_client.connect()
-            self.logger.info("[DEVICE CLIENT] %s" % self.device_client)
+            await self._device_client.connect()
+            self._logger.info("[DEVICE CLIENT] %s" % self._device_client)
 
         except Exception as ex:
-            self.logger.error("[ERROR] %s" % ex)
-            self.logger.error(
+            self._logger.error("[ERROR] %s" % ex)
+            self._logger.error(
                 "[TERMINATING] We encountered an error creating and connecting the device in the Class::DeviceClient"
             )
             return None
@@ -73,15 +78,15 @@ class DeviceClient:
         msg = Message(json.dumps(Telemetry))
         msg.content_encoding = "utf-8"
         msg.content_type = "application/json"
-        msg.custom_properties["$.ifname"] = InterfaceInstanceName
-        msg.custom_properties["$.ifid"] = InterfacelId
-        await self.device_client.send_message(msg)
-        self.logger.info("[MESSAGE] %s" % msg)
+        #msg.custom_properties["$.ifname"] = InterfaceInstanceName
+        #msg.custom_properties["$.ifid"] = InterfacelId
+        await self._device_client.send_message(msg)
+        self._logger.info("[MESSAGE] %s" % msg)
 
     # -------------------------------------------------------------------------------
     #   Function:   disconnect
     #   Usage:      Disconnects from the IoT Hub
     # -------------------------------------------------------------------------------
     async def disconnect(self):
-        self.device_client.disconnect()
+        self._device_client.disconnect()
         return

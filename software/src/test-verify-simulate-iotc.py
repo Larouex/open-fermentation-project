@@ -14,18 +14,31 @@ import logging as Log
 # our classes
 from classes.config import Config
 from classes.simulate import Simulate
+from classes.deviceclient import DeviceClient
 
 # -------------------------------------------------------------------------------
 #   main()
 # -------------------------------------------------------------------------------
 async def main(argv):
 
+    # Load the configuration file
+    logger = Log
+    config = Config(logger)
+
+    # defaults
+    id = 1
+    verbose = False
+
+    # Load the configuration file & get example of the
+    # device name from the config file
+    device_name_prefix = config.data["Device"]["Device Name Prefix"]
+    device_name = device_name_prefix.format(id=id)
+
     # execution state from args
-    short_options = "hvd"
-    long_options = ["help", "verbose", "debug"]
+    short_options = "hvdr:"
+    long_options = ["help", "verbose", "debug", "registerid="]
     full_cmd_arguments = sys.argv
     argument_list = full_cmd_arguments[1:]
-    verbose= False
 
     try:
         arguments, values = getopt.getopt(argument_list, short_options, long_options)
@@ -35,6 +48,7 @@ async def main(argv):
     for current_argument, current_value in arguments:
 
         if current_argument in ("-h", "--help"):
+
             print(
                 "------------------------------------------------------------------------------------------------------------------------------------------"
             )
@@ -51,6 +65,15 @@ async def main(argv):
             )
             print(
                 "  -d or --debug - Debug Mode with lots of DEBUG Data will be Output to Assist with Tracing and Debugging"
+            )
+            print("")
+            print("  OPTIONAL PARAMETERS...")
+            print("")
+            print(
+                "    -r or --registerid - This numeric value will get appended to your provisioned device. Example '1' would"
+            )
+            print(
+                "                         result in a device provisioned with the name: {}".format(device_name)
             )
             print(
                 "------------------------------------------------------------------------------------------------------------------------------------------"
@@ -69,13 +92,26 @@ async def main(argv):
             Log.info("Debug Logging Mode...")
         else:
             Log.basicConfig(format="%(levelname)s: %(message)s")
+       
+        if current_argument in ("-r", "--registerid"):
+            id = current_value
+            Log.info("Register Id is Specified as: {id}".format(id=id))
 
-        # Load the configuration file
-        logger = Log
-        config = Config(logger)
-        
+            # validate the number is a NUMBER
+            if id.isnumeric() == False:
+                print("[ERROR] -r --registerid must be a numeric value")
+                return
+            
+            # update if needed
+            device_name = device_name_prefix.format(id=id)
+
+
         # Load Simulation
         simulate = Simulate(Log, verbose, config)
+
+        # create our IoT Central Device Client
+        device_client = DeviceClient(Log, device_name)
+        await device_client.connect()
 
         while True:
             simulate.RunSimulation()
@@ -91,6 +127,11 @@ async def main(argv):
                     simulate.chamber_temperature, simulate.chamber_humdity
                 )
             )
+
+            # Payload
+            payload =  '{{"ambient_temperature": {:.2f},"ambient_humidity": {:},"chamber_temperature": {:.2f},"chamber_humidity": {:}}}'
+            print("PAYLOAD: " + payload.format(simulate.ambient_temperature, simulate.ambient_humdity, simulate.chamber_temperature, simulate.chamber_humdity))
+            await device_client.send_telemetry(payload, "", "")
             print(
                 "...SLEEPING FOR...{:} Seconds".format(
                     config.data["Simulation"]["Loop Delay"]
