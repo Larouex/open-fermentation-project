@@ -78,8 +78,8 @@ class DeviceClient:
         msg = Message(json.dumps(Telemetry))
         msg.content_encoding = "utf-8"
         msg.content_type = "application/json"
-        #msg.custom_properties["$.ifname"] = InterfaceInstanceName
-        #msg.custom_properties["$.ifid"] = InterfacelId
+        msg.custom_properties["$.ifname"] = InterfaceInstanceName
+        msg.custom_properties["$.ifid"] = InterfacelId
         await self._device_client.send_message(msg)
         self._logger.info("[MESSAGE] %s" % msg)
 

@@ -131,7 +131,7 @@ async def main(argv):
             # Payload
             payload =  '{{"ambient_temperature": {:.2f},"ambient_humidity": {:},"chamber_temperature": {:.2f},"chamber_humidity": {:}}}'
             print("PAYLOAD: " + payload.format(simulate.ambient_temperature, simulate.ambient_humdity, simulate.chamber_temperature, simulate.chamber_humdity))
-            await device_client.send_telemetry(payload, "", "")
+            await device_client.send_telemetry(payload, config.data["Device"]["Default Component Id"], config.data["Device"]["NameSpace"])
             print(
                 "...SLEEPING FOR...{:} Seconds".format(
                     config.data["Simulation"]["Loop Delay"]
