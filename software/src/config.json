@@ -32,5 +32,24 @@
       "Open2": 24
     }
   },
-  "AmbientPin": 25
+  "AmbientPin": 25,
+  "Simulation" :{
+    "Loop Delay": 15,
+    "Ambient Temperature": {
+      "Minimum": 56,
+      "Maximum": 81
+    },
+    "Chamber Temperature": {
+      "Minimum": 61,
+      "Maximum": 80
+    },
+    "Ambient Humidity": {
+      "Minimum": 71,
+      "Maximum": 78
+    },
+    "Chamber Humidity": {
+      "Minimum": 72,
+      "Maximum": 85
+    }
+  }
 }

@@ -18,11 +18,13 @@
     - [Upgrading pip](#upgrading-pip)
     - [Install all the Tools for Visual Studio Code](#install-all-the-tools-for-visual-studio-code)
     - [Get the Code!](#get-the-code)
+      - [POWERSHELL INSTRUCTIONS](#powershell-instructions)
     - [Install the Requirements for the Virtual Environment and Python](#install-the-requirements-for-the-virtual-environment-and-python)
+      - [BASH INSTRUCTIONS](#bash-instructions)
 
 ## Overview
 
-You will want to setup your development environment on your main machine (your desktop or laptop) and the Debain operating system environment on the Raspberry Pi.
+You will want to setup your development environment on your main machine (your desktop or laptop) and the Raspbian OS (Debian) operating system environment on the Raspberry Pi.
 
 On your workstation this involved setting up the development toolchain (all that is needed to edit the software) and on the Raspberry Pi, the latest version of Python, a virtual environment for isolation of the Saluminator&reg; software when you are testing and running the monitoring.
 
@@ -88,6 +90,7 @@ These are a set of tools we will use to develop our apps on the Raspberry Pi. Yo
 
 The next step is to bring this repository to your development machine so you can work with all of the code and scripts. If you want to contribute, you can also create and submit Oull Requests!
 
+#### POWERSHELL INSTRUCTIONS
 Open up a Powershell command window and type in the following...
 **NOTE: This is the steps for Powershell on Windows and you can use any directory you want**
 ```ps1
@@ -153,6 +156,46 @@ python -m pip install -r requirements.txt
 
 Verify the Environment...
 ```ps1
+cd src
+python test-verify-env-dev.py
+```
+
+You will see something similar to the output below...
+```ps1
+(Config) SUCCESS: Loaded the Configuration File (config.json)!
+(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)!
+(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)!
+(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)!
+```
+**NOTE:** You can examine the contents of the various json files by adding the --verbose option to the test-verify-env-dev.py script.
+
+#### BASH INSTRUCTIONS
+
+Open a bash terminal in Visual Studio Code and install the Python Virtual Environment support...
+
+```bash
+python -m pip install --user virtualenv
+```
+
+Create the virtual environment for the Saluminator&reg; software..
+
+```bash
+python -m venv ./.saluminatorv4-venv/dev
+```
+
+and then start the virtual environment..
+
+```bash
+. ./.saluminatorv4-venv/dev/bin/activate
+```
+
+Install the requirements...
+```bash
+python -m pip install -r requirements.txt
+```
+
+Verify the Environment...
+```bash
 cd src
 python test-verify-env-dev.py
 ```

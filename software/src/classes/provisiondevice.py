@@ -13,12 +13,12 @@ import time, logging, string, json, os, binascii, threading, datetime, pprint
 
 # Our classes
 import classes.constants as CONSTANTS
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
-from classes.config import Config
 from classes.devicecache import DeviceCache
 from classes.secrets import Secrets
 from classes.symmetrickey import SymmetricKey
+from classes.config import Config
+from classes.printheader import PrintHeader
+from classes.printerror import PrintError
 
 # uses the Azure IoT Device SDK for Python (Native Python libraries)
 from azure.iot.device.aio import ProvisioningDeviceClient
@@ -39,13 +39,13 @@ class ProvisionDevice:
         self._verbose = Verbose
         self._module = "ProvisionDevice"
 
-        # Tracing and Errors
-        self._print_header = PrintHeader(Log, Verbose)
-        self._print_error = PrintError(Log, Verbose)
-
         # Load the configuration file
         self._config = Config(Log)
         self._config_cache_data = self._config.data
+
+        # Tracing and Errors
+        self._print_header = PrintHeader(Log, Verbose, self._config)
+        self._print_error = PrintError(Log, Verbose, self._config)
 
         # Symmetric Key
         self._symmetrickey = SymmetricKey(Log, Verbose)
@@ -110,9 +110,9 @@ class ProvisionDevice:
             # Azure IoT Central SDK Call to create the provisioning_device_client
             provisioning_device_client = (
                 ProvisioningDeviceClient.create_from_symmetric_key(
-                    provisioning_host=self._secrets.get_provisioning_host(),
+                    provisioning_host=self._secrets.provisioning_host,
                     registration_id=self._device_to_provision["Device"]["Name"],
-                    id_scope=self._secrets.get_scope_id(),
+                    id_scope=self._secrets.scope_id,
                     symmetric_key=self._device_to_provision["Device"]["Secrets"][
                         "DeviceSymmetricKey"
                     ],
@@ -137,12 +137,16 @@ class ProvisionDevice:
             # for node in self.config["Nodes"]:
             # self.device_to_provision["Device"]["Capabilities"].append(node["InterfaceInstanceName"])
 
+            self._logger.info(self._device_to_provision)
+
             # Update Secrets Cache Data for Devices
             existing_device = [
                 x
                 for x in self._secrets_cache_data["Devices"]
                 if x["Device"]["Name"] == self._device_to_provision["Device"]["Name"]
             ]
+
+            self._logger.info("Here 3")
 
             if len(existing_device) == 0:
                 self._secrets_cache_data["Devices"].append(self._device_to_provision)
@@ -223,7 +227,7 @@ class ProvisionDevice:
 
             # Get device symmetric key
             device_symmetric_key = self._symmetrickey.compute_derived_symmetric_key(
-                self._device_name, self._secrets.get_device_secondary_key()
+                self._device_name, self._secrets.device_secondary_key
             )
 
             # Get the Provisioned Device Secret
@@ -281,7 +285,7 @@ class ProvisionDevice:
         self._secrets_cache_data = self._secrets.data
 
         # Devices Cache
-        self._device_cache = DeviceCache(self._logger, self._verbose)
+        self._device_cache = DeviceCache(self._logger)
         self._device_cache_data = self._device_cache.data
 
         return

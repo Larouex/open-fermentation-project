@@ -14,11 +14,12 @@ The content below is the deep dive into each of the Python scripts, modules, cla
 
 <!-- vscode-markdown-toc -->
 
-- [Contents](#Contents)
-- [Recipe Management](#RecipeManagement)
-- [Saluminator&reg; Software](#SaluminatorregSoftware)
-  - [Configure](#Configure)
-  - [Initialize](#Initialize)
+- [The Software](#the-software)
+  - [<a name='Contents'></a>Contents](#contents)
+  - [<a name='RecipeManagement'></a>Recipe Management](#recipe-management)
+  - [<a name='SaluminatorregSoftware'></a>Saluminator&reg; Software](#saluminator-software)
+    - [<a name='Configure'></a>Configure](#configure)
+    - [<a name='Initialize'></a>Initialize](#initialize)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -37,7 +38,7 @@ The following docs are deep-dives into the specific scripts and modules that com
 
 ### <a name='Configure'></a>Configure
 
-- [Setup Environment](./ENVIRONMENT.MD)
+- [Setup Development Environment](./ENVIRONMENT.MD)
   Steps needed to get your development toolchain, Python and overall development requirements setup for your workstaation and the Raspberry Pi OS.
 
 - [Configure System Files](./CONFIGURE.MD)
