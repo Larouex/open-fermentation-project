@@ -6,18 +6,14 @@
 
 ## Contents
 
-- [Welcome](#welcome)
-  - [Hardware](#the-hardware)
-  - [Software](#the-software)
-  - [Cloud](#the-software)
+- [Welcome!](#welcome)
+  - [The Hardware](#the-hardware)
+  - [The Software](#the-software)
+  - [The Cloud](#the-cloud)
 - [Mission Statement](#mission-statement)
-  - [Mission](#our-mission)
-  - [Story](#our-story)
-  - [Values](#our-values)
-    - [Quality](#quality)
-    - [Sustainability](#sustainability)
-    - [Education](#education)
-    - [Community](#sommunity)
+  - [OUR MISSION](#our-mission)
+  - [OUR STORY](#our-story)
+  - [OUR VALUES](#our-values)
 
 # Welcome!
 
@@ -28,6 +24,8 @@ The **Open Fermentation Project SPC** is...
 - Cloud Integration for Telemetry and Monitoring
 
 The **Saluminator&reg; "Curing" Appliance** is a registered trademark of Larouex Gourmet Foods LLC. The appliance was developed by Larry W Jordan Jr. The trademark and logo are registered for commercial products and projects.
+
+<img src="./assets/aaluminator-v4-test-device.jpg" width="500"/>
 
 The **Open Fermentation Project SPC** is a Social Purpose Corporation formed in Washington State. The definition is below...
 
