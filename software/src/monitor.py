@@ -328,7 +328,7 @@ async def humidity_cycle(logger, verbose, current_recipe, relay_list, humidity):
                 )
                 row = await recipe_phase.audit_event(audit_event)
 
-                # Register [Humidity Variance] audit event
+                # Register [De-Humidity Variance] audit event
                 audit_event = (
                     recipe_phase_data["recipe_phase"],
                     current_recipe["Current Checkpoint"],
@@ -379,35 +379,13 @@ async def temperature_cycle(logger, verbose, current_recipe, relay_list, tempera
             current_recipe["Current Checkpoint"]
         )
 
-        if verbose == True:
-            print("")
-            print("-------------------------------------------------")
-            print(" Monitor::Checking Temperature + Variance")
-            print("-------------------------------------------------")
-        # Do we do a DeHumidifier Cycle?
+        # Is the "Temperature Desired" GREATER THAN the "Current Temperature"?
         if recipe_phase_data["temperature_desired"] > temperature:
-
-            if verbose == True:
-                print("Temperature LESS than Desired->", temperature)
-                print("Temperature Desired->", recipe_phase_data["temperature_desired"])
-                print(
-                    "Temperature Variance->", recipe_phase_data["temperature_variance"]
-                )
 
             if (
                 recipe_phase_data["temperature_desired"]
                 + recipe_phase_data["temperature_variance"]
             ) > temperature:
-
-                if verbose == True:
-                    print("Temperature LESS than Desired + Variance->", temperature)
-                    print(
-                        "Temperature Desired + Variance->",
-                        (
-                            recipe_phase_data["temperature_desired"]
-                            + recipe_phase_data["temperature_variance"]
-                        ),
-                    )
 
                 # Register [Temperature Variance] audit event
                 audit_event = (
@@ -415,7 +393,7 @@ async def temperature_cycle(logger, verbose, current_recipe, relay_list, tempera
                     current_recipe["Current Checkpoint"],
                     datetime.now(),
                     "TEMPERATURE",
-                    "Temperature LESS than Desired->{0}, Temperature->{1}, Temperature Variance->{2}".format(
+                    "Temperature LESS THAN Desired Temperature->{0}, Temperature->{1}, Temperature Variance->{2}".format(
                         temperature,
                         recipe_phase_data["temperature_desired"],
                         recipe_phase_data["temperature_variance"],
@@ -425,7 +403,6 @@ async def temperature_cycle(logger, verbose, current_recipe, relay_list, tempera
 
                 relay_list["Heater"].setRelayState(CONSTANT.ON)
                 relay_list["Chiller"].setRelayState(CONSTANT.OFF)
-                print("Heater Relay is Engaged")
 
                 # Register [Heater] audit event
                 audit_event = (
@@ -437,29 +414,13 @@ async def temperature_cycle(logger, verbose, current_recipe, relay_list, tempera
                 )
                 row = await recipe_phase.audit_event(audit_event)
 
+        # Is the "Temperature Desired" LESS THAN the "Current Temperature"?
         elif recipe_phase_data["temperature_desired"] < temperature:
-
-            if verbose == True:
-                print("Temperature GREATER than Desired->", temperature)
-                print("Temperature Desired->", recipe_phase_data["temperature_desired"])
-                print(
-                    "Temperature Variance->", recipe_phase_data["temperature_variance"]
-                )
 
             if (
                 recipe_phase_data["temperature_desired"]
                 - recipe_phase_data["temperature_variance"]
             ) < temperature:
-
-                if verbose == True:
-                    print("Temperature GREATER than Desired + Variance->", temperature)
-                    print(
-                        "Temperature Desired - Variance->",
-                        (
-                            recipe_phase_data["temperature_desired"]
-                            - recipe_phase_data["temperature_variance"]
-                        ),
-                    )
 
                 # Register [Temperature Variance] audit event
                 audit_event = (
@@ -467,7 +428,7 @@ async def temperature_cycle(logger, verbose, current_recipe, relay_list, tempera
                     current_recipe["Current Checkpoint"],
                     datetime.now(),
                     "TEMPERATURE",
-                    "Temperature LESS than Desired->{0}, Temperature->{1}, Temperature Variance->{2}".format(
+                    "Temperature GREATER THAN Desired Temperature->{0}, Temperature->{1}, Temperature Variance->{2}".format(
                         temperature,
                         recipe_phase_data["temperature_desired"],
                         recipe_phase_data["temperature_variance"],
@@ -475,11 +436,9 @@ async def temperature_cycle(logger, verbose, current_recipe, relay_list, tempera
                 )
                 row = await recipe_phase.audit_event(audit_event)
 
+                # Turn on the Chiller
                 relay_list["Chiller"].setRelayState(CONSTANT.ON)
                 relay_list["Heater"].setRelayState(CONSTANT.OFF)
-                print("Chiller Relay is Engaged")
-
-                # Register [Heater] audit event
                 audit_event = (
                     recipe_phase_data["recipe_phase"],
                     current_recipe["Current Checkpoint"],

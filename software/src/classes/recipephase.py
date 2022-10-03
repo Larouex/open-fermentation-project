@@ -239,11 +239,57 @@ class RecipePhase:
             cur = self._connection.cursor()
             cur.execute(sql, task)
             self._connection.commit()
+            rowid = cur.lastrowid
 
-            return cur.lastrowid
+            # __Verbose__
+            if (self._verbose):
+                _method = "audit_event"
+                json_audit = verbose_audit_event(rowid)
+                _message = "recipe_phase: {recipe_phase}".format(recipe_phase = json_audit["recipe_phase"])
+                self._print_header.print(_module, _method, _message, False)
+                _message = "recipe_hour: {recipe_hour}".format(recipe_hour = json_audit["recipe_hour"])
+                self._print_header.print(_module, _method, _message, False)
+                _message = "event_datetime: {event_datetime}".format(event_datetime = json_audit["event_datetime"])
+                self._print_header.print(_module, _method, _message, False)
+                _message = "event_type: {event_type}".format(event_type = json_audit["event_type"])
+                self._print_header.print(_module, _method, _message, False)
+                _message = "event_description: {event_description}".format(event_description = json_audit["event_description"])
+                self._print_header.print(_module, _method, _message, False)
+
+            return rowid
 
         except Exception as e:
             print("Exception::recipephase.py(audit_event)->", e)
+            return None
+
+    # -------------------------------------------------------------------------------
+    #   Function:   verbose_audit_event
+    #   Usage:      Print for Debug the Audit Event
+    # -------------------------------------------------------------------------------
+    async def verbose_audit_event(self, rowid):
+
+        try:
+
+            # Connect and Open audit table
+            cur = self._connection.cursor()
+
+            # Valid Audit Record?
+            cur.execute("SELECT * FROM audit WHERE id=?", (rowid,))
+
+            # get the checkpoint row
+            row = cur.fetchone()
+            json_result = {
+                "id": row[0],
+                "recipe_phase": row[1],
+                "recipe_hour": row[2],
+                "event_datetime": row[3],
+                "event_type": row[4],
+                "event_description": row[5],
+            }
+            return json_result
+
+        except Exception as e:
+            print("Exception::recipephase.py(verbose_audit_event)->", e)
             return None
 
     # -------------------------------------------------------------------------------
