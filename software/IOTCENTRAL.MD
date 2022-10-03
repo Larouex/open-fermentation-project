@@ -21,4 +21,4 @@
 
 ## 2. <a name='Overview'></a>Overview
 
-This document provides a deep-dive into the use of Azure IoT Cnetyrasl and the Saluminator&reg;
+This document provides a deep-dive into the use of Azure IoT Central and the Saluminator&reg;
