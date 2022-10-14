@@ -141,16 +141,76 @@
           "SimulationRangeValues": [0.1, 0.2, 0.3]
         },
         {
-          "DisplayName": "Recipe Name",
-          "TelemetryName": "rn",
-          "IoTCDataType": "string",
-          "SimulationRangeValues": ["Tuscona"]
+          "DisplayName": "Hourly Message Count",
+          "TelemetryName": "hmc",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [1, 2, 3]
         },
         {
-          "DisplayName": "Recipe Name",
-          "TelemetryName": "rn",
-          "IoTCDataType": "string",
-          "SimulationRangeValues": ["Tuscona"]
+          "DisplayName": "Average Temperature",
+          "TelemetryName": "at",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [71.2, 71.3]
+        },
+        {
+          "DisplayName": "Average Humidity",
+          "TelemetryName": "ah",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Incubation Started",
+          "TelemetryName": "incubation_started",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Incubation Ended",
+          "TelemetryName": "incubation_ended",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Incubation Percentage Completed",
+          "TelemetryName": "incubation_percentage",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Cure Started",
+          "TelemetryName": "cure_started",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Cure Ended",
+          "TelemetryName": "cure_ended",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Cure Percentage Completed",
+          "TelemetryName": "cure_percentage",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Finish Started",
+          "TelemetryName": "finish_started",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Finish Ended",
+          "TelemetryName": "finish_ended",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
+        },
+        {
+          "DisplayName": "Finish Percentage Completed",
+          "TelemetryName": "finish_percentage",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [55.2, 55.3]
         }
       ]
     }
