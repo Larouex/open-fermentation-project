@@ -1,0 +1,8 @@
+{
+  "@id": "{id}",
+  "@type": "CapabilityModel",
+  "displayName": "{displayName}",
+  "description": "{description}",
+  "@context": ["http://azureiot.com/v1/contexts/IoTModel.json"],
+  "implements": []
+}

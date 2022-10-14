@@ -5,13 +5,23 @@
   "Telemetry Frequency In Seconds": 60,
   "Read Delay In Seconds": 5,
   "Temperature Format": "F",
-  "NameSpace": "saluminatorIndustrialV4",
+  "NameSpace": "saluminatorFermentationSystem",
   "Database Naming Pattern": "active_recipe_{recipe_name}.db",
   "Correct Recipe Checkpoint Drift": true,
+  "ServerUrlPattern": "opc.tcp://{ip}:{port}/Saluminator-Fermentation-System/Server",
+  "ClientUrlPattern": "opc.tcp://localhost:{port}/Saluminator-Fermentation-System/Server",
+  "Port": 4840,
+  "IPAddress": "0.0.0.0",
+  "ApplicationUri": "urn:saluminatorFermentationSystem:Server",
+  "DeviceCapabilityModelId": "urn:saluminatorFermentationSystem:Server:1",
+  "ServerDiscoveryName": "Saluminator Fermentation System",
+  "CacheAddrSpaceFileName": "cache.opc",
+  "ServerFrequencyInSeconds": 10,
+  "ClientFrequencyInSeconds": 15,
   "Device": {
-    "Device Name Prefix": "saluminator-{id}",
-    "NameSpace": "saluminatorIndustrialV4",
-    "Default Component Id": "dtmi:saluminatorIndustrialV4:Saluminator;1"
+    "Device Name Prefix": "saluminatorFermentationSystem-{id}",
+    "NameSpace": "saluminatorFermentationSystem",
+    "Default Component Id": "dtmi:saluminatorFermentationSystem:Saluminator;1"
   },
   "Status": {
     "Pins": {
@@ -33,7 +43,7 @@
     }
   },
   "AmbientPin": 25,
-  "Simulation" :{
+  "Simulation": {
     "Loop Delay": 15,
     "Ambient Temperature": {
       "Minimum": 56,
@@ -51,5 +61,98 @@
       "Minimum": 72,
       "Maximum": 85
     }
-  }
+  },
+  "Nodes": [
+    {
+      "Name": "Ambient",
+      "InterfacelId": "urn:saluminatorFermentationSystem:AmbientInterface:1",
+      "InterfaceInstanceName": "AmbientInterface",
+      "Variables": [
+        {
+          "DisplayName": "Ambient Temperature",
+          "TelemetryName": "temperature",
+          "IoTCDataType": "float",
+          "SimulationRangeValues": [
+            72.45, 73.23, 85.9, 91.54, 73.28, 67.54, 69.28, 81.54, 73.68, 81.23
+          ]
+        },
+        {
+          "DisplayName": "Ambient Humidity",
+          "TelemetryName": "humidity",
+          "IoTCDataType": "float",
+          "SimulationRangeValues": [68.8, 71.0, 72.3, 64.1, 89.2, 67.3]
+        }
+      ]
+    },
+    {
+      "Name": "Saluminator",
+      "InterfacelId": "urn:saluminatorFermentationSystem:SaluminatorInterface:1",
+      "InterfaceInstanceName": "SaluminatorInterface",
+      "Variables": [
+        {
+          "DisplayName": "Chamber Temperature",
+          "TelemetryName": "temperature",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [
+            112.45, 113.23, 115.9, 121.54, 143.28, 151.23
+          ]
+        },
+        {
+          "DisplayName": "Chamber Humidity",
+          "TelemetryName": "humidity",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [78.8, 79.0, 77.3, 88.1, 85.2, 87.3]
+        }
+      ]
+    },
+    {
+      "Name": "Recipe",
+      "InterfacelId": "urn:saluminatorFermentationSystem:RecipeInterface:1",
+      "InterfaceInstanceName": "RecipeInterface",
+      "Variables": [
+        {
+          "DisplayName": "Telemetry Frequency Loop (Seconds)",
+          "TelemetryName": "tfls",
+          "IoTCDataType": "integer",
+          "SimulationRangeValues": [15]
+        },
+        {
+          "DisplayName": "Recipe Name",
+          "TelemetryName": "rn",
+          "IoTCDataType": "string",
+          "SimulationRangeValues": ["Tuscona"]
+        },
+        {
+          "DisplayName": "Total Cure Time (Hours)",
+          "TelemetryName": "tcth",
+          "IoTCDataType": "integer",
+          "SimulationRangeValues": [335]
+        },
+        {
+          "DisplayName": "Checkpoint Hour",
+          "TelemetryName": "checkpoint_hour",
+          "IoTCDataType": "integer",
+          "SimulationRangeValues": [1, 2, 3, 4, 5]
+        },
+        {
+          "DisplayName": "Last Reported from Device",
+          "TelemetryName": "last_reported_time",
+          "IoTCDataType": "double",
+          "SimulationRangeValues": [0.1, 0.2, 0.3]
+        },
+        {
+          "DisplayName": "Recipe Name",
+          "TelemetryName": "rn",
+          "IoTCDataType": "string",
+          "SimulationRangeValues": ["Tuscona"]
+        },
+        {
+          "DisplayName": "Recipe Name",
+          "TelemetryName": "rn",
+          "IoTCDataType": "string",
+          "SimulationRangeValues": ["Tuscona"]
+        }
+      ]
+    }
+  ]
 }

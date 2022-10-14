@@ -1,0 +1,66 @@
+{
+  "NameSpace": "saluminatorFermentationSystem",
+  "DeviceCapabilityModelId": "urn:saluminatorFermentationSystem:Server:1",
+  "Nodes": [
+    {
+      "Name": "Ambient",
+      "NodeId": "ns=2;i=1",
+      "InterfacelId": "urn:saluminatorFermentationSystem:AmbientInterface:1",
+      "InterfaceInstanceName": "AmbientInterface",
+      "Variables": [
+        {
+          "DisplayName": "Ambient Temperature",
+          "TelemetryName": "temperature",
+          "NodeId": "ns=2;i=2",
+          "IoTCDataType": "float"
+        },
+        {
+          "DisplayName": "Ambient Humidity",
+          "TelemetryName": "humidity",
+          "NodeId": "ns=2;i=3",
+          "IoTCDataType": "float"
+        }
+      ]
+    },
+    {
+      "Name": "Saluminator",
+      "NodeId": "ns=2;i=4",
+      "InterfacelId": "urn:saluminatorFermentationSystem:SaluminatorInterface:1",
+      "InterfaceInstanceName": "SaluminatorInterface",
+      "Variables": [
+        {
+          "DisplayName": "Chamber Temperature",
+          "TelemetryName": "temperature",
+          "NodeId": "ns=2;i=5",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Chamber Humidity",
+          "TelemetryName": "humidity",
+          "NodeId": "ns=2;i=6",
+          "IoTCDataType": "double"
+        }
+      ]
+    },
+    {
+      "Name": "Recipe",
+      "NodeId": "ns=2;i=7",
+      "InterfacelId": "urn:saluminatorFermentationSystem:RecipeInterface:1",
+      "InterfaceInstanceName": "RecipeInterface",
+      "Variables": [
+        {
+          "DisplayName": "Telemetry Frequency Loop (Seconds)",
+          "TelemetryName": "tfls",
+          "NodeId": "ns=2;i=8",
+          "IoTCDataType": "integer"
+        },
+        {
+          "DisplayName": "Recipe Name",
+          "TelemetryName": "rn",
+          "NodeId": "ns=2;i=9",
+          "IoTCDataType": "string"
+        }
+      ]
+    }
+  ]
+}

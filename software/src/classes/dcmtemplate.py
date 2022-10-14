@@ -6,30 +6,40 @@
 #   Online:   www.hackinmakin.com
 #
 #   (c) 2020 Larouex Software Design LLC
-#   This code is licensed under MIT license (see LICENSE.txt for details)    
+#   This code is licensed under MIT license (see LICENSE.txt for details)
 # ==================================================================================
 import json, logging
-from pathlib import Path, PureWindowsPath
 
-class DcmTemplate():
-    
-    def __init__(self, logger):
-        self.logger = logger
-        self.load_file()
+
+class DcmTemplate:
+    def __init__(self, Log):
+
+        # init
+        self._filename = "dcmtemplate.json"
+        self._data = self.load_file()
+
+    @property
+    def data(self):
+        return self._data
 
     def load_file(self):
-        with open('dcmtemplate.json', 'r') as config_file:
-            self.data = json.load(config_file)
-            alerts = self.load_alerts()
-            self.logger.debug(alerts["Alerts"]["DcmTemplate"]["Loaded"].format(self.data))
 
-    def update_file(self, fileName, data):
-        path_to_file = Path(PureWindowsPath("DeviceTemplates\\{fileName}".format(fileName=fileName)))
-        with open(path_to_file, 'w') as config_file:
-            alerts = self.load_alerts() 
-            config_file.write(json.dumps(data, indent=2))
-            self.logger.debug(alerts["Alerts"]["DcmTemplate"]["Updated"].format(self.data))
+        try:
+            with open(self._filename, "r") as config_file:
+                return json.load(config_file)
 
-    def load_alerts(self):
-        with open('alerts.json', 'r') as alerts_file:
-            return json.load(alerts_file)
+        except Exception as ex:
+            print("DCMTEMPLATE ERROR: {}", ex)
+
+        return
+
+    def update_file(self, data):
+
+        try:
+            with open(self._filename, "w") as configs_file:
+                configs_file.write(json.dumps(data, indent=2))
+
+        except Exception as ex:
+            print("DCMTEMPLATE ERROR: {}", ex)
+
+        return

@@ -12,7 +12,7 @@ import getopt, sys, time, string, threading, asyncio, os
 import logging as Log
 
 # our classes
-from classes.opcserver import OpcServer
+from classes.opcuaserver import OpcuaServer
 from classes.config import Config
 from classes.varianttype import VariantType
 
@@ -22,7 +22,7 @@ from classes.varianttype import VariantType
 async def start_server(WhatIf, CacheAddrSpace):
 
     # Start Server
-    opc_server = OpcServer(Log, WhatIf, CacheAddrSpace)
+    opc_server = OpcuaServer(Log, WhatIf, CacheAddrSpace)
     await opc_server.start()
 
     return
