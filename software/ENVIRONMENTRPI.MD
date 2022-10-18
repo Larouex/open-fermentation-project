@@ -13,9 +13,9 @@
   - [Overview](#overview)
 - [Setting up your Raspberry Pi OS](#setting-up-your-raspberry-pi-os)
   - [Setting up Raspberry Pi Imager](#setting-up-raspberry-pi-imager)
-    - [Step #1 - Setup the Imager Tool](#step-1---setup-the-imager-tool)
-    - [Step #2 - Choose the OS and SD Card](#step-2---choose-the-os-and-sd-card)
-    - [Step #3 - Write the OS](#step-3---write-the-os)
+    - [Step 1 - Setup the Imager Tool](#step-1---setup-the-imager-tool)
+    - [Step 2 - Choose the OS and SD Card](#step-2---choose-the-os-and-sd-card)
+    - [Step 3 - Write the OS](#step-3---write-the-os)
     - [Step 4 - Eject the Micro SD card](#step-4---eject-the-micro-sd-card)
     - [Step 5 - Install the Micro SD card in the Raspberry Pi](#step-5---install-the-micro-sd-card-in-the-raspberry-pi)
   - [Configure the Raspberry Pi](#configure-the-raspberry-pi)
@@ -37,7 +37,7 @@ It is now time to set up the Raspbian image on the SD card that you load will in
 ## Setting up Raspberry Pi Imager
 Let's get started with the Raspberry Pi Imaging Tool. First watch the short video on using the tool...
 
-### Step #1 - Setup the Imager Tool
+### Step 1 - Setup the Imager Tool
 [LINK: How to use Raspberry Pi Imager | Install Raspberry Pi OS to your Raspberry Pi (Raspbian)](https://www.youtube.com/watch?v=ntaXWS8Lk34)
 
 Install the Imager tool for your Desktop operating system...
@@ -49,7 +49,7 @@ Install the Imager tool for your Desktop operating system...
 Scroll the section, "Install Raspberry Pi OS using Raspberry Pi Imager" and install the software.
 
 
-### Step #2 - Choose the OS and SD Card
+### Step 2 - Choose the OS and SD Card
 
 - Install the Raspbian OS Image on the SD card.
 - Install the MicroSD card into the SD writer connected to your desktop or Laptop.
@@ -62,7 +62,7 @@ Choose the SD card connected to your computer.
 ![alt text](../assets/pi-os-installer-choose-os-card-selected.png "Choose SD")
 
 
-### Step #3 - Write the OS
+### Step 3 - Write the OS
 
 Click on the "WRITE" button and allow the process to copy, verify and complete.
 
