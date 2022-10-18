@@ -22,7 +22,7 @@ from sqlite3 import Error
 from classes.config import Config
 from classes.recipes import Recipes
 from classes.currentrecipe import CurrentRecipe
-from classes.printheader import PrintHeader
+from classes.printtracing import PrintTracing
 
 # -------------------------------------------------------------------------------
 #   Function:   create_connection
@@ -223,7 +223,7 @@ async def main(argv):
     _config = Config(Log)
 
     # Messaging
-    _print_header = PrintHeader(Log, _verbose, _config)
+    _printtracing = PrintTracing(Log, _verbose, _config)
 
     # Get the recipes array from the recipes.json file
     _recipes = Recipes(Log)

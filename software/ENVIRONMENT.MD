@@ -26,10 +26,11 @@
     - [Install the Requirements for the Virtual Environment and Python](#install-the-requirements-for-the-virtual-environment-and-python)
       - [Powershell](#powershell-1)
       - [Linux/Mac BASH INSTRUCTIONS](#linuxmac-bash-instructions-1)
+    - [Congratulations! Your Development "Workstation" is configured. Next, let's setup the environment on the Raspberry Pi.](#congratulations-your-development-workstation-is-configured-next-lets-setup-the-environment-on-the-raspberry-pi)
 
 ## Overview
 
-This document walks you through the setup of your development environment on your main machine (desktop or laptop) and the Raspbian OS (Debian) operating system environment on the Raspberry Pi for the  Saluminator&reg;. Setup on your workstation involves configuring the development toolchain (everything that is needed to edit/iterate/build/deploy the software) and on the Raspberry Pi, the latest versions and the virtual environment for isolation of the Saluminator&reg; software when you are testing and running the applications.
+This document walks you through the setup of your development environment on your main machine (desktop or laptop) and the Raspbian OS (Debian) operating system environment on the Raspberry Pi for the Saluminator&reg;. Setup on your workstation involves configuring the development toolchain (everything that is needed to edit/iterate/build/deploy the software) and on the Raspberry Pi, the latest versions and the virtual environment for isolation of the Saluminator&reg; software when you are testing and running the applications.
 
 **NOTE:** This is not a comprehensive and there are a number of issues you may encounter with versioning and other little nits. That is what the interwebs are for :)
 
@@ -265,4 +266,4 @@ Testing and Verifying the Environment...
 ```
 **NOTE:** You can examine the contents of the various json files by adding the --verbose option to the test-verify-env-dev.py script.
 
-**Congratulations!** Your system is configured. Next, let's setup the environment on the Raspberry Pi.
+### Congratulations! Your Development "Workstation" is configured. Next, let's setup the environment on the Raspberry Pi.

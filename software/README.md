@@ -39,7 +39,10 @@ The following docs are deep-dives into the specific scripts and modules that com
 ### <a name='Configure'></a>Configure
 
 - [Setup Development Environment](./ENVIRONMENT.MD)
-  Steps needed to get your development toolchain, Python and overall development requirements setup for your workstaation and the Raspberry Pi OS.
+  Steps needed to get your development toolchain, Python and overall development requirements setup for your developer "Workstation".
+
+- [Setup Raspberry Pi Environment](./ENVIRONMENTRPI.MD)
+  Steps needed to get your development toolchain, Python and overall development requirements setup for your developer "Workstation".
 
 - [Configure System Files](./CONFIGURE.MD)
   Guidance and suggestions for the json files for configuration, security, recipes, etc.
