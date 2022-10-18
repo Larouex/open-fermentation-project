@@ -12,8 +12,7 @@ from multiprocessing.spawn import is_forking
 import time, logging, string, json
 
 import classes.constants as CONSTANTS
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
+from classes.printtracing import PrintTracing
 
 # Azure IoT Libraries
 from azure.keyvault.certificates import (

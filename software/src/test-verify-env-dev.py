@@ -17,8 +17,7 @@ from classes.secrets import Secrets
 from classes.recipes import Recipes
 from classes.symmetrickey import SymmetricKey
 import classes.constants as CONSTANTS
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
+from classes.printtracing import PrintTracing
 from classes.config import Config
 
 # -------------------------------------------------------------------------------
@@ -58,59 +57,57 @@ async def main(argv):
     _config = Config(Log)
 
     # Tracing and Errors
-    _print_header = PrintHeader(Log, _verbose, _config)
-    _print_error = PrintError(Log, _verbose, _config)
-
-    # __Verbose__
+    _printtracing = PrintTracing(Log, _verbose, _config)
+    _printtracing.printheader(_module, _method)
     _message = "Testing and Verifying the Environment..."
-    _print_header.print(_module, _method, _message, False)
+    _printtracing.forceprint(_message)
 
     # __Verbose__
-    _message = "(Config) SUCCESS: Loaded the Configuration File (config.json)!"
-    _print_header.forceprint(_message)
+    _message = "(Config) SUCCESS: Loaded the Configuration File (config.json)"
+    _printtracing.forceprint(_message)
     if (_verbose == True):
         _message = "(Config) CONTENTS: {contents}".format(contents = _config.data)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
 
     # Load the devicecache file
     _devicecache = DeviceCache(Log)
 
     # __Verbose__
-    _message = "(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)!"
-    _print_header.forceprint(_message)
+    _message = "(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)"
+    _printtracing.forceprint(_message)
     if (_verbose == True):
         _message = "(DeviceCache) CONTENTS: {contents}".format(contents = _devicecache.data)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
 
     # Load the secrets file
-    _secrets = Secrets(Log, _verbose)
+    _secrets = Secrets(Log)
 
     # __Verbose__
-    _message = "(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)!"
-    _print_header.forceprint(_message)
+    _message = "(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)"
+    _printtracing.forceprint(_message)
     if (_verbose == True):
         _message = "(Secrets) PROVISIONING HOST: {contents}".format(contents = _secrets.provisioning_host)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
         _message = "(Secrets) SCOPE ID: {contents}".format(contents = _secrets.scope_id)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
         _message = "(Secrets) DEVICE PRIMARY KEY: {contents}".format(contents = _secrets.device_primary_key)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
         _message = "(Secrets) DEVICE SECONDARY KEY: {contents}".format(contents = _secrets.device_secondary_key)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
         _message = "(Secrets) GATEWAY PRIMARY KEY: {contents}".format(contents = _secrets.gateway_primary_key)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
         _message = "(Secrets) GATEWAY SECONDARY KEY: {contents}".format(contents = _secrets.gateway_secondary_key)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
 
     # Load the recipes file
     _recipes = Recipes(Log)
 
     # __Verbose__
-    _message = "(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)!"
-    _print_header.forceprint(_message)
+    _message = "(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)"
+    _printtracing.forceprint(_message)
     if (_verbose == True):
         _message = "(Recipes) CONTENTS: {contents}".format(contents = _recipes.data)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.forceprint(_message)
 
     return
     

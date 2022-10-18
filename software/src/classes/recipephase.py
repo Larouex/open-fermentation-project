@@ -16,23 +16,22 @@ import sqlite3
 from sqlite3 import Error
 
 from classes.config import Config
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
+from classes.printtracing import PrintTracing
 
 class RecipePhase:
     def __init__(self, Log, Verbose, Database, Started):
         
         self._logger = Log
         self._verbose = Verbose
-        _module = "RecipePhase"
-        _method = "__init__"
+        self._module = "RecipePhase"
+        self._method = "__init__"
 
         # Load the configuration file
         self._config = Config(Log)
 
         # Tracing and Errors
-        self._print_header = PrintHeader(Log, Verbose, self._config)
-        self._print_error = PrintError(Log, Verbose, self._config)
+        self._printtracing = PrintTracing(Log, Verbose, self._config)
+        self._printtracing.printheader(self._module, self._method)
 
         # datetime calcs
         self.today = datetime.now()
@@ -45,11 +44,11 @@ class RecipePhase:
         # __Verbose__
         if (self._verbose):
             _message = "Today: {today}".format(today = self.today)
-            self._print_header.print(_module, _method, _message, False)
+            self._printtracing.print(_module, _method, _message, False)
             _message = "Recipe Started: {started}".format(started = self._recipe_started)
-            self._print_header.print(_module, _method, _message, True)
+            self._printtracing.print(_module, _method, _message, True)
             _message = "Hours Elapsed Since Recipe Started: {elapsed}".format(elapsed = self._hours_since_recipe_started)
-            self._print_header.print(_module, _method, _message, True)
+            self._printtracing.print(_module, _method, _message, True)
 
         # Create Database Connection
         self._database = Database
@@ -67,8 +66,8 @@ class RecipePhase:
         try:
             connection = sqlite3.connect(self._database)
             return connection
-        except Error as e:
-            print("Exception::recipephase.py(connect)->", e)
+        except Error as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
 
         return connection
 
@@ -111,8 +110,8 @@ class RecipePhase:
 
             return json_rows_result
 
-        except Exception as e:
-            print("Exception::recipephase.py(view_tracking)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -176,8 +175,8 @@ class RecipePhase:
 
             return json_rows_result
 
-        except Exception as e:
-            print("Exception::recipephase.py(view_tracking)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -215,8 +214,8 @@ class RecipePhase:
             }
             return json_result
 
-        except Exception as e:
-            print("Exception::recipephase.py(select_tracking_by_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -246,20 +245,20 @@ class RecipePhase:
                 _method = "audit_event"
                 json_audit = verbose_audit_event(rowid)
                 _message = "recipe_phase: {recipe_phase}".format(recipe_phase = json_audit["recipe_phase"])
-                self._print_header.print(_module, _method, _message, False)
+                self._printtracing.print(_module, _method, _message, False)
                 _message = "recipe_hour: {recipe_hour}".format(recipe_hour = json_audit["recipe_hour"])
-                self._print_header.print(_module, _method, _message, False)
+                self._printtracing.print(_module, _method, _message, False)
                 _message = "event_datetime: {event_datetime}".format(event_datetime = json_audit["event_datetime"])
-                self._print_header.print(_module, _method, _message, False)
+                self._printtracing.print(_module, _method, _message, False)
                 _message = "event_type: {event_type}".format(event_type = json_audit["event_type"])
-                self._print_header.print(_module, _method, _message, False)
+                self._printtracing.print(_module, _method, _message, False)
                 _message = "event_description: {event_description}".format(event_description = json_audit["event_description"])
-                self._print_header.print(_module, _method, _message, False)
+                self._printtracing.print(_module, _method, _message, False)
 
             return rowid
 
-        except Exception as e:
-            print("Exception::recipephase.py(audit_event)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -288,8 +287,8 @@ class RecipePhase:
             }
             return json_result
 
-        except Exception as e:
-            print("Exception::recipephase.py(verbose_audit_event)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -312,8 +311,8 @@ class RecipePhase:
 
             return True
 
-        except Exception as e:
-            print("Exception::recipephase.py(complete_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -336,8 +335,8 @@ class RecipePhase:
 
             return True
 
-        except Exception as e:
-            print("Exception::recipephase.py(started_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -353,8 +352,8 @@ class RecipePhase:
             else:
                 return 0
 
-        except Exception as e:
-            print("Exception::recipephase.py(delta_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -367,8 +366,8 @@ class RecipePhase:
 
             return self._hours_since_recipe_started
 
-        except Exception as e:
-            print("Exception::recipephase.py(init_recipe_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -391,8 +390,8 @@ class RecipePhase:
 
             return True
 
-        except Exception as e:
-            print("Exception::recipephase.py(correct_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None
 
     # -------------------------------------------------------------------------------
@@ -411,6 +410,6 @@ class RecipePhase:
             )
             return hours_since_recipe_started
 
-        except Exception as e:
-            print("Exception::recipephase.py(current_recipe_checkpoint)->", e)
+        except Exception as ex:
+            self._printtracing.forceprint(self._module, self._method, ex)
             return None

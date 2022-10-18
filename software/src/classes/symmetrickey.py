@@ -13,8 +13,7 @@ import base64, hmac, hashlib
 
 import classes.constants as CONSTANTS
 from classes.config import Config
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
+from classes.printtracing import PrintTracing
 
 class SymmetricKey:
 
@@ -30,8 +29,7 @@ class SymmetricKey:
         self._config = Config(Log)
 
         # Tracing and Errors
-        self._print_header = PrintHeader(Log, Verbose, self._config)
-        self._print_error = PrintError(Log, Verbose, self._config)
+        self._printtracing = PrintTracing(Log, Verbose, self._config)
 
         self.data = []
 
@@ -40,6 +38,7 @@ class SymmetricKey:
     def compute_derived_symmetric_key(self, device_id, symmetric_key):
 
         self._method = "compute_derived_symmetric_key"
+        self._printtracing.printheader(self._module, self._method)
 
         try:
 
@@ -49,9 +48,9 @@ class SymmetricKey:
             device_key_encoded = base64.b64encode(signed_hmac.digest())
 
             message = "Generated Device Key: {key}".format(key=str(device_key_encoded.decode("utf-8")))
-            self._print_header.print(self._module, self._method, message, CONSTANTS.INFO)
+            self._printtracing.print(message)
 
             return device_key_encoded.decode("utf-8")
         
         except Exception as ex:
-            self._print_error.print(self._module, self._method, ex)
+            self._printtracing.print(self._module, self._method, ex)

@@ -23,8 +23,7 @@ from classes.recipes import Recipes
 from classes.currentrecipe import CurrentRecipe
 from classes.recipephase import RecipePhase
 import classes.constants as CONSTANTS
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
+from classes.printtracing import PrintTracing
 
 # -------------------------------------------------------------------------------
 #   main()
@@ -62,8 +61,8 @@ async def main(argv):
     _config = Config(Log)
 
     # Tracing and Errors
-    _print_header = PrintHeader(Log, _verbose, _config)
-    _print_error = PrintError(Log, _verbose, _config)
+    _printtracing = PrintTracing(Log, _verbose, _config)
+    _printtracing.printheader(_module, _method)
 
     # Load the recipes file
     _recipes = Recipes(Log)
@@ -82,9 +81,9 @@ async def main(argv):
     # __Verbose__
     if (_verbose):
         _message = "Location: {location}".format(location = _database_location)
-        _print_header.print(_module, _method, _message, False)
+        _printtracing.print(_module, _method, _message, False)
         _message = "Current Checkpoint: {checkpoint}".format(checkpoint = _current_checkpoint)
-        _print_header.print(_module, _method, _message, True)
+        _printtracing.print(_module, _method, _message, True)
 
     # Show All Record from DB
     json_result = _recipephase.view_tracking_start_end()
@@ -94,8 +93,8 @@ async def main(argv):
         print("---------------------------------------------------------------------")
     else:
         _message = "(Tracking) From the Tracking table, the first row and last row..."
-        _print_header.print(_module, _method, _message, True)
-        _print_header.print(_module, _method, json_result, True)
+        _printtracing.print(_module, _method, _message, True)
+        _printtracing.print(_module, _method, json_result, True)
 
     # Show Current Checkpoint Record from DB
     json_result = await _recipephase.select_tracking_by_checkpoint(_current_checkpoint)
@@ -106,8 +105,8 @@ async def main(argv):
         print("---------------------------------------------------------------------")
     else:
         _message = "(Tracking) Current Checkpoint from the Tracking table..."
-        _print_header.print(_module, _method, _message, True)
-        _print_header.print(_module, _method, json_result, True)
+        _printtracing.print(_module, _method, _message, True)
+        _printtracing.print(_module, _method, json_result, True)
 
 
 if __name__ == "__main__":

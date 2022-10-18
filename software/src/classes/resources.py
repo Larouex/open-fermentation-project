@@ -1,7 +1,7 @@
 # ==================================================================================
-#   File:   config.py
+#   File:   resources.py
 #   Author: Larry W Jordan Jr (larouex@larouex.com)
-#   Use:    Handler for Config
+#   Use:    Handler for String Resources
 #
 #   https://github.com/Larouex/open-fermentation-project
 #
@@ -10,12 +10,12 @@
 # ==================================================================================
 import json, logging
 
-class Config:
+class Resources:
 
     def __init__(self, Log):
         
         # init
-        self._filename = "config.json"
+        self._filename = "resources.json"
         self._data = self.load_file()
 
     @property

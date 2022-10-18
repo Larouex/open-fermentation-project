@@ -17,8 +17,7 @@ from classes.devicecache import DeviceCache
 from classes.secrets import Secrets
 from classes.symmetrickey import SymmetricKey
 from classes.config import Config
-from classes.printheader import PrintHeader
-from classes.printerror import PrintError
+from classes.printtracing import PrintTracing
 
 # uses the Azure IoT Device SDK for Python (Native Python libraries)
 from azure.iot.device.aio import ProvisioningDeviceClient
@@ -38,14 +37,15 @@ class ProvisionDevice:
         self._logger = Log
         self._verbose = Verbose
         self._module = "ProvisionDevice"
+        self._method = "__init__"
 
         # Load the configuration file
         self._config = Config(Log)
         self._config_cache_data = self._config.data
 
         # Tracing and Errors
-        self._print_header = PrintHeader(Log, Verbose, self._config)
-        self._print_error = PrintError(Log, Verbose, self._config)
+        self._printtracing = PrintTracing(Log, Verbose, self._config)
+        self._printtracing.printheader(_module, _method)
 
         # Symmetric Key
         self._symmetrickey = SymmetricKey(Log, Verbose)
@@ -78,7 +78,7 @@ class ProvisionDevice:
     # -------------------------------------------------------------------------------
     async def provision_device(self, Id):
 
-        method = "provision_devices"
+        self._method = "provision_devices"
 
         # First up we gather all of the needed provisioning meta-data and secrets
         try:
@@ -101,8 +101,8 @@ class ProvisionDevice:
             self._device_to_provision = self.create_device_to_provision()
 
             # __Verbose__
-            self._print_header.print(self._module, method, self._device_to_provision, CONSTANTS.INFO)
-            self._print_header.print(self._module, method, "DEVICE SYMMETRIC KEY %s"
+            self._printtracing.print(self._module, method, self._device_to_provision, CONSTANTS.INFO)
+            self._printtracing.print(self._module, method, "DEVICE SYMMETRIC KEY %s"
             % (
                 self._device_to_provision["Device"]["Secrets"]["DeviceSymmetricKey"],
             ), CONSTANTS.INFO)
@@ -127,7 +127,7 @@ class ProvisionDevice:
             registration_result = await provisioning_device_client.register()
 
             # __Verbose__
-            self._print_header.print(self._module, method, "RESULT: %s" % (registration_result), CONSTANTS.INFO)
+            self._printtracing.print(self._module, method, "RESULT: %s" % (registration_result), CONSTANTS.INFO)
 
             self._device_to_provision["Device"]["Secrets"][
                 "AssignedHub"
@@ -195,7 +195,7 @@ class ProvisionDevice:
             self._device_cache.update_file(self._device_cache_data)
             
             # __Verbose__
-            self._print_header.print(self._module, method, "SUCCESS %s"
+            self._printtracing.print(self._module, method, "SUCCESS %s"
             % (
                 self._device_to_provision
             ), CONSTANTS.INFO)
@@ -203,7 +203,7 @@ class ProvisionDevice:
             return
 
         except Exception as ex:
-            self._print_error.print(self._module, method, ex)
+            self._printtracing.forceprint(self._module, self._method, ex)
 
         return
         
@@ -212,7 +212,7 @@ class ProvisionDevice:
     #   Usage:      Returns a Devices Array
     # -------------------------------------------------------------------------------
     def create_device_to_provision(self):
-        method = "create_device_to_provision"
+        self._method = "create_device_to_provision"
         try:
 
             # Get the node for the device we are provisioning
@@ -244,7 +244,7 @@ class ProvisionDevice:
             return newDeviceToProvision
 
         except Exception as ex:
-            self._print_error.print(self._module, method, ex)
+            self._printtracing.forceprint(self._module, self._method, ex)
 
         return
 

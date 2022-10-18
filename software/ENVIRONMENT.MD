@@ -13,22 +13,25 @@
   - [Overview](#overview)
   - [Setting up the Development Toolchain for your Workstation](#setting-up-the-development-toolchain-for-your-workstation)
     - [Install Git](#install-git)
+      - [Install/Update on Windows](#installupdate-on-windows)
+      - [Install/Update on Mac](#installupdate-on-mac)
+      - [Install/Update on Linux/Raspbian](#installupdate-on-linuxraspbian)
     - [Install Visual Studio Code](#install-visual-studio-code)
     - [Install Python](#install-python)
-    - [Upgrading pip](#upgrading-pip)
+    - [Upgrading Pip](#upgrading-pip)
     - [Install all the Tools for Visual Studio Code](#install-all-the-tools-for-visual-studio-code)
-    - [Get the Code!](#get-the-code)
-      - [POWERSHELL INSTRUCTIONS](#powershell-instructions)
+  - [Get the Code!](#get-the-code)
+    - [Powershell](#powershell)
+    - [Linux/Mac BASH INSTRUCTIONS](#linuxmac-bash-instructions)
     - [Install the Requirements for the Virtual Environment and Python](#install-the-requirements-for-the-virtual-environment-and-python)
-      - [BASH INSTRUCTIONS](#bash-instructions)
+      - [Powershell](#powershell-1)
+      - [Linux/Mac BASH INSTRUCTIONS](#linuxmac-bash-instructions-1)
 
 ## Overview
 
-You will want to setup your development environment on your main machine (your desktop or laptop) and the Raspbian OS (Debian) operating system environment on the Raspberry Pi.
+This document walks you through the setup of your development environment on your main machine (desktop or laptop) and the Raspbian OS (Debian) operating system environment on the Raspberry Pi for the  Saluminator&reg;. Setup on your workstation involves configuring the development toolchain (everything that is needed to edit/iterate/build/deploy the software) and on the Raspberry Pi, the latest versions and the virtual environment for isolation of the Saluminator&reg; software when you are testing and running the applications.
 
-On your workstation this involved setting up the development toolchain (all that is needed to edit the software) and on the Raspberry Pi, the latest version of Python, a virtual environment for isolation of the Saluminator&reg; software when you are testing and running the monitoring.
-
-**NOTE:** This is not a comprehensive set of instructions on setting up. There are a number of issues you may encounter with Python, versioning and other little nits. That is what the interwebs are for :)
+**NOTE:** This is not a comprehensive and there are a number of issues you may encounter with versioning and other little nits. That is what the interwebs are for :)
 
 ## Setting up the Development Toolchain for your Workstation
 
@@ -36,7 +39,34 @@ I used the generic term "Workstation" as a way to differentiate that this is the
 
 ### Install Git
 
-Git is the tool we use for version control and management of software assets. Our workshop will use it to clone the modules and also to save anything if you want
+Git is the tool we use for version control and management of software assets. Our workshop will use it to clone the modules and also to merege and contribute to the respository.
+
+Validate that Git is installed and check the version...
+```
+git --version
+```
+#### Install/Update on Windows
+Open a Powershell window...
+```
+git update-git-for-windows
+```
+
+#### Install/Update on Mac
+Open a terminal window and install Homebrew...
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+Install/Update Git
+```bash
+brew upgrade git
+```
+
+#### Install/Update on Linux/Raspbian
+Open a Terminal window...
+```
+sudo apt update
+sudo apt upgrade
+```
 
 [LINK: Git Installation Page](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
@@ -60,14 +90,14 @@ From the Python Org:
 
 [LINK: Python 3 Installation Page](https://www.python.org/downloads/)
 
-### Upgrading pip
+### Upgrading Pip
 
 Pip is the package manager we will use to download packages
 
 On Linux or macOS (Open Terminal):
 
 ```
-    pip install -U pip
+pip install -U pip
 ```
 
 On Windows (from a CMD window or Powershell):
@@ -86,13 +116,13 @@ These are a set of tools we will use to develop our apps on the Raspberry Pi. Yo
 
 ![alt text](../assets/vs-code-remote-edit-sml.png "VS Code Remote SSH Edit")
 
-### Get the Code!
+## Get the Code!
 
 The next step is to bring this repository to your development machine so you can work with all of the code and scripts. If you want to contribute, you can also create and submit Oull Requests!
 
-#### POWERSHELL INSTRUCTIONS
-Open up a Powershell command window and type in the following...
-**NOTE: This is the steps for Powershell on Windows and you can use any directory you want**
+### Powershell
+Open up a Powershell window and type in the following...
+
 ```ps1
 cd \
 mkdir Projects
@@ -101,10 +131,8 @@ git clone https://github.com/Larouex/open-fermentation-project.git
 cd open-fermentation-project
 dir
 ```
-
 You should see something similar to the following output...
-
-```bash
+```ps1
 
     Directory: C:\Projects\open-fermentation-project
 
@@ -120,92 +148,120 @@ d-----         4/11/2022  10:48 AM                software
 -a----         3/29/2022   8:57 AM           6611 README.md
 ```
 
-### Install the Requirements for the Virtual Environment and Python
-**NOTE: This is the steps for Powershell on Windows**
+### Linux/Mac BASH INSTRUCTIONS
+Open up a Terminal window and type in the following...
 
+```bash
+cd \
+mkdir Projects
+cd Projects
+git clone https://github.com/Larouex/open-fermentation-project.git
+cd open-fermentation-project
+ls -l
+```
+You should see something similar to the following output...
+```bash
+total 84
+drwxr-xr-x 1 larryj 1049089     0 Oct  3 13:47 assets/
+drwxr-xr-x 1 larryj 1049089     0 Oct  3 13:45 assets-editing/
+drwxr-xr-x 1 larryj 1049089     0 Mar 29  2022 cloud/
+drwxr-xr-x 1 larryj 1049089     0 May 26 12:52 hardware/
+-rw-r--r-- 1 larryj 1049089 35497 Mar 14  2022 LICENSE.md
+-rw-r--r-- 1 larryj 1049089  6573 Oct  3 13:45 README.md
+drwxr-xr-x 1 larryj 1049089     0 Oct 18 09:34 software/
+```
+
+### Install the Requirements for the Virtual Environment and Python
 This next set of steps are all executed from the command line and will result in a virtual environment that supports the running of the Saluminator&reg; scripts and modifications, etc.
 
+#### Powershell
 First, open a powershell terminal in Visual Studio Code and set the powershell execution policy to allow scripts...
-
 ```ps1
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
-
+Next, let's make sure we are in the right folder structure...
+```ps1
+cd \
+cd .\Projects\open-fermentation-project\software\
+```
 Next, install the Python Virtual Environment...
-
 ```ps1
 python -m pip install --user virtualenv
 ```
-
 Create the virtual environment for the Saluminator&reg; software..
-
 ```ps1
 python -m venv ./.saluminatorv4-venv/dev
 ```
-
-and then start the virtual environment..
-
+Start (Activate) the virtual environment..
 ```ps1
 .\.saluminatorv4-venv\dev\Scripts\Activate.ps1
 ```
-
 Install the requirements...
 ```ps1
 python -m pip install -r requirements.txt
 ```
-
 Verify the Environment...
 ```ps1
 cd src
 python test-verify-env-dev.py
 ```
-
 You will see something similar to the output below...
 ```ps1
-(Config) SUCCESS: Loaded the Configuration File (config.json)!
-(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)!
-(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)!
-(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)!
+-------------------------------------------------------------
+APP NAME: SaluminatorV4
+APP DESC: Monitoring of Saluminator Fermentation System
+SCRIPT: test-verify-env-dev.py
+METHOD: main()
+-------------------------------------------------------------
+Testing and Verifying the Environment...
+(Config) SUCCESS: Loaded the Configuration File (config.json)
+(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)
+(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)
+(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)
 ```
 **NOTE:** You can examine the contents of the various json files by adding the --verbose option to the test-verify-env-dev.py script.
 
-#### BASH INSTRUCTIONS
-
+#### Linux/Mac BASH INSTRUCTIONS
 Open a bash terminal in Visual Studio Code and install the Python Virtual Environment support...
-
 ```bash
 python -m pip install --user virtualenv
 ```
-
+Next, let's make sure we are in the right folder structure...
+```bash
+cd /
+cd ./Projects/open-fermentation-project/software/
+```
 Create the virtual environment for the Saluminator&reg; software..
-
 ```bash
 python -m venv ./.saluminatorv4-venv/dev
 ```
-
 and then start the virtual environment..
 
 ```bash
-. ./.saluminatorv4-venv/dev/bin/activate
+source ./.saluminatorv4-venv/dev/Scripts/activate
 ```
-
 Install the requirements...
 ```bash
 python -m pip install -r requirements.txt
 ```
-
 Verify the Environment...
 ```bash
 cd src
 python test-verify-env-dev.py
 ```
-
 You will see something similar to the output below...
-```ps1
-(Config) SUCCESS: Loaded the Configuration File (config.json)!
-(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)!
-(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)!
-(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)!
+```bash
+-------------------------------------------------------------
+APP NAME: SaluminatorV4
+APP DESC: Monitoring of Saluminator Fermentation System
+SCRIPT: test-verify-env-dev.py
+METHOD: main()
+-------------------------------------------------------------
+Testing and Verifying the Environment...
+(Config) SUCCESS: Loaded the Configuration File (config.json)
+(DeviceCache) SUCCESS: Loaded the Device Cache File (devicecache.json)
+(Secrets) SUCCESS: Loaded the Secrets File (secrets.json)
+(Recipes) SUCCESS: Loaded the Recipes File (recipes.json)
 ```
 **NOTE:** You can examine the contents of the various json files by adding the --verbose option to the test-verify-env-dev.py script.
 
