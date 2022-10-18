@@ -64,12 +64,24 @@ async def get_relays(logger, verbose, relay_pin_list):
         "DeHumidifier": Relay(
             logger, verbose, relay_pin_list["DeHumidifier"], CONSTANT.OFF
         ),
-        "Heater": Relay(logger, verbose, relay_pin_list["Heater"], CONSTANT.OFF),
-        "Chiller": Relay(logger, verbose, relay_pin_list["Chiller"], CONSTANT.OFF),
-        "Fan": Relay(logger, verbose, relay_pin_list["Fan"], CONSTANT.ON),
-        "Light": Relay(logger, verbose, relay_pin_list["Light"], CONSTANT.OFF),
-        "Open1": Relay(logger, verbose, relay_pin_list["Open1"], CONSTANT.OFF),
-        "Open2": Relay(logger, verbose, relay_pin_list["Open2"], CONSTANT.OFF),
+        "Heater": Relay(
+            logger, verbose, relay_pin_list["Heater"], CONSTANT.OFF
+        ),
+        "Chiller": Relay(
+            logger, verbose, relay_pin_list["Chiller"], CONSTANT.OFF
+        ),
+        "Fan": Relay(
+            logger, verbose, relay_pin_list["Fan"], CONSTANT.ON
+        ),
+        "Light": Relay(
+            logger, verbose, relay_pin_list["Light"], CONSTANT.OFF
+        ),
+        "Open1": Relay(
+            logger, verbose, relay_pin_list["Open1"], CONSTANT.OFF
+        ),
+        "Open2": Relay(
+            logger, verbose, relay_pin_list["Open2"], CONSTANT.OFF
+        ),
     }
 
     return list

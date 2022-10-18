@@ -10,6 +10,7 @@ cryptography
 wifi
 dataclasses
 #rpi-gpio
+pypubsub
 adafruit-circuitpython-busdevice
 adafruit-circuitpython-am2320
 adafruit-circuitpython-dht
