@@ -17,6 +17,7 @@ paho-mqtt
 adafruit-circuitpython-busdevice
 adafruit-circuitpython-am2320
 adafruit-circuitpython-dht
+azure-monitor-opentelemetry-exporter
 azure.iot.device
 azure.identity
 azure.keyvault.certificates

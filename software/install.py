@@ -10,6 +10,12 @@
 # ==================================================================================
 import sys, os, subprocess, platform
 
+# debug
+#print (hasattr(sys, 'real_prefix'))
+#print (hasattr(sys, 'base_prefix'))
+#print (sys.prefix)
+#print (sys.base_prefix)
+
 def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
@@ -38,5 +44,6 @@ else:
     print('Do not run install.py outside of an activated Virtual Environment.')
     print('Please stop and read the ENVIONMENT.MD (for your Workstation) or ENVIONMENTRPI.MD for the Raspberry Pi on the Saluminator(R)')
     print("------------------------------------------")
+
 
 

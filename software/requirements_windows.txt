@@ -1,7 +1,7 @@
 # =============================================================================
 # USAGE: python install.py
 # REQUIRES: Virtual Environment is Running
-# DESCRIPTION: `requirements_raspbian.txt` installs all dependant packages for the 
+# DESCRIPTION: `requirements_windows.txt` installs all dependant packages for the 
 #               Raspberry Pi on the Saluminator(R)
 # =============================================================================
 virtualenv
@@ -13,6 +13,7 @@ cryptography
 wifi
 dataclasses
 paho-mqtt
+azure-monitor-opentelemetry-exporter
 azure.iot.device
 azure.identity
 azure.keyvault.certificates

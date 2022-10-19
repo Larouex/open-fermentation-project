@@ -232,6 +232,8 @@ Next, let's make sure we are in the right folder structure...
 cd /
 cd ./Projects/open-fermentation-project/software/
 ```
+**NOTE:** If you are running on Windows and have a mounted C drive, you may need to use "cd ./c/Projects/open-fermentation-project/software/"
+
 Create the virtual environment for the Saluminator&reg; software..
 ```bash
 python -m venv ./.saluminatorv4-venv/dev
