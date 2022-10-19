@@ -199,7 +199,7 @@ Start (Activate) the virtual environment..
 ```
 Install the requirements...
 ```ps1
-python -m pip install -r requirements.txt
+python install.py
 ```
 Verify the Environment...
 ```ps1
@@ -243,7 +243,7 @@ source ./.saluminatorv4-venv/dev/Scripts/activate
 ```
 Install the requirements...
 ```bash
-python -m pip install -r requirements.txt
+python install.py
 ```
 Verify the Environment...
 ```bash

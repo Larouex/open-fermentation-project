@@ -1,5 +1,8 @@
 # =============================================================================
-# `requirements.txt` installs all dependant packages
+# USAGE: python install.py
+# REQUIRES: Virtual Environment is Running
+# DESCRIPTION: `requirements_raspbian.txt` installs all dependant packages for the 
+#               Raspberry Pi on the Saluminator(R)
 # =============================================================================
 virtualenv
 setuptools
@@ -9,12 +12,7 @@ asyncua
 cryptography
 wifi
 dataclasses
-#rpi-gpio
 paho-mqtt
-pypubsub
-adafruit-circuitpython-busdevice
-adafruit-circuitpython-am2320
-adafruit-circuitpython-dht
 azure.iot.device
 azure.identity
 azure.keyvault.certificates
