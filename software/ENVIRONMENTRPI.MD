@@ -12,7 +12,7 @@
   - [Contents](#contents)
   - [Overview](#overview)
 - [Setting up your Raspberry Pi OS](#setting-up-your-raspberry-pi-os)
-  - [Setting up Raspberry Pi Imager](#setting-up-raspberry-pi-imager)
+  - [Introducing the Raspberry Pi Imager](#introducing-the-raspberry-pi-imager)
     - [Step 1 - Setup the Imager Tool](#step-1---setup-the-imager-tool)
     - [Step 2 - Choose the OS and SD Card](#step-2---choose-the-os-and-sd-card)
     - [Step 3 - Write the OS](#step-3---write-the-os)
@@ -34,8 +34,8 @@ Setup on your workstation involves configuring the development toolchain (everyt
 # Setting up your Raspberry Pi OS
 It is now time to set up the Raspbian image on the SD card that you load will into the MicroSD cart slot on the Raspberry Pi. Recently the Raspberry Pi Organization published an Operating System imaging tool that is excellent.
 
-## Setting up Raspberry Pi Imager
-Let's get started with the Raspberry Pi Imaging Tool. First watch the short video on using the tool...
+## Introducing the Raspberry Pi Imager
+The first thing to set up is your Raspbian image on the SD card that you insert into the MicroSD cart slot on the Raspberry Pi. You will need at least a 8 gig card and the ability to I/O to the card using a SD reader.
 
 ### Step 1 - Setup the Imager Tool
 [LINK: How to use Raspberry Pi Imager | Install Raspberry Pi OS to your Raspberry Pi (Raspbian)](https://www.youtube.com/watch?v=ntaXWS8Lk34)
@@ -44,10 +44,19 @@ Install the Imager tool for your Desktop operating system...
 
 [LINK: Raspberry Pi OS Installation Page](https://www.raspberrypi.org/software/)
 
+* Scroll the section, "Install Raspberry Pi OS using Raspberry Pi Imager"
+* Install the **_Raspberry Pi Imager_** software for your operating system
+* Next, fire up the **_Raspberry Pi Imager_** software...
+ 
 ![alt text](../assets/pi-os-installer.png "Install the Raspberry Pi Imager")
 
-Scroll the section, "Install Raspberry Pi OS using Raspberry Pi Imager" and install the software.
-
+* Press **CTRL+SHIFT+X** on the keyboard to open **Advanced options** window...
+* Enable **Set Hostname:** and give your Pi a name you want (we use SaluminatorXX with a unique number of the appliance for easy identification).
+* Enable **Enable SSH** and set the option to **Use password authentication**.
+* Enable **Set username and password** to your preferences and something you can remember! **Hint:** Click the **Show password** option and insure it is all correct.
+* Enable **Configure wireless LAN** and setup to your wireless network details.
+* Enable **Set locale settings** to your time zone and preferred keyboard layout.
+* Click the **SAVE** button!
 
 ### Step 2 - Choose the OS and SD Card
 

@@ -59,6 +59,96 @@
           "TelemetryName": "rn",
           "NodeId": "ns=2;i=9",
           "IoTCDataType": "string"
+        },
+        {
+          "DisplayName": "Total Cure Time (Hours)",
+          "TelemetryName": "tcth",
+          "NodeId": "ns=2;i=10",
+          "IoTCDataType": "integer"
+        },
+        {
+          "DisplayName": "Checkpoint Hour",
+          "TelemetryName": "checkpoint_hour",
+          "NodeId": "ns=2;i=11",
+          "IoTCDataType": "integer"
+        },
+        {
+          "DisplayName": "Last Reported from Device",
+          "TelemetryName": "last_reported_time",
+          "NodeId": "ns=2;i=12",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Hourly Message Count",
+          "TelemetryName": "hmc",
+          "NodeId": "ns=2;i=13",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Average Temperature",
+          "TelemetryName": "at",
+          "NodeId": "ns=2;i=14",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Average Humidity",
+          "TelemetryName": "ah",
+          "NodeId": "ns=2;i=15",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Incubation Started",
+          "TelemetryName": "incubation_started",
+          "NodeId": "ns=2;i=16",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Incubation Ended",
+          "TelemetryName": "incubation_ended",
+          "NodeId": "ns=2;i=17",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Incubation Percentage Completed",
+          "TelemetryName": "incubation_percentage",
+          "NodeId": "ns=2;i=18",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Cure Started",
+          "TelemetryName": "cure_started",
+          "NodeId": "ns=2;i=19",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Cure Ended",
+          "TelemetryName": "cure_ended",
+          "NodeId": "ns=2;i=20",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Cure Percentage Completed",
+          "TelemetryName": "cure_percentage",
+          "NodeId": "ns=2;i=21",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Finish Started",
+          "TelemetryName": "finish_started",
+          "NodeId": "ns=2;i=22",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Finish Ended",
+          "TelemetryName": "finish_ended",
+          "NodeId": "ns=2;i=23",
+          "IoTCDataType": "double"
+        },
+        {
+          "DisplayName": "Finish Percentage Completed",
+          "TelemetryName": "finish_percentage",
+          "NodeId": "ns=2;i=24",
+          "IoTCDataType": "double"
         }
       ]
     }
