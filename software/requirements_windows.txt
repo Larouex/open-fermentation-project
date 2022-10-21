@@ -10,7 +10,6 @@ wheel
 asyncio
 asyncua
 cryptography
-wifi
 dataclasses
 paho-mqtt
 azure-monitor-opentelemetry-exporter
