@@ -13,7 +13,7 @@ An example to show an application using all instruments in the OpenTelemetry SDK
 and recorded using the sdk are tracked and telemetry is exported to application insights with the
 AzureMonitorMetricsExporter.
 """
-import os
+import os, time
 from typing import Iterable
 
 from opentelemetry import metrics
@@ -30,7 +30,7 @@ reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
 metrics.set_meter_provider(MeterProvider(metric_readers=[reader]))
 
 # Create a namespaced meter
-meter = metrics.get_meter_provider().get_meter("sample")
+meter = metrics.get_meter_provider().get_meter("saluminator")
 
 # Callback functions for observable instruments
 def observable_counter_func(options: CallbackOptions) -> Iterable[Observation]:
@@ -49,26 +49,29 @@ def observable_gauge_func(options: CallbackOptions) -> Iterable[Observation]:
 
 # Counter
 counter = meter.create_counter("counter")
-counter.add(12)
 
-# Async Counter
-observable_counter = meter.create_observable_counter(
-    "observable_counter", [observable_counter_func]
-)
+for x in range(0, 30):
+    counter.add(1)
 
-# UpDownCounter
-up_down_counter = meter.create_up_down_counter("up_down_counter")
-up_down_counter.add(1)
-up_down_counter.add(-5)
+    # Async Counter
+    observable_counter = meter.create_observable_counter(
+        "observable_counter", [observable_counter_func]
+    )
 
-# Async UpDownCounter
-observable_up_down_counter = meter.create_observable_up_down_counter(
-    "observable_up_down_counter", [observable_up_down_counter_func]
-)
+    # UpDownCounter
+    up_down_counter = meter.create_up_down_counter("up_down_counter")
+    up_down_counter.add(1)
+    up_down_counter.add(-5)
 
-# Histogram
-histogram = meter.create_histogram("histogram")
-histogram.record(99.9)
+    # Async UpDownCounter
+    observable_up_down_counter = meter.create_observable_up_down_counter(
+        "observable_up_down_counter", [observable_up_down_counter_func]
+    )
 
-# Async Gauge
-gauge = meter.create_observable_gauge("gauge", [observable_gauge_func])
+    # Histogram
+    histogram = meter.create_histogram("histogram")
+    histogram.record(99.9)
+
+    # Async Gauge
+    gauge = meter.create_observable_gauge("gauge", [observable_gauge_func])
+    time.sleep(15)
