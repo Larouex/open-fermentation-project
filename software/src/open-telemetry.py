@@ -49,7 +49,7 @@ def observable_gauge_func(options: CallbackOptions) -> Iterable[Observation]:
 
 # Counter
 counter = meter.create_counter("counter")
-counter.add(1)
+counter.add(12)
 
 # Async Counter
 observable_counter = meter.create_observable_counter(
