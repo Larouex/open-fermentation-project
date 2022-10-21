@@ -8,55 +8,64 @@
 #   (c) 2022 Larouex Gourmet Foods LLC
 #   This code is licensed under GNU license (see LICENSE.txt for details)
 # ==================================================================================
-import getopt, sys, time, string, threading, asyncio, os
-import logging
+import os
+from typing import Iterable
 
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.sdk.resources import (
-    SERVICE_NAME,
-    SERVICE_NAMESPACE,
-    SERVICE_INSTANCE_ID,
-    Resource,
+from opentelemetry import metrics
+from opentelemetry.metrics import CallbackOptions, Observation
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
+
+from azure.monitor.opentelemetry.exporter import AzureMonitorMetricExporter
+
+exporter = AzureMonitorMetricExporter(
+    connection_string=os.environ[
+        "InstrumentationKey=beec3397-2433-489c-833a-e4b9e4c4a1f6;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/"
+    ]
+)
+reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
+metrics.set_meter_provider(MeterProvider(metric_readers=[reader]))
+
+# Create a namespaced meter
+meter = metrics.get_meter_provider().get_meter("sample")
+
+# Callback functions for observable instruments
+def observable_counter_func(options: CallbackOptions) -> Iterable[Observation]:
+    yield Observation(1, {})
+
+
+def observable_up_down_counter_func(
+    options: CallbackOptions,
+) -> Iterable[Observation]:
+    yield Observation(-10, {})
+
+
+def observable_gauge_func(options: CallbackOptions) -> Iterable[Observation]:
+    yield Observation(9, {})
+
+
+# Counter
+counter = meter.create_counter("counter")
+counter.add(1)
+
+# Async Counter
+observable_counter = meter.create_observable_counter(
+    "observable_counter", [observable_counter_func]
 )
 
-from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
+# UpDownCounter
+up_down_counter = meter.create_up_down_counter("up_down_counter")
+up_down_counter.add(1)
+up_down_counter.add(-5)
 
-exporter = AzureMonitorTraceExporter.from_connection_string(
-    "InstrumentationKey=beec3397-2433-489c-833a-e4b9e4c4a1f6;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/"
+# Async UpDownCounter
+observable_up_down_counter = meter.create_observable_up_down_counter(
+    "observable_up_down_counter", [observable_up_down_counter_func]
 )
 
+# Histogram
+histogram = meter.create_histogram("histogram")
+histogram.record(99.9)
 
-logging.basicConfig(format="%(asctime)s:%(levelname)s:%(message)s", level=logging.DEBUG)
-
-logger = logging.getLogger(__name__)
-file = logging.FileHandler("example.log")
-stream = logging.StreamHandler()
-logger.addHandler(file)
-logger.addHandler(stream)
-
-trace.set_tracer_provider(
-    TracerProvider(
-        resource=Resource.create(
-            {
-                SERVICE_NAME: "saluminator-fermentation-01",
-                # ----------------------------------------
-                # Setting role name and role instance
-                # ----------------------------------------
-                SERVICE_NAMESPACE: "saluminatorFermentationSystem",
-                SERVICE_INSTANCE_ID: "1",
-                # ----------------------------------------------
-                # Done setting role name and role instance
-                # ----------------------------------------------
-            }
-        )
-    )
-)
-trace.set_tracer_provider(TracerProvider())
-tracer = trace.get_tracer(__name__)
-span_processor = BatchSpanProcessor(exporter)
-trace.get_tracer_provider().add_span_processor(span_processor)
-
-with tracer.start_as_current_span("hello"):
-    print("Hello, World!")
+# Async Gauge
+gauge = meter.create_observable_gauge("gauge", [observable_gauge_func])
