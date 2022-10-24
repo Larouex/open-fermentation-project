@@ -36,7 +36,9 @@ from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 
 
 class OpenTelemetry:
-    def __init__(self):
+    def __init__(self, Log, Level):
+
+        self.logger = Log
 
         # load up configuration and mapping files
         self.config = []
@@ -67,8 +69,8 @@ class OpenTelemetry:
         # Attach LoggingHandler to root logger
         log_emitter_provider.add_log_processor(BatchLogProcessor(log_exporter))
         handler = LoggingHandler()
-        self.logger.getLogger().addHandler(handler)
-        self.logger.getLogger().setLevel(self.logger.NOTSET)
+        self.otel_logger.getLogger().addHandler(handler)
+        self.otel_logger.getLogger().setLevel(Level)
 
     # -------------------------------------------------------------------------------
     #   Function:   export_log
@@ -78,7 +80,7 @@ class OpenTelemetry:
 
         try:
 
-            logger = self.logger.getLogger(__name__)
+            logger = self.otel_logger.getLogger(__name__)
             logger.warning("Hello World!")
 
         except Exception as ex:

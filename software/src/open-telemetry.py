@@ -10,8 +10,9 @@
 # ==================================================================================
 import os, time
 from typing import Iterable
+import logging as Log
 
 from classes.opentelemetry import OpenTelemetry
 
-open_telemetry = OpenTelemetry()
+open_telemetry = OpenTelemetry(Log, Log.NOTSET)
 logger = open_telemetry.export_log()
