@@ -47,7 +47,8 @@ class OpenTelemetry:
 
         # Load the secrets file
         self.secrets = []
-        self.load_secrets()
+        secrets = Secrets(self.logger)
+        self.secrets = secrets.data
 
         # Logging
         log_emitter_provider = LogEmitterProvider()
@@ -97,19 +98,7 @@ class OpenTelemetry:
     # -------------------------------------------------------------------------------
     def load_config(self):
 
-        # Load all the configuration
         config = Config(self.logger)
         self.config = config.data
         self.nodes = self.config["Nodes"]
-        return
-
-    # -------------------------------------------------------------------------------
-    #   Function:   load_secrets
-    #   Usage:      Loads the secrets
-    # -------------------------------------------------------------------------------
-    def load_secrets(self):
-
-        # Load all the configuration
-        secrets = Secrets(self.logger)
-        self.secrets = secrets.data
         return
