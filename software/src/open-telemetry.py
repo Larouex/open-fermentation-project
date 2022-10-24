@@ -50,28 +50,32 @@ def observable_gauge_func(options: CallbackOptions) -> Iterable[Observation]:
 # Counter
 counter = meter.create_counter("counter")
 
-for x in range(0, 30):
+
+# Async Counter
+observable_counter = meter.create_observable_counter(
+    "observable_counter", [observable_counter_func]
+)
+
+# Async UpDownCounter
+observable_up_down_counter = meter.create_observable_up_down_counter(
+    "observable_up_down_counter", [observable_up_down_counter_func]
+)
+
+histogram = meter.create_histogram("histogram")
+
+up_down_counter = meter.create_up_down_counter("up_down_counter")
+
+gauge = meter.create_observable_gauge("gauge", [observable_gauge_func])
+
+for x in range(0, 300):
     counter.add(1)
 
-    # Async Counter
-    observable_counter = meter.create_observable_counter(
-        "observable_counter", [observable_counter_func]
-    )
-
     # UpDownCounter
-    up_down_counter = meter.create_up_down_counter("up_down_counter")
     up_down_counter.add(1)
     up_down_counter.add(-5)
 
-    # Async UpDownCounter
-    observable_up_down_counter = meter.create_observable_up_down_counter(
-        "observable_up_down_counter", [observable_up_down_counter_func]
-    )
-
     # Histogram
-    histogram = meter.create_histogram("histogram")
     histogram.record(99.9)
 
     # Async Gauge
-    gauge = meter.create_observable_gauge("gauge", [observable_gauge_func])
-    time.sleep(15)
+    time.sleep(30)
