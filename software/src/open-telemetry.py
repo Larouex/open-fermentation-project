@@ -13,4 +13,5 @@ from typing import Iterable
 
 from classes.opentelemetry import OpenTelemetry
 
-logger = OpenTelemetry.export_log()
+open_telemetry = OpenTelemetry()
+logger = open_telemetry.export_log()
