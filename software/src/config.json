@@ -16,7 +16,7 @@
   "DeviceCapabilityModelId": "urn:saluminatorFermentationSystem:Server:1",
   "ServerDiscoveryName": "Saluminator Fermentation System",
   "CacheAddrSpaceFileName": "cache.opc",
-  "ServerFrequencyInSeconds": 10,
+  "ServerFrequencyInSeconds": 60,
   "ClientFrequencyInSeconds": 15,
   "Device": {
     "Device Name Prefix": "saluminatorFermentationSystem-{id}",

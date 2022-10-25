@@ -16,17 +16,7 @@ from classes.opcuaserver import OpcuaServer
 from classes.config import Config
 from classes.varianttype import VariantType
 
-# -------------------------------------------------------------------------------
-#   Start the OPC Server
-# -------------------------------------------------------------------------------
-async def start_server(WhatIf, CacheAddrSpace):
-
-    # Start Server
-    opc_server = OpcuaServer(Log, WhatIf, CacheAddrSpace)
-    await opc_server.start()
-
-    return
-
+from classes.otellogging import OtelLogging
 
 async def main(argv):
 
@@ -64,7 +54,7 @@ async def main(argv):
                 "------------------------------------------------------------------------------------------------------------------"
             )
             return
-
+    
         if current_argument in ("-v", "--verbose"):
             Log.basicConfig(format="%(levelname)s: %(message)s", level=Log.INFO)
             Log.info("Verbose Logging Mode...")
@@ -88,8 +78,13 @@ async def main(argv):
             elif cache_addr_space == "load":
                 Log.info("Cache Address Space Mode [LOAD]...")
 
+
+    otel_logging = OtelLogging(Log, Log.NOTSET)
+    #Log = otel_logging.get_export_log()
+
     # Start Server
-    await start_server(whatif, cache_addr_space)
+    opc_server = OpcuaServer(Log, whatif, cache_addr_space)
+    await opc_server.start()
 
 
 if __name__ == "__main__":

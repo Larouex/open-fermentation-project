@@ -23,6 +23,8 @@ from classes.config import Config
 from classes.maptelemetry import MapTelemetry
 from classes.varianttype import VariantType
 
+# open telemetry
+from classes.otelmetering import OtelMetering
 
 class OpcuaServer:
     def __init__(self, Log, WhatIf, CacheAddrSpace):
@@ -230,7 +232,6 @@ class OpcuaServer:
 
             async with opc_server:
                 while True:
-                    await asyncio.sleep(self.config["ServerFrequencyInSeconds"])
                     for node in self.nodes:
                         temp_dict = self.nodes_dict[node["Name"]]
                         temp_dict_counter = self.nodes_dict_counter[node["Name"]]
@@ -264,11 +265,12 @@ class OpcuaServer:
                                     cc=temp_dict_counter[variable["TelemetryName"]],
                                 )
                             )
+                    self.logger.info("Pausing for %s seconds..." % self.config["ServerFrequencyInSeconds"])
+                    time.sleep(self.config["ServerFrequencyInSeconds"])
 
         else:
 
             while True:
-                await asyncio.sleep(self.config["ServerFrequencyInSeconds"])
                 for node in self.nodes:
                     temp_dict = self.nodes_dict[node["Name"]]
                     temp_dict_counter = self.nodes_dict_counter[node["Name"]]
@@ -296,6 +298,8 @@ class OpcuaServer:
                                 cc=temp_dict_counter[variable["TelemetryName"]],
                             )
                         )
+                self.logger.info("Pausing for %s seconds..." % self.config["ServerFrequencyInSeconds"])
+                time.sleep(self.config["ServerFrequencyInSeconds"])
 
         return
 

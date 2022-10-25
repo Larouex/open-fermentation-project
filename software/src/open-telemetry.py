@@ -24,6 +24,7 @@ from opentelemetry.sdk.resources import (
 from classes.otellogging import OtelLogging
 from classes.otelspanenrichingprocessor import OtelSpanEnrichingProcessor
 from classes.otelhistogram import OtelHistogram
+from classes.otelmetering import OtelMetering
 
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
@@ -56,5 +57,15 @@ with tracer.start_as_current_span("parent"):
     Log.error("ERROR: Inside of span")
 
 otel_histogram = OtelHistogram(Log)
-otel_histogram.set_record(30.5, "RecipeProgress", 15)
+otel_histogram.set_record(30.5, "RecipeProgress", "15")
 otel_histogram.set_record(31.5, "RecipeProgress", 16)
+otel_histogram.set_record(41.5, "RecipeProgress", 16)
+otel_histogram.set_record(51.5, "RecipeProgress", 16)
+otel_histogram.set_record(61.5, "RecipeProgress", 16)
+otel_histogram.set_record(71.5, "RecipeProgress", 16)
+otel_histogram.set_record(81.5, "RecipeProgress", 16)
+otel_histogram.set_record(91.5, "RecipeProgress", 16)
+otel_histogram.set_record(11.5, "RecipeProgress", 16)
+
+otel_metering = OtelMetering(Log)
+otel_metering.instrument()

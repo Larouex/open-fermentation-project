@@ -74,7 +74,6 @@ class OtelHistogram:
 
         try:
             self._histogram.record(RecordNumber, {RecordKey: RecordValue})
-            input()
 
         except Exception as ex:
             self._logger.error("%s:%s->%s", self._class, self._method, ex)
