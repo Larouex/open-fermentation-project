@@ -18,6 +18,7 @@ class MapTelemetry:
         # init
         self._filename = "maptelemetry.json"
         self._data = self.load_file()
+        self._logger = Log
 
     @property
     def data(self):
@@ -30,7 +31,7 @@ class MapTelemetry:
                 return json.load(config_file)
 
         except Exception as ex:
-            print("MAPTELEMETRY ERROR: {}", ex)
+            self._logger.error("MAPTELEMETRY ERROR: {}", ex)
 
         return
 
@@ -41,6 +42,6 @@ class MapTelemetry:
                 configs_file.write(json.dumps(data, indent=2))
 
         except Exception as ex:
-            print("MAPTELEMETRY ERROR: {}", ex)
+            self._logger.error("MAPTELEMETRY ERROR: {}", ex)
 
         return

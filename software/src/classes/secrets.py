@@ -29,13 +29,20 @@ from azure.identity import ClientSecretCredential
 
 class Secrets:
     def __init__(self, Log):
+        self._class = "Secrets"
+        self._method = "__init__"
 
-        # init
-        self._filename = "secrets.json"
-        self._logger = Log
+        try:
 
-        # Initiate the Secrets
-        self._data = self.load_file()
+            # init
+            self._filename = "secrets.json"
+            self._logger = Log
+
+            # Initiate the Secrets
+            self._data = self.load_file()
+
+        except Exception as ex:
+            self._logger.error("%s:%s->%s", self._class, self._method, ex)
 
         return
 
@@ -53,11 +60,11 @@ class Secrets:
         try:
             with open(self._filename, "r") as config_file:
                 return json.load(config_file)
-        
+
         except Exception as ex:
-            self._logger.error("SECRETS ERROR: {}", ex)
-        
-        return 
+            self._logger.error("%s:%s->%s", self._class, self._method, ex)
+
+        return "[]"
 
     # -------------------------------------------------------------------------------
     #   Function:   update_file_device_secrets
@@ -65,6 +72,7 @@ class Secrets:
     # -------------------------------------------------------------------------------
     def update_file_device_secrets(self, data):
         self._method = "update_file_device_secrets"
+
         try:
 
             with open("secrets.json", "w") as configs_file:
@@ -72,15 +80,22 @@ class Secrets:
                 configs_file.write(json.dumps(self._data, indent=2))
 
         except Exception as ex:
-            self._logger.error("SECRETS ERROR: {}", ex)
-        
-        return 
+            self._logger.error("SECRETS:%s Error %s", ex, self._method)
 
+        return
+
+    # Propeties you can query
     @property
     def provisioning_host(self):
         return self._data["ProvisioningHost"]
 
-    # Propeties you can query
+    @property
+    def ApplicationInsightsConnectionString(self):
+        if self._data["UseKeyVault"]:
+            return self._data["KeyVaultSecrets"]["ApplicationInsightsConnectionString"]
+        else:
+            return self._data["LocalSecrets"]["ApplicationInsightsConnectionString"]
+
     @property
     def scope_id(self):
         if self._data["UseKeyVault"]:
@@ -98,7 +113,9 @@ class Secrets:
     @property
     def device_secondary_key(self):
         if self._data["UseKeyVault"]:
-            return self._data["KeyVaultSecrets"]["DeviceConnect"]["SaSKeys"]["Secondary"]
+            return self._data["KeyVaultSecrets"]["DeviceConnect"]["SaSKeys"][
+                "Secondary"
+            ]
         else:
             return self._data["LocalSecrets"]["DeviceConnect"]["SaSKeys"]["Secondary"]
 
@@ -112,7 +129,9 @@ class Secrets:
     @property
     def gateway_secondary_key(self):
         if self._data["UseKeyVault"]:
-            return self._data["KeyVaultSecrets"]["GatewayConnect"]["SaSKeys"]["Secondary"]
+            return self._data["KeyVaultSecrets"]["GatewayConnect"]["SaSKeys"][
+                "Secondary"
+            ]
         else:
             return self._data["LocalSecrets"]["GatewayConnect"]["SaSKeys"]["Secondary"]
 
@@ -122,4 +141,6 @@ class Secrets:
 
     @property
     def device_secrets(self, DeviceName):
-        return [x for x in self._data["Devices"] if x["Device"]["Name"] == DeviceName][0]
+        return [x for x in self._data["Devices"] if x["Device"]["Name"] == DeviceName][
+            0
+        ]
