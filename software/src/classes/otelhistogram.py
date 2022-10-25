@@ -40,7 +40,7 @@ from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 
 
 class OtelHistogram:
-    def __init__(self, Log):
+    def __init__(self, Log, MeterName, DisplayName):
         self._class = "OtelHistogram"
         self._method = "__init__"
 
@@ -58,9 +58,8 @@ class OtelHistogram:
             )
             reader = PeriodicExportingMetricReader(self._metric_exporter)
             metrics.set_meter_provider(MeterProvider(metric_readers=[reader]))
-            meter = metrics.get_meter_provider().get_meter("saluminator_histogram")
-
-            self._histogram = meter.create_histogram("histogram")
+            meter = metrics.get_meter_provider().get_meter(MeterName)
+            self._histogram = meter.create_histogram(MeterName, DisplayName)
 
         except Exception as ex:
             self._logger.error("%s:%s->%s", self._class, self._method, ex)
@@ -69,11 +68,11 @@ class OtelHistogram:
     #   Function:   set_record
     #   Usage:      Record Values
     # -------------------------------------------------------------------------------
-    def set_record(self, RecordNumber, RecordKey, RecordValue):
+    def set_record(self, Value):
         self._method = "set_record"
 
         try:
-            self._histogram.record(RecordNumber, {RecordKey: RecordValue})
+            self._histogram.record(Value)
 
         except Exception as ex:
             self._logger.error("%s:%s->%s", self._class, self._method, ex)

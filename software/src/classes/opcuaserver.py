@@ -25,6 +25,7 @@ from classes.varianttype import VariantType
 
 # open telemetry
 from classes.otelmetering import OtelMetering
+from classes.otelhistogram import OtelHistogram
 
 class OpcuaServer:
     def __init__(self, Log, WhatIf, CacheAddrSpace):
@@ -253,6 +254,9 @@ class OpcuaServer:
                                 await variable_obj[
                                     variable["TelemetryName"]
                                 ].write_value(value)
+
+                            otel_histogram = OtelHistogram(self.logger, variable["TelemetryName"], variable["DisplayName"])
+                            otel_histogram.set_record(value)
 
                             log_msg = "[LOOP] {nn} {tn} {vw} {tc} SEQ({sc}) CUR({cc})"
                             self.logger.info(
